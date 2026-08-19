@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<title>Tech Digest - Daily Tech News and Deep Dives</title>
+<link>https://kragent66-glitch.github.io/tech-digest/</link>
+<atom:link href="https://kragent66-glitch.github.io/tech-digest/rss.xml" rel="self" type="application/rss+xml"/>
+<description>A daily technology news digest plus one in-depth deep dive, every day.</description>
+<language>en</language>
+<item>
+<title>Mojo goes open source, a 27B model matches the giants, and companies start rationing AI tokens</title>
+<link>https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-08-20.html</link>
+<guid>https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-08-20.html</guid>
+<pubDate>2026-08-20 07:00:00 +0530</pubDate>
+<description>The day&#x27;s most important technology news, curated with context: Mojo finally goes open source, Qwen&#x27;s 27B model punches far above its weight, an AirTag exposes how Amazon...</description>
+</item>
+<item>
+<title>The Tokenpocalypse: how runaway AI spend is reshaping the enterprise</title>
+<link>https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-20.html</link>
+<guid>https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-20.html</guid>
+<pubDate>2026-08-20 07:00:00 +0530</pubDate>
+<description>The enterprise AI boom has a hidden cost problem: token consumption is exploding, and it is not engineers driving the bill. Leaked internal audio from Accenture, reported...</description>
+</item>
+</channel>
+</rss>

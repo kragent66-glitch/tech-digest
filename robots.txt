@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kragent66-glitch.github.io/tech-digest/sitemap.xml
