@@ -140,3 +140,27 @@ footer .row { display: flex; justify-content: space-between; flex-wrap: wrap; ga
   html { scroll-behavior: auto; }
   #progress { display: none; }
 }
+
+/* key-facts / GEO answer block */
+.key-facts {
+  margin: 0 0 40px;
+  padding: 18px 22px;
+  border: 1px solid var(--hairline);
+  border-left: 3px solid var(--gold);
+  border-radius: var(--radius);
+  background: var(--bg-soft);
+}
+.key-facts h2 {
+  margin: 0 0 10px;
+  font-size: .82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--gold);
+}
+.key-facts p {
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 1.75;
+  color: var(--ink);
+}
