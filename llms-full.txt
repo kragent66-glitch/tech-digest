@@ -205,6 +205,77 @@ GenLayer's project boilerplate for building "intelligent contracts" on their blo
 **Why it matters.** The stories today paint a picture of an industry simultaneously consolidating (Stripe buying OpenRouter at $7B+), exposing its vulnerabilities (Microsoft's 8-month Copilot patch delay), and building the tooling layer that will determine which AI agents actually ship to production (the skills explosion, orchestration frameworks, memory systems). The Samsung foundry price hikes and Fractile's $6.5B valuation remind us that the physical infrastructure — the chips and the foundries — remains the bottleneck. And the GitHub Trending data makes one thing clear: the market has moved past "build one agent" to "manage a fleet of agents." The winners will be those who own the metering, routing, memory, and orchestration layers — not just the models themselves.
 
 
+## I built a Cutshort scraper that needs zero dependencies and no API key
+Source: https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-23.html
+# I built a Cutshort scraper that needs zero dependencies and no API key
+
+Job boards are API-gated for a reason, but most of them ship the data you want to the browser before you ask for it. Cutshort, a Bangalore-based recruiting platform, is a Next.js app, and every one of its search and job pages embeds its own rendered JSON in a single script tag. Read that tag and you have the full job feed with no authentication, no scraper framework, and no third-party dependency. I built `cutshort-cli` to do exactly that, and it now ships as a MIT-licensed, zero-dependency Python package on GitHub with a GitHub Pages landing page.
+
+This is the technical record of how it works, what reverse-engineering Cutshort's apply flow taught me about anti-bulk design, and why the tool deliberately stops where it does.
+
+## The trick: every Next.js page is an API
+
+Next.js server-renders pages and hands the client a hydration payload. That payload lives in a script tag with a stable ID, `__NEXT_DATA__`, and it contains a `props.pageProps.dehydratedState` object that mirrors the exact data the server fetched. For Cutshort:
+
+- The search page (`/search-jobs?free_text=<query>`) embeds `dehydratedState.queries[0].state.data`, which is a paginated result object holding every returned job.
+- Every job page embeds the full job object, including title, company, location, salary range, and the raw job description.
+
+`cutshort-cli` fetches a page, extracts that script tag with a single regex, and decodes it. No `requests`, no `httpx`, no Playwright to render JavaScript. Just `urllib` from the standard library:
+
+```python
+m = re.search(r'<script id="__NEXT_DATA__"[^>]*>(.*?)</script>', html, re.S)
+data = json.loads(m.group(1))
+```
+
+That one idea collapses what looks like an API-integration problem into a parsing problem. The pages are already an API; you just have to read the HTML they are willing to send you.
+
+## Three commands, two of them fully public
+
+The tool exposes three commands.
+
+`search` hits the search page and returns a paginated list, with an optional `--loc` substring filter and a `--json` flag for scripting:
+
+```
+$ cutshort search "AI engineer" --loc Mumbai
+Query: 'AI engineer' | total_count=3642 | page 1/729
+- Senior Software Engineer, AI/ML - Hyderabad - exp 5-9 yrs
+```
+
+`job` takes a job URL (or even just the path short-id) and prints the complete, HTML-stripped description:
+
+```
+$ cutshort job https://cutshort.io/job/Senior-Machine-Learning-Engineer-...
+```
+
+`whoami` is the one authenticated command. It needs a session-cookie JSON export (from the Cookie-Editor browser extension) and calls Cutshort's `/api/auth/user` endpoint, returning your profile, contact, and skills. Cookies are treated as a secret: the default path is `~/.config/cutshort/cookies.json` (overridable with `CUTSHORT_COOKIES`), and the `.gitignore` is set up so a cookies file can never be committed.
+
+Production hygiene was front and center: a 40-second timeout, up to three attempts with linear backoff on transient network errors, and error handling that surfaces real HTTP statuses instead of swallowing them. The parsers are pure functions tested against real trimmed Cutshort payloads stored in `tests/fixtures/`, so the test suite needs no network access.
+
+## The apply wall, and the honest boundary
+
+The most instructive part of the build was the apply flow. Applying to a Cutshort job from a logged-in candidate session redirects to `/profile/all-jobs?jobid=<id>`, where the "Apply now" button opens a multi-step candidate-data wizard. The wizard collects experience, current salary, expected salary, location, and company. Then a hidden field appears: `cf-turnstile-response`.
+
+That is a Cloudflare Turnstile captcha.
+
+Cutshort does not expose a clean HTTP endpoint for submitting applications, and the Turnstile is the enforcement layer on top of the data wizard. This is intentional anti-bulk design. The platform is funded by quality matches, not volume, and its candidate dashboard even labels the prompt to update your talent card. Reverse-engineering the endpoint and scripting around Turnstile is possible in a limited sense, but it is exactly the kind of automation job boards are built to reject, and doing it risks flagging the account that does it.
+
+So `cutshort-cli` draws the line there. The tool makes the expensive part fast - search and deep evaluation - and stops at the one-click "Apply now" button, which is the part that takes a human anyway. I respect the boundary on purpose, and I documented why in the README so the design decision reads as a choice, not a missing feature.
+
+## Why this matters beyond one job board
+
+Fixing Cutshort in particular is a real utility - job search from the terminal is genuinely faster for bulk-evaluating roles, and Cutshort offers no public API. But the reusable lesson is the pattern: large Next.js or server-rendered web apps routinely embed the very data their public APIs would charge for. Before writing a scraper framework or paying for API access, look for the hydration payload. It is often one regex and one `json.loads` away.
+
+The second lesson is about boundaries. Anti-bot and anti-bulk measures like Turnstile exist because programmatic abuse is the norm, not the edge case. A well-designed scraping tool knows not just what it can read, but what it should not try to write. `cutshort-cli` reads everything publicly visible and writes nothing. That is a deliberate and, I think, the right trade.
+
+## Where it lives
+
+- Repository: [github.com/kragent66-glitch/cutshort-cli](https://github.com/kragent66-glitch/cutshort-cli)
+- Landing page: [kragent66-glitch.github.io/cutshort-cli](https://kragent66-glitch.github.io/cutshort-cli/)
+- License: MIT, zero third-party dependencies, Python 3.9+
+- Install: `pip install git+https://github.com/kragent66-glitch/cutshort-cli.git`
+
+Unofficial, not affiliated with Cutshort. Improvements and PRs are welcome.
+
 ## The 2026 AI Price War: How Model Costs Collapsed 90 Percent and What It Means for the Infrastructure Layer
 Source: https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-22.html
 # The 2026 AI Price War: How Model Costs Collapsed 90 Percent and What It Means for the Infrastructure Layer

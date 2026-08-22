@@ -28,6 +28,13 @@
 <description>Today&#x27;s tech landscape is defined by three converging forces: AI infrastructure consolidation (Stripe buying OpenRouter for $7B+), the growing vulnerability surface of AI...</description>
 </item>
 <item>
+<title>I built a Cutshort scraper that needs zero dependencies and no API key</title>
+<link>https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-23.html</link>
+<guid>https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-23.html</guid>
+<pubDate>2026-08-23 07:00:00 +0530</pubDate>
+<description>Job boards are API-gated for a reason, but most of them ship the data you want to the browser before you ask for it. Cutshort, a Bangalore-based recruiting platform, is a...</description>
+</item>
+<item>
 <title>The 2026 AI Price War: How Model Costs Collapsed 90 Percent and What It Means for the Infrastructure Layer</title>
 <link>https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-22.html</link>
 <guid>https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-22.html</guid>
