@@ -7,6 +7,13 @@
 <description>A daily technology news digest plus one in-depth deep dive, every day.</description>
 <language>en</language>
 <item>
+<title>Meta Drops Muse Glimmer 30B Open-Weight, SpaceX Closes $60B Cursor Deal, and the Agent Runtime Layer Goes Open</title>
+<link>https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-08-23.html</link>
+<guid>https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-08-23.html</guid>
+<pubDate>2026-08-23 07:00:00 +0530</pubDate>
+<description>The agent stack is splitting cleanly into models you rent and runtimes you own. Meta shipped Muse Glimmer, a 30-billion-parameter open-weight model built for local agenti...</description>
+</item>
+<item>
 <title>OpenAI Connects ChatGPT to Apple Messages, Stripe Buys OpenRouter for $7.5B, and the MCP Plumbing Layer Matures</title>
 <link>https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-08-22.html</link>
 <guid>https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-08-22.html</guid>
