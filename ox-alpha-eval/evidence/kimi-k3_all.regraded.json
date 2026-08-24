@@ -1,0 +1,552 @@
+{
+  "model": "kimi-k3",
+  "regraded": true,
+  "results": [
+    {
+      "task": "two_sum",
+      "title": "Two Sum (fast path)",
+      "model": "kimi-k3",
+      "latency_s": 9.94,
+      "raw_response": {
+        "id": "chatcmpl-0e482758-3dc5-94ed-9150-8e7938675cb8",
+        "object": "chat.completion",
+        "created": 1787559697,
+        "model": "kimi-k3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "def two_sum(nums: list[int], target: int) -> list[int]:\n    seen = {}\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in seen:\n            return [seen[complement], i]\n        seen[num] = i\n    return []",
+              "reasoning_content": "The user wants a Python function `two_sum` that:\n1. Takes `nums: list[int]` and `target: int`\n2. Returns indices of two numbers adding to target\n3. Single pass with a dict\n4. Returns `[i, j]` where i < j\n5. Returns empty list if none found\n6. Output ONLY the function definition\n\nStandard one-pass hashmap solution. Since we iterate and check complement, when we find a match, the stored index is always smaller than the current index, so `[seen[complement], i]` satisfies i < j.\n\nOutput only the function, no code fences? \"Output ONLY the function definition\" \u2014 I'll output just the code without markdown fences to be safe. Actually, code fences might be acceptable but \"only the function definition\" suggests raw code. I'll output raw code."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 182,
+          "completion_tokens": 251,
+          "total_tokens": 433,
+          "completion_tokens_details": {
+            "reasoning_tokens": 173
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 182,
+        "completion_tokens": 251,
+        "total_tokens": 433,
+        "completion_tokens_details": {
+          "reasoning_tokens": 173
+        }
+      },
+      "generated_code": "def two_sum(nums: list[int], target: int) -> list[int]:\n    seen = {}\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in seen:\n            return [seen[complement], i]\n        seen[num] = i\n    return []",
+      "verdict": "PASS",
+      "execution_detail": "ALL_PASS",
+      "answer_origin": "content",
+      "running_verdict_recheck": "ALL_PASS"
+    },
+    {
+      "task": "lru_cache",
+      "title": "LRU Cache (O(1))",
+      "model": "kimi-k3",
+      "latency_s": 15.01,
+      "raw_response": {
+        "id": "chatcmpl-6a8bff1b39545cfde255a697",
+        "object": "chat.completion",
+        "created": 1787559710,
+        "model": "kimi-k3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "```python\nfrom collections import OrderedDict\n\n\nclass LRUCache:\n    def __init__(self, capacity: int):\n        self.capacity = capacity\n        self.cache = OrderedDict()\n\n    def get(self, key: int) -> int:\n        if key not in self.cache:\n            return -1\n        self.cache.move_to_end(key)\n        return self.cache[key]\n\n    def put(self, key: int, value: int) -> None:\n        if key in self.cache:\n            self.cache.move_to_end(key)\n        self.cache[key] = value\n        if len(self.cache) > self.capacity:\n            self.cache.popitem(last=False)\n```",
+              "reasoning_content": "The user wants a Python LRUCache class with O(1) operations. Output ONLY the class. Let me write it with OrderedDict, clean and simple.\n\n```python\nclass LRUCache:\n    def __init__(self, capacity: int):\n        self.capacity = capacity\n        self.cache = OrderedDict()\n\n    def get(self, key: int) -> int:\n        if key not in self.cache:\n            return -1\n        self.cache.move_to_end(key)\n        return self.cache[key]\n\n    def put(self, key: int, value: int) -> None:\n        if key in self.cache:\n            self.cache.move_to_end(key)\n        self.cache[key] = value\n        if len(self.cache) > self.capacity:\n            self.cache.popitem(last=False)\n```\n\nNeed the import for OrderedDict. The user said \"Output ONLY the class\" \u2014 but the import is needed. I could include the import since it's necessary. Hmm, \"Output ONLY the class\" \u2014 strictly the class. But without import it won't run. Common convention: include the import. The user says output only the class. I'll include the import line since it's required for functionality, or use collections.OrderedDict... no, that still needs import. I think including `from collections import OrderedDict` is acceptable and expected. Many solutions include it. I'll include it as it's necessary for the class to work."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 185,
+          "completion_tokens": 435,
+          "total_tokens": 620,
+          "completion_tokens_details": {
+            "reasoning_tokens": 286
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 185,
+        "completion_tokens": 435,
+        "total_tokens": 620,
+        "completion_tokens_details": {
+          "reasoning_tokens": 286
+        }
+      },
+      "generated_code": "```python\nfrom collections import OrderedDict\n\n\nclass LRUCache:\n    def __init__(self, capacity: int):\n        self.capacity = capacity\n        self.cache = OrderedDict()\n\n    def get(self, key: int) -> int:\n        if key not in self.cache:\n            return -1\n        self.cache.move_to_end(key)\n        return self.cache[key]\n\n    def put(self, key: int, value: int) -> None:\n        if key in self.cache:\n            self.cache.move_to_end(key)\n        self.cache[key] = value\n        if len(self.cache) > self.capacity:\n            self.cache.popitem(last=False)\n```",
+      "verdict": "PASS",
+      "execution_detail": "ALL_PASS",
+      "answer_origin": "content",
+      "running_verdict_recheck": "ALL_PASS"
+    },
+    {
+      "task": "num_islands",
+      "title": "Number of Islands (DFS/BFS)",
+      "model": "kimi-k3",
+      "latency_s": 19.89,
+      "raw_response": {
+        "id": "chatcmpl-6a8bff2ae9ce7bc3df589c50",
+        "object": "chat.completion",
+        "created": 1787559729,
+        "model": "kimi-k3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef num_islands(grid: list[list[str]]) -> int:\n    if not grid or not grid[0]:\n        return 0\n    grid = [row[:] for row in grid]\n    rows, cols = len(grid), len(grid[0])\n    count = 0\n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == '1':\n                count += 1\n                grid[r][c] = '0'\n                stack = [(r, c)]\n                while stack:\n                    cr, cc = stack.pop()\n                    for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):\n                        nr, nc = cr + dr, cc + dc\n                        if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == '1':\n                            grid[nr][nc] = '0'\n                            stack.append((nr, nc))\n    return count\n```",
+              "reasoning_content": "The user wants a function `num_islands` that counts connected '1' regions using 4-directional connectivity. They want to mutate a copy (so the original grid isn't modified) and avoid recursion limits on big grids \u2014 meaning use an iterative approach (BFS or iterative DFS with a stack).\n\nLet me write it:\n\n```python\ndef num_islands(grid: list[list[str]]) -> int:\n    if not grid or not grid[0]:\n        return 0\n    grid = [row[:] for row in grid]\n    rows, cols = len(grid), len(grid[0])\n    count = 0\n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == '1':\n                count += 1\n                grid[r][c] = '0'\n                stack = [(r, c)]\n                while stack:\n                    cr, cc = stack.pop()\n                    for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):\n                        nr, nc = cr + dr, cc + dc\n                        if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == '1':\n                            grid[nr][nc] = '0'\n                            stack.append((nr, nc))\n    return count\n```\n\nThis mutates a copy and uses an iterative DFS with a stack to avoid recursion limits. Output ONLY the function."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 152,
+          "completion_tokens": 537,
+          "total_tokens": 689,
+          "completion_tokens_details": {
+            "reasoning_tokens": 306
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 152,
+        "completion_tokens": 537,
+        "total_tokens": 689,
+        "completion_tokens_details": {
+          "reasoning_tokens": 306
+        }
+      },
+      "generated_code": "```python\ndef num_islands(grid: list[list[str]]) -> int:\n    if not grid or not grid[0]:\n        return 0\n    grid = [row[:] for row in grid]\n    rows, cols = len(grid), len(grid[0])\n    count = 0\n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == '1':\n                count += 1\n                grid[r][c] = '0'\n                stack = [(r, c)]\n                while stack:\n                    cr, cc = stack.pop()\n                    for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):\n                        nr, nc = cr + dr, cc + dc\n                        if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == '1':\n                            grid[nr][nc] = '0'\n                            stack.append((nr, nc))\n    return count\n```",
+      "verdict": "PASS",
+      "execution_detail": "ALL_PASS",
+      "answer_origin": "content",
+      "running_verdict_recheck": "ALL_PASS"
+    },
+    {
+      "task": "median_two_arrays",
+      "title": "Median of Two Sorted Arrays (O(log(n+m)))",
+      "model": "kimi-k3",
+      "latency_s": 23.07,
+      "raw_response": {
+        "id": "chatcmpl-afe2f19d-b13f-9eb2-a94f-c82ffa0f275d",
+        "object": "chat.completion",
+        "created": 1787559742,
+        "model": "kimi-k3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "def find_median_sorted_arrays(a: list[int], b: list[int]) -> float:\n    if len(a) > len(b):\n        a, b = b, a\n\n    m, n = len(a), len(b)\n    total = m + n\n    if total == 0:\n        raise ValueError(\"both arrays are empty\")\n\n    half = (total + 1) // 2\n    lo, hi = 0, m\n\n    while lo <= hi:\n        i = (lo + hi) // 2\n        j = half - i\n\n        a_left = a[i - 1] if i > 0 else float(\"-inf\")\n        a_right = a[i] if i < m else float(\"inf\")\n        b_left = b[j - 1] if j > 0 else float(\"-inf\")\n        b_right = b[j] if j < n else float(\"inf\")\n\n        if a_left <= b_right and b_left <= a_right:\n            if total % 2:\n                return float(max(a_left, b_left))\n            return (max(a_left, b_left) + min(a_right, b_right)) / 2\n\n        if a_left > b_right:\n            hi = i - 1\n        else:\n            lo = i + 1\n\n    raise ValueError(\"input arrays are not sorted\")",
+              "reasoning_content": "We need answer only function. Need craft correct median of two sorted arrays O(log(min)). Output only function, no markdown? User says output ONLY function. Need include imports? Only def. Handle empty lists. Binary search partition smaller array. Python type hints list[int] implies 3.9+. Implement.\n\nNeed ensure code correct:\n\ndef find_median_sorted_arrays(a: list[int], b: list[int]) -> float:\n    if len(a) > len(b):\n        a, b = b, a\n    m, n = len(a), len(b)\n    total = m+n\n    half = (total +1)//2\n    lo, hi = 0, m\n    while lo <= hi:\n        i=(lo+hi)//2\n        j=half-i\n        a_left = a[i-1] if i>0 else float('-inf')\n        a_right = a[i] if i<m else float('inf')\n        b_left = b[j-1] if j>0 else float('-inf')\n        b_right = b[j] if j<n else float('inf')\n        if a_left <= b_right and b_left <= a_right:\n            if total %2:\n                return float(max(a_left,b_left))\n            return (max(a_left,b_left)+min(a_right,b_right))/2\n        if a_left > b_right:\n            hi=i-1\n        else:\n            lo=i+1\n    raise ValueError(\"Input arrays are not sorted\")\n\nNeed consider j bounds: half <=? Since m<=n and half=(total+1)//2. Max j when i=0: half <= n? If m=0,total=n,half=(n+1)//2 <= n for n>=1 yes. Min j when i=m: half-m = (total+1)//2 -m = (n-m+1)//2 >=0 since n>=m. Good.\n\nIf both empty, m=n=0 total=0 half=0, lo=hi=0, i=0 j=0, infinities satisfy, total even returns (max(-inf,-inf)+min(inf,inf))/2 -> nan? (-inf + inf) = nan, /2 nan. Better raise ValueError for no elements maybe. But median undefined. Could include if total==0 raise ValueError. But adding maybe okay. Since function only. We can raise. However tests may not check both empty. Fine.\n\nNeed output only function, no code fence. Ensure no explanation."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 150,
+          "completion_tokens": 819,
+          "total_tokens": 969,
+          "completion_tokens_details": {
+            "reasoning_tokens": 521
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 150,
+        "completion_tokens": 819,
+        "total_tokens": 969,
+        "completion_tokens_details": {
+          "reasoning_tokens": 521
+        }
+      },
+      "generated_code": "def find_median_sorted_arrays(a: list[int], b: list[int]) -> float:\n    if len(a) > len(b):\n        a, b = b, a\n\n    m, n = len(a), len(b)\n    total = m + n\n    if total == 0:\n        raise ValueError(\"both arrays are empty\")\n\n    half = (total + 1) // 2\n    lo, hi = 0, m\n\n    while lo <= hi:\n        i = (lo + hi) // 2\n        j = half - i\n\n        a_left = a[i - 1] if i > 0 else float(\"-inf\")\n        a_right = a[i] if i < m else float(\"inf\")\n        b_left = b[j - 1] if j > 0 else float(\"-inf\")\n        b_right = b[j] if j < n else float(\"inf\")\n\n        if a_left <= b_right and b_left <= a_right:\n            if total % 2:\n                return float(max(a_left, b_left))\n            return (max(a_left, b_left) + min(a_right, b_right)) / 2\n\n        if a_left > b_right:\n            hi = i - 1\n        else:\n            lo = i + 1\n\n    raise ValueError(\"input arrays are not sorted\")",
+      "verdict": "PASS",
+      "execution_detail": "ALL_PASS",
+      "answer_origin": "content",
+      "running_verdict_recheck": "ALL_PASS"
+    },
+    {
+      "task": "reverse_words",
+      "title": "Reverse Words in a String",
+      "model": "kimi-k3",
+      "latency_s": 3.82,
+      "raw_response": {
+        "id": "chatcmpl-2f2e066b17b5b1973d4b041f0",
+        "object": "chat.completion",
+        "created": 1787559766,
+        "model": "kimi-k3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef reverse_words(s: str) -> str:\n    return ' '.join(s.split()[::-1])\n```",
+              "reasoning_content": "The user wants a function that reverses words in a string, handling multiple spaces, with single space separation, no leading/trailing spaces.\n\nSimple solution:\n\n```python\ndef reverse_words(s: str) -> str:\n    return ' '.join(s.split()[::-1])\n```\n\n`s.split()` with no arguments splits on any whitespace and removes empty strings, handling multiple spaces. Then reverse and join with single space.\n\nOutput ONLY the function."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 156,
+          "completion_tokens": 126,
+          "total_tokens": 282,
+          "completion_tokens_details": {
+            "reasoning_tokens": 88
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 156,
+        "completion_tokens": 126,
+        "total_tokens": 282,
+        "completion_tokens_details": {
+          "reasoning_tokens": 88
+        }
+      },
+      "generated_code": "```python\ndef reverse_words(s: str) -> str:\n    return ' '.join(s.split()[::-1])\n```",
+      "verdict": "PASS",
+      "execution_detail": "ALL_PASS",
+      "answer_origin": "content",
+      "running_verdict_recheck": "ALL_PASS"
+    },
+    {
+      "task": "json_escape",
+      "title": "Correct JSON string escaping (subtle)",
+      "model": "kimi-k3",
+      "latency_s": 17.44,
+      "raw_response": {
+        "id": "chatcmpl-6a8bff5b845eec9ee2f91796",
+        "object": "chat.completion",
+        "created": 1787559775,
+        "model": "kimi-k3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef json_escape(s: str) -> str:\n    parts = ['\"']\n    for ch in s:\n        if ch == '\"':\n            parts.append('\\\\\"')\n        elif ch == '\\\\':\n            parts.append('\\\\\\\\')\n        elif ch == '\\n':\n            parts.append('\\\\n')\n        elif ch == '\\t':\n            parts.append('\\\\t')\n        elif ch == '\\r':\n            parts.append('\\\\r')\n        elif ch == '\\b':\n            parts.append('\\\\b')\n        elif ch == '\\f':\n            parts.append('\\\\f')\n        elif ord(ch) < 0x20:\n            parts.append('\\\\u%04x' % ord(ch))\n        else:\n            parts.append(ch)\n    parts.append('\"')\n    return ''.join(parts)\n```",
+              "reasoning_content": "The function needs to escape:\n- `\"` \u2192 `\\\"`\n- `\\` \u2192 `\\\\`\n- `\\n` \u2192 `\\n`\n- `\\t` \u2192 `\\t`\n- `\\r` \u2192 `\\r`\n- `\\b` \u2192 `\\b`\n- `\\f` \u2192 `\\f`\n- control chars < 0x20 \u2192 `\\uXXXX`\n- everything else passes through\n\nReturn the full JSON string literal including surrounding double quotes.\n\nImplementation:\n\n```python\ndef json_escape(s: str) -> str:\n    parts = ['\"']\n    for ch in s:\n        o = ord(ch)\n        if ch == '\"':\n            parts.append('\\\\\"')\n        elif ch == '\\\\':\n            parts.append('\\\\\\\\')\n        elif ch == '\\n':\n            parts.append('\\\\n')\n        elif ch == '\\t':\n            parts.append('\\\\t')\n        elif ch == '\\r':\n            parts.append('\\\\r')\n        elif ch == '\\b':\n            parts.append('\\\\b')\n        elif ch == '\\f':\n            parts.append('\\\\f')\n        elif o < 0x20:\n            parts.append('\\\\u%04x' % o)\n        else:\n            parts.append(ch)\n    parts.append('\"')\n    return ''.join(parts)\n```\n\nOutput only the function."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 190,
+          "completion_tokens": 431,
+          "total_tokens": 621,
+          "completion_tokens_details": {
+            "reasoning_tokens": 258
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 190,
+        "completion_tokens": 431,
+        "total_tokens": 621,
+        "completion_tokens_details": {
+          "reasoning_tokens": 258
+        }
+      },
+      "generated_code": "```python\ndef json_escape(s: str) -> str:\n    parts = ['\"']\n    for ch in s:\n        if ch == '\"':\n            parts.append('\\\\\"')\n        elif ch == '\\\\':\n            parts.append('\\\\\\\\')\n        elif ch == '\\n':\n            parts.append('\\\\n')\n        elif ch == '\\t':\n            parts.append('\\\\t')\n        elif ch == '\\r':\n            parts.append('\\\\r')\n        elif ch == '\\b':\n            parts.append('\\\\b')\n        elif ch == '\\f':\n            parts.append('\\\\f')\n        elif ord(ch) < 0x20:\n            parts.append('\\\\u%04x' % ord(ch))\n        else:\n            parts.append(ch)\n    parts.append('\"')\n    return ''.join(parts)\n```",
+      "verdict": "FAIL",
+      "execution_detail": "EXIT 1\nSTDERR:\nTraceback (most recent call last):\n  File \"/tmp/tmpki2baz5x.py\", line 31, in <module>\n    check('he said \"hi\"')\n  File \"/tmp/tmpki2baz5x.py\", line 30, in check\n    assert json.loads(lit) == s, (lit, s)\n           ^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/share/uv/python/cpython-3.11.16-linux-aarch64-gnu/lib/python3.11/json/__init__.py\", line 346, in loads\n    return _default_decoder.decode(s)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/share/uv/python/cpython-3.11.16-linux-aarch64-gnu/lib/python3.11/json/decoder.py\", line 340, in decode\n    raise JSONDecodeError(\"Extra data\", s, end)\njson.decoder.JSONDecodeError: Extra data: line 1 column 3 (char 2)\n",
+      "answer_origin": "content",
+      "running_verdict_recheck": "EXIT 1\nSTDERR:\nTraceback (most recent call last):\n  File \"/tmp/tmpyca0i37q.py\", line 31, in <module>\n    check('he said \"hi\"')\n  File \"/tmp/tmpyca0i37q.py\", line 30, in check\n    assert json.loads(lit) == s, (lit, s)\n           ^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/share/uv/python/cpython-3.11.16-linux-aarch64-gnu/lib/python3.11/json/__init__.py\", line 346, in loads\n    return _default_decoder.decode(s)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/share/uv/python/cpython-3.11.16-linux-aarch64-gnu/lib/python3.11/json/decoder.py\", line 340, in decode\n    raise JSONDecodeError(\"Extra data\", s, end)\njson.decoder.JSONDecodeError: Extra data: line 1 column 3 (char 2)\n"
+    },
+    {
+      "task": "multi_key_sort",
+      "title": "Multi-key stable sort",
+      "model": "kimi-k3",
+      "latency_s": 15.84,
+      "raw_response": {
+        "id": "chatcmpl-6a8bff6a3f58d027d99ee740",
+        "object": "chat.completion",
+        "created": 1787559795,
+        "model": "kimi-k3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef sort_events(events: list[dict]) -> list[dict]:\n    return sorted(events, key=lambda e: (-e[\"priority\"], e[\"start_time\"], e[\"name\"]))\n```",
+              "reasoning_content": "The user wants a function that sorts event dicts by:\n1. priority DESC (numeric)\n2. start_time ASC (numeric)\n3. name ASC (alphabetical)\n\nAnd it must be stable.\n\nTo sort descending by priority but ascending by the others, I can negate priority for numeric. So the key would be `(-event[\"priority\"], event[\"start_time\"], event[\"name\"])`. Python's sort is stable, so stability is preserved.\n\nAlternatively, do multiple passes: sort by name, then start_time, then priority reverse=True. But the tuple key with negation works since priority is numeric.\n\nOutput only the function."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 156,
+          "completion_tokens": 186,
+          "total_tokens": 342,
+          "completion_tokens_details": {
+            "reasoning_tokens": 130
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 156,
+        "completion_tokens": 186,
+        "total_tokens": 342,
+        "completion_tokens_details": {
+          "reasoning_tokens": 130
+        }
+      },
+      "generated_code": "```python\ndef sort_events(events: list[dict]) -> list[dict]:\n    return sorted(events, key=lambda e: (-e[\"priority\"], e[\"start_time\"], e[\"name\"]))\n```",
+      "verdict": "PASS",
+      "execution_detail": "ALL_PASS",
+      "answer_origin": "content",
+      "running_verdict_recheck": "ALL_PASS"
+    },
+    {
+      "task": "river_crossing",
+      "title": "Logic: river crossing puzzle",
+      "model": "kimi-k3",
+      "latency_s": 9.97,
+      "raw_response": {
+        "id": "chatcmpl-2f2e024d8183ffd3a7112a223",
+        "object": "chat.completion",
+        "created": 1787559803,
+        "model": "kimi-k3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "1. Farmer takes Chicken across\n2. Farmer returns alone\n3. Farmer takes Fox across\n4. Farmer brings Chicken back\n5. Farmer takes Grain across\n6. Farmer returns alone\n7. Farmer takes Chicken across",
+              "reasoning_content": "This is the classic river crossing puzzle. Let me solve it.\n\nInitial state: Left bank has Farmer, Fox, Chicken, Grain. Right bank empty.\n\nRules: Fox eats Chicken if farmer absent; Chicken eats Grain if farmer absent. Boat holds farmer + at most one item.\n\nSolution:\n1. Farmer takes Chicken across. (Left: Fox, Grain \u2014 fox doesn't eat grain, safe)\n2. Farmer returns alone. (Right: Chicken)\n3. Farmer takes Fox across. (Right: Fox, Chicken \u2014 but farmer is there, so safe while present)\n4. Farmer brings Chicken back. (Right: Fox; Left: Chicken, Grain \u2014 farmer present, safe)\n5. Farmer takes Grain across. (Right: Fox, Grain \u2014 safe, fox doesn't eat grain)\n6. Farmer returns alone. (Left: Chicken)\n7. Farmer takes Chicken across. (All across)\n\nThat's the standard 7-move solution. Output only the moves as numbered list."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 194,
+          "completion_tokens": 255,
+          "total_tokens": 449,
+          "completion_tokens_details": {
+            "reasoning_tokens": 196
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 194,
+        "completion_tokens": 255,
+        "total_tokens": 449,
+        "completion_tokens_details": {
+          "reasoning_tokens": 196
+        }
+      },
+      "answer_text": "1. Farmer takes Chicken across\n2. Farmer returns alone\n3. Farmer takes Fox across\n4. Farmer brings Chicken back\n5. Farmer takes Grain across\n6. Farmer returns alone\n7. Farmer takes Chicken across",
+      "verdict": "PASS",
+      "rubric_notes": "rubric: see grader",
+      "answer_origin": "content",
+      "rubric_recheck": "PASS"
+    },
+    {
+      "task": "monty_hall",
+      "title": "Logic: Monty Hall with explicit reasoning",
+      "model": "kimi-k3",
+      "latency_s": 8.77,
+      "raw_response": {
+        "id": "chatcmpl-a961ec2e-f704-909f-add8-2288667f2317",
+        "object": "chat.completion",
+        "created": 1787559812,
+        "model": "kimi-k3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "2/3 \u2014 your first pick was right only 1/3 of the time, and since Monty always reveals an empty door, switching wins in exactly those 2/3 of cases where your initial choice was wrong.",
+              "reasoning_content": "The classic Monty Hall problem. You pick door 1, probability 1/3 of being correct. Monty opens an empty door (he knows where the prize is, and always opens an empty door). Switching wins with probability 2/3.\n\nThe user wants JUST the number and one sentence explaining why. So output: \"2/3\" and one sentence.\n\nOne-sentence why: Your initial pick had a 1/3 chance of being right, and since Monty's reveal gives you information but doesn't change your door's original probability, the remaining unopened door concentrates the other 2/3 probability, so switching wins whenever your first pick was wrong.\n\nKeep it to one sentence. Output just the number and one sentence."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 169,
+          "completion_tokens": 213,
+          "total_tokens": 382,
+          "completion_tokens_details": {
+            "reasoning_tokens": 151
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 169,
+        "completion_tokens": 213,
+        "total_tokens": 382,
+        "completion_tokens_details": {
+          "reasoning_tokens": 151
+        }
+      },
+      "answer_text": "2/3 \u2014 your first pick was right only 1/3 of the time, and since Monty always reveals an empty door, switching wins in exactly those 2/3 of cases where your initial choice was wrong.",
+      "verdict": "PASS",
+      "rubric_notes": "rubric: see grader",
+      "answer_origin": "content",
+      "rubric_recheck": "PASS"
+    },
+    {
+      "task": "sq_sum_formula",
+      "title": "Math: sum of first N squares",
+      "model": "kimi-k3",
+      "latency_s": 10.88,
+      "raw_response": {
+        "id": "chatcmpl-6a8bff8dd9ccd67300ab9b6f",
+        "object": "chat.completion",
+        "created": 1787559823,
+        "model": "kimi-k3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "**Formula:**\n$$1^2 + 2^2 + \\cdots + n^2 = \\frac{n(n+1)(2n+1)}{6}$$\n\n**For n = 100:**\n$$\\frac{100 \\cdot 101 \\cdot 201}{6} = \\frac{2{,}030{,}100}{6} = 338{,}350$$\n\n**Answer:** n(n+1)(2n+1)/6, and for n = 100 it equals **338350**.",
+              "reasoning_content": "The sum of squares formula: 1\u00b2 + 2\u00b2 + ... + n\u00b2 = n(n+1)(2n+1)/6.\n\nFor n = 100: 100 \u00d7 101 \u00d7 201 / 6.\n\nCompute: 100 \u00d7 101 = 10100. 10100 \u00d7 201 = 10100 \u00d7 200 + 10100 = 2,020,000 + 10,100 = 2,030,100. Divide by 6: 2,030,100 / 6 = 338,350.\n\nCheck: 6 \u00d7 338,350 = 2,030,100. Yes.\n\nSo answer: n(n+1)(2n+1)/6, and 338350."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 152,
+          "completion_tokens": 281,
+          "total_tokens": 433,
+          "completion_tokens_details": {
+            "reasoning_tokens": 158
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 152,
+        "completion_tokens": 281,
+        "total_tokens": 433,
+        "completion_tokens_details": {
+          "reasoning_tokens": 158
+        }
+      },
+      "answer_text": "**Formula:**\n$$1^2 + 2^2 + \\cdots + n^2 = \\frac{n(n+1)(2n+1)}{6}$$\n\n**For n = 100:**\n$$\\frac{100 \\cdot 101 \\cdot 201}{6} = \\frac{2{,}030{,}100}{6} = 338{,}350$$\n\n**Answer:** n(n+1)(2n+1)/6, and for n = 100 it equals **338350**.",
+      "verdict": "PASS",
+      "rubric_notes": "rubric: see grader",
+      "answer_origin": "content",
+      "rubric_recheck": "PASS"
+    },
+    {
+      "task": "partial_trap",
+      "title": "Math: partial fractions trap",
+      "model": "kimi-k3",
+      "latency_s": 16.05,
+      "raw_response": {
+        "id": "chatcmpl-6a8bff98db055f04e1a4de53",
+        "object": "chat.completion",
+        "created": 1787559834,
+        "model": "kimi-k3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "## Closed Form\n\nUsing partial fractions:\n$$\\frac{1}{k(k+1)} = \\frac{1}{k} - \\frac{1}{k+1}$$\n\nThe sum telescopes:\n$$\\sum_{k=1}^{n} \\frac{1}{k(k+1)} = \\left(1 - \\frac{1}{2}\\right) + \\left(\\frac{1}{2} - \\frac{1}{3}\\right) + \\cdots + \\left(\\frac{1}{n} - \\frac{1}{n+1}\\right) = 1 - \\frac{1}{n+1} = \\frac{n}{n+1}$$\n\n**Closed form:** $\\displaystyle \\frac{n}{n+1}$\n\n## Limit\n\n$$\\lim_{n \\to \\infty} \\frac{n}{n+1} = 1$$\n\n**Limit:** $1$\n\n## Value at n = 1,000,000\n\n$$\\frac{1{,}000{,}000}{1{,}000{,}001}$$\n\n**Exact value:** $\\displaystyle \\frac{1000000}{1000001}$",
+              "reasoning_content": "The sum is sum_{k=1}^{n} 1/(k(k+1)). Using partial fractions: 1/(k(k+1)) = 1/k - 1/(k+1). Telescoping: sum = 1 - 1/(n+1) = n/(n+1).\n\nLimit as n\u2192\u221e: 1.\n\nFor n = 1,000,000: 1000000/1000001 \u2248 0.999999000000999999... but they want exact: fraction 1000000/1000001, or decimal which would be repeating. Exact fraction is best: 1000000/1000001.\n\nOutput closed form, limit, and the value."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 186,
+          "completion_tokens": 409,
+          "total_tokens": 595,
+          "completion_tokens_details": {
+            "reasoning_tokens": 152
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 186,
+        "completion_tokens": 409,
+        "total_tokens": 595,
+        "completion_tokens_details": {
+          "reasoning_tokens": 152
+        }
+      },
+      "answer_text": "## Closed Form\n\nUsing partial fractions:\n$$\\frac{1}{k(k+1)} = \\frac{1}{k} - \\frac{1}{k+1}$$\n\nThe sum telescopes:\n$$\\sum_{k=1}^{n} \\frac{1}{k(k+1)} = \\left(1 - \\frac{1}{2}\\right) + \\left(\\frac{1}{2} - \\frac{1}{3}\\right) + \\cdots + \\left(\\frac{1}{n} - \\frac{1}{n+1}\\right) = 1 - \\frac{1}{n+1} = \\frac{n}{n+1}$$\n\n**Closed form:** $\\displaystyle \\frac{n}{n+1}$\n\n## Limit\n\n$$\\lim_{n \\to \\infty} \\frac{n}{n+1} = 1$$\n\n**Limit:** $1$\n\n## Value at n = 1,000,000\n\n$$\\frac{1{,}000{,}000}{1{,}000{,}001}$$\n\n**Exact value:** $\\displaystyle \\frac{1000000}{1000001}$",
+      "verdict": "PASS",
+      "rubric_notes": "rubric: see grader",
+      "answer_origin": "content",
+      "rubric_recheck": "PASS"
+    },
+    {
+      "task": "tool_weather_call",
+      "title": "Tool calling: weather lookup",
+      "model": "kimi-k3",
+      "latency_s": 11.32,
+      "raw_response": {
+        "id": "chatcmpl-6a8bffa847731bf377c6d65b",
+        "object": "chat.completion",
+        "created": 1787559852,
+        "model": "kimi-k3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "{\"tool\":\"get_weather\",\"args\":{\"city\":\"Seattle\"}}\n{\"tool\":\"get_time\",\"args\":{\"city\":\"Seattle\"}}\nFINAL: Yes, bring an umbrella \u2014 the forecast for Seattle is rain with a probability of 0.8 (80%). Your briefing time is 10:00.",
+              "reasoning_content": "The user wants me to output tool calls as JSON lines, then a FINAL: answer. The simulated results are given. I should make the two tool calls in order, then produce the final answer referencing rain probability 0.8 and the briefing time 10:00.\n\nI should note that the forecast doesn't explicitly say \"tomorrow\" \u2014 but the user says a correct answer says umbrella yes or acknowledges lack of tomorrow data. The forecast is rain with probability 0.8, so umbrella yes.\n\nFormat:\n{\"tool\":\"get_weather\",\"args\":{\"city\":\"Seattle\"}}\n{\"tool\":\"get_time\",\"args\":{\"city\":\"Seattle\"}}\nFINAL: Yes, bring an umbrella \u2014 there's an 80% chance of rain in Seattle. Your briefing time is 10:00."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 278,
+          "completion_tokens": 241,
+          "total_tokens": 519,
+          "completion_tokens_details": {
+            "reasoning_tokens": 162
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 278,
+        "completion_tokens": 241,
+        "total_tokens": 519,
+        "completion_tokens_details": {
+          "reasoning_tokens": 162
+        }
+      },
+      "answer_text": "{\"tool\":\"get_weather\",\"args\":{\"city\":\"Seattle\"}}\n{\"tool\":\"get_time\",\"args\":{\"city\":\"Seattle\"}}\nFINAL: Yes, bring an umbrella \u2014 the forecast for Seattle is rain with a probability of 0.8 (80%). Your briefing time is 10:00.",
+      "answer_origin": "content",
+      "tool_calls_made": {
+        "weather": true,
+        "time": true
+      },
+      "verdict": "PASS",
+      "tool_recheck": {
+        "weather": true,
+        "time": true
+      }
+    }
+  ]
+}

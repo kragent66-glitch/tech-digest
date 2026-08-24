@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ox Alpha: The Free 1M-Context Mystery Model, Benchmarked With Real Evidence (Deep Dive)</title>
+<meta name="description" content="Ox Alpha (OpenRouter id stealth/ox-alpha ) is an anonymous, free, 1M-context reasoning model that appeared on OpenRouter and the Nous portal around August 20, 2026 with n...">
+<meta name="author" content="Utkarsh Bhangale">
+<link rel="canonical" href="https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-25.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Tech Digest">
+<meta property="og:title" content="Ox Alpha: The Free 1M-Context Mystery Model, Benchmarked With Real Evidence">
+<meta property="og:description" content="Ox Alpha (OpenRouter id stealth/ox-alpha ) is an anonymous, free, 1M-context reasoning model that appeared on OpenRouter and the Nous portal around August 20, 2026 with n...">
+<meta property="og:url" content="https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-25.html">
+<meta property="og:image" content="https://kragent66-glitch.github.io/tech-digest/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ox Alpha: The Free 1M-Context Mystery Model, Benchmarked With Real Evidence (Deep Dive)">
+<meta name="twitter:description" content="Ox Alpha (OpenRouter id stealth/ox-alpha ) is an anonymous, free, 1M-context reasoning model that appeared on OpenRouter and the Nous portal around August 20, 2026 with n...">
+<meta name="twitter:image" content="https://kragent66-glitch.github.io/tech-digest/og-card.png">
+<link rel="alternate" type="application/rss+xml" title="Tech Digest" href="https://kragent66-glitch.github.io/tech-digest/rss.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Ox Alpha: The Free 1M-Context Mystery Model, Benchmarked With Real Evidence", "description": "Ox Alpha (OpenRouter id stealth/ox-alpha ) is an anonymous, free, 1M-context reasoning model that appeared on OpenRouter and the Nous portal around August 20, 2026 with n...", "datePublished": "2026-08-25T19:00:00+05:30", "dateModified": "2026-08-25T19:00:00+05:30", "inLanguage": "en", "articleSection": "Tech Deep Dive", "keywords": "deep dive, technology analysis, AI", "wordCount": 2133, "author": {"@type": "Person", "name": "Utkarsh Bhangale", "url": "https://github.com/kragent66-glitch"}, "publisher": {"@type": "Organization", "name": "Tech Digest", "url": "https://kragent66-glitch.github.io/tech-digest", "logo": {"@type": "ImageObject", "url": "https://kragent66-glitch.github.io/tech-digest/og-card.png"}}, "mainEntityOfPage": "https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-25.html", "image": "https://kragent66-glitch.github.io/tech-digest/og-card.png"}
+{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Tech Digest", "item": "https://kragent66-glitch.github.io/tech-digest/"}, {"@type": "ListItem", "position": 2, "name": "Deep Dives", "item": "https://kragent66-glitch.github.io/tech-digest/deep/index.html"}, {"@type": "ListItem", "position": 3, "name": "Aug 25, 2026", "item": "https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-25.html"}]}
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the key takeaway from Ox Alpha: The Free 1M-Context Mystery Model, Benchmarked With Real Evidence?", "acceptedAnswer": {"@type": "Answer", "text": "Ox Alpha (OpenRouter id `stealth/ox-alpha`) is an anonymous, free, 1M-context reasoning model that appeared on OpenRouter and the Nous portal around August 20, 2026 with no lab listed, no HuggingFace weights, and no official benchmark scores - only a provider named \"Stealth\". It was repeatedly called a frontier coder on the strength of an ~80% score on a 10-task DeepSWE subset, but the same developer later reported a full DeepSWE run at ~63%. This post does what the hype skipped: we ran Ox Alpha and nine other models through one controlled 12-task harness (executed code, not claims), verified the community benchmark numbers against primary sources, and separated our own transparent spot-check from published leaderboard figures so the two are never conflated. Bottom line: on equal footing Ox Alpha posts 11/12, statistically tied with DeepSeek V4 Pro, Kimi K3, GLM-5.3, MiniMax M3 and Qwen 3.8 Max on this set, and every one of those models - including Ox Alpha - failed the same subtle JSON-escape task. Ox Alpha is a strong mid-tier reasoning coder, not the anonymous frontier model the early subset scores implied."}}]}</script>
+</head>
+<body>
+<div id="progress"></div>
+<div class="wrap">
+<header class="article-hero">
+<a class="back" href="../../">Tech Digest</a>
+<span class="eyebrow" style="display:block;margin-top:34px;">Deep Dive - Aug 25, 2026</span>
+<h1>Ox Alpha: The Free 1M-Context Mystery Model, Benchmarked With Real Evidence</h1>
+<div class="byline">
+<span class="by-author">Utkarsh Bhangale</span><span class="by-sep"></span>
+<time datetime="2026-08-25">Aug 25, 2026</time><span class="by-sep"></span>
+<span>11 min read</span><span class="by-sep"></span><span>2,133 words</span>
+</div>
+</header>
+<section class="key-facts" aria-label="Key facts">
+<h2>Key facts</h2>
+<p>Ox Alpha (OpenRouter id `stealth/ox-alpha`) is an anonymous, free, 1M-context reasoning model that appeared on OpenRouter and the Nous portal around August 20, 2026 with no lab listed, no HuggingFace weights, and no official benchmark scores - only a provider named &quot;Stealth&quot;. It was repeatedly called a frontier coder on the strength of an ~80% score on a 10-task DeepSWE subset, but the same developer later reported a full DeepSWE run at ~63%. This post does what the hype skipped: we ran Ox Alpha and nine other models through one controlled 12-task harness (executed code, not claims), verified the community benchmark numbers against primary sources, and separated our own transparent spot-check from published leaderboard figures so the two are never conflated. Bottom line: on equal footing Ox Alpha posts 11/12, statistically tied with DeepSeek V4 Pro, Kimi K3, GLM-5.3, MiniMax M3 and Qwen 3.8 Max on this set, and every one of those models - including Ox Alpha - failed the same subtle JSON-escape task. Ox Alpha is a strong mid-tier reasoning coder, not the anonymous frontier model the early subset scores implied.</p>
+</section>
+<article class="article"><p>Ox Alpha (OpenRouter id <code>stealth/ox-alpha</code>) is an anonymous, free, 1M-context reasoning model that appeared on OpenRouter and the Nous portal around August 20, 2026 with no lab listed, no HuggingFace weights, and no official benchmark scores - only a provider named "Stealth". It was repeatedly called a frontier coder on the strength of an ~80% score on a 10-task DeepSWE subset, but the same developer later reported a full DeepSWE run at ~63%. This post does what the hype skipped: we ran Ox Alpha and nine other models through one controlled 12-task harness (executed code, not claims), verified the community benchmark numbers against primary sources, and separated our own transparent spot-check from published leaderboard figures so the two are never conflated. Bottom line: on equal footing Ox Alpha posts 11/12, statistically tied with DeepSeek V4 Pro, Kimi K3, GLM-5.3, MiniMax M3 and Qwen 3.8 Max on this set, and every one of those models - including Ox Alpha - failed the same subtle JSON-escape task. Ox Alpha is a strong mid-tier reasoning coder, not the anonymous frontier model the early subset scores implied.</p>
+<h2>What Ox Alpha Is</h2>
+<ul>
+<li>Identity: <code>stealth/ox-alpha</code>, canonical slug uses the same id, provider "Stealth" with no organization.</li>
+<li>Context window: 1,048,576 tokens. Max output: 131,072 tokens.</li>
+<li>Modality: text + image + video in, text out.</li>
+<li>Reasoning: mandatory, with an explicit reasoning effort knob (max, high, low) and a default of max.</li>
+<li>Tool calling: supported.</li>
+<li>Cost: $0 during the preview window (pricing prompt 0, completion 0 on both OpenRouter and the Nous portal, which we verified directly via the Nous API).</li>
+<li>Preview window: roughly one week after Aug 20 (sources vary on the exact end date, some cite ~Aug 27, 2026).</li>
+<li>Weights: none published. No HuggingFace id. No architecture disclosure.</li>
+</ul>
+<h2>The Hype vs The Retraction</h2>
+<p>The two headline numbers are real community claims, but both are small-sample and neither is officially published.</p>
+<p>80% on a 10-task DeepSWE subset. Developer Ben Davis reported ~80% on a 10-task subset of DeepSWE, a long-horizon software-engineering benchmark, with reference models in that subset at ~65% (Fable 5) and ~52% (GPT-5.6 Sol). Davis flagged the sample as small enough to carry real variance.</p>
+<p>Then the retraction. On Aug 22 Davis reported the actual full DeepSWE run: ended at ~63%, not the 80% his first subset test got. He clarified the fuller run was done by @winkey_h (DataCurve), described as the actual creator of DeepSWE. On the same thread, another commenter put Ox Alpha "more or less on par with GPT-5.6 Sol mid", while a third (Abe Burnett) said they had not seen Sol-mid performance and compared it to "Terra low" instead.</p>
+<p>87.5% on "Kingbench". A community YouTube run reported Ox Alpha at 70/80 = 87.5%, second behind GLM-5.3 at 91.25%. Kingbench is not a standard benchmark: it has no published, auditable methodology and no independent lab runs it.</p>
+<p>Officially absent. The OpenRouter model page lists no Artificial Analysis scores, no coding index, and no independent benchmark block. Ox Alpha does not appear on the public DeepSWE/BenchSift leaderboard as of late August 2026.</p>
+<p>The honest read: Ox Alpha has no official scores, its most-cited 80% was retracted to ~63% by the same source, and the Kingbench figure is non-standard. Any claim that it tops coding benchmarks is not backed by verifiable evidence.</p>
+<h2>Who Is Behind It (Circumstantial Only)</h2>
+<p>Ox Alpha's maker has made no official statement, and nothing here should be read as confirmed attribution. The strongest circumstantial evidence points at Zhipu AI / Z.ai and an unreleased GLM-5.x variant:</p>
+<ul>
+<li>Ben Davis reported ~99% confidence Ox Alpha is Zhipu's unreleased GLM-5.x.</li>
+<li>Tokenizer fingerprint work: a Chinese-language thread (@MaxForAI) reported that across 25 prompt sets Ox Alpha's raw token counts were nearly identical to GLM-5.3, "each time just 75 extra tokens", which points to a shared tokenizer.</li>
+<li>Serving fingerprint: researcher Chetaslua sent malformed input and reportedly received a Java stack trace containing the internal class path <code>com.wd.paas...</code>, an infrastructure fingerprint associated with Zhipu.</li>
+<li>Zhipu's GLM-5 line is MoE-based, MIT open weights, and 1M context; GLM-5.x cleanly matches Ox Alpha's 1M-context, reasoning-required, multimodal-in profile.</li>
+</ul>
+<p>Counter-signals: at least one observer (Orphis/Anrahya) guessed the opposite direction, "a lab (maybe frontier) has taken GLM 5.2 base and done some magic", noting the cost of serving this for free. We treat all of this as hypothesis, not fact.</p>
+<h2>Our Controlled Eval: 12 Identical Tasks, 10 Models</h2>
+<p>To test Ox Alpha in a way that is reproducible and fair, we built a harness that (1) runs identical prompts and hidden test cases against every model, (2) actually executes generated code in a subprocess and grades it against the hidden tests (not the model's word), and (3) applies the exact same corrected rubric to every model. Plain <code>cargo test</code>-style "it passed" is easy to fake; executed verdicts are not.</p>
+<p>The set: 7 coding tasks (two-sum, LRU cache, number of islands, median of two sorted arrays, reverse words, a subtle JSON-string-escaping task, multi-key stable sort), 4 reasoning tasks (river crossing, Monty Hall, sum-of-squares formula, a partial-fractions telescoping trap), and 1 tool-calling task (weather lookup with JSON tool calls).</p>
+<p>Service notes: Ox Alpha was measured on the Nous portal (the primary measure) and again as <code>ox-alpha-free</code> on the opencode-go gateway (a control). DeepSeek V4 Flash/Pro, Kimi K3, GLM-5.3, MiniMax M3 and Qwen 3.8 Max ran through the opencode-go gateway. step-3.7-flash:free and tencent/hy3:free ran on the Nous portal. Same prompts, same executors, same rubric throughout.</p>
+<h3>Table: pass/fail per task</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Task</th>
+<th style="text-align: center;">OxAlpha</th>
+<th style="text-align: center;">DS V4 Pro</th>
+<th style="text-align: center;">Kimi K3</th>
+<th style="text-align: center;">GLM 5.3</th>
+<th style="text-align: center;">MiniMax M3</th>
+<th style="text-align: center;">Qwen3.8 Max</th>
+<th style="text-align: center;">DS V4 Flash</th>
+<th style="text-align: center;">step-3.7</th>
+<th style="text-align: center;">hy3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>two_sum</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">F</td>
+</tr>
+<tr>
+<td>LRU cache</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+</tr>
+<tr>
+<td>num islands</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+</tr>
+<tr>
+<td>median 2 arrays</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">P</td>
+</tr>
+<tr>
+<td>reverse words</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+</tr>
+<tr>
+<td>JSON escape</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+</tr>
+<tr>
+<td>multi-key sort</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+</tr>
+<tr>
+<td>river crossing</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+</tr>
+<tr>
+<td>Monty Hall</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+</tr>
+<tr>
+<td>sum of squares</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+</tr>
+<tr>
+<td>partial fractions</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+</tr>
+<tr>
+<td>tool weather</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">P</td>
+</tr>
+<tr>
+<td>Total</td>
+<td style="text-align: center;">11/12</td>
+<td style="text-align: center;">11/12</td>
+<td style="text-align: center;">11/12</td>
+<td style="text-align: center;">11/12</td>
+<td style="text-align: center;">11/12</td>
+<td style="text-align: center;">11/12</td>
+<td style="text-align: center;">11/12</td>
+<td style="text-align: center;">10/12</td>
+<td style="text-align: center;">10/12</td>
+</tr>
+</tbody>
+</table></div>
+<p>(Ox Alpha's <code>ox-alpha-free</code> control: 11/12, identical. The one apparent miss there, partial fractions, was a token-budget truncation: the gateway returned an empty final answer after spending its cap on reasoning; with a larger budget it answered correctly. Both ox-alpha endpoints behave the same when given equal room.)</p>
+<h3>What this set actually shows</h3>
+<p>On these 12 tasks every midline-and-up model collapses into a tight 11/12 cluster. The set does not separate frontier coders; it separates one thing: correct JSON string escaping, the single subtle, spec-heavy task that every single model failed. That is a real pattern worth reporting - "frontier" coding chops do not guarantee correctness on fiddly serialization edge cases - but it also means this eval is a coarse screen, not a frontier ranking.</p>
+<p>Ox Alpha's 11/12 ties DeepSeek V4 Pro and Kimi K3 and beats the two smaller Nous free models (10/12 each). It does not out-tie the paid/open mids on this easy-ish set. That is consistent with the community full-DeepSWE result (~63%, a strong-but-not-top coder) and NOT with the inflated 80% subset figure.</p>
+<p>A methodology warning worth stating plainly: we first ran the harness and scored Ox Alpha 8/12, then found three of those "failures" were bugs in our own grader (LaTeX-rendered numbers not matched, a wrong expected value on our side, and case-sensitivity), not Ox Alpha failures. After correcting the rubric to accept valid alternate phrasings, Ox Alpha is 11/12, and the corrected rubric was then applied identically to all ten models. Raw unfixed evidence and the audit trail are archived next to the harness. We disclose this loudly because a rubric that cannot tell a right answer from a wrong one is worth less than a flattering number.</p>
+<h2>Published Leaderboard Scores (Separate Axis)</h2>
+<p>These are third-party published figures for named models, using different benchmarks (SWE-bench+, SWE-bench Verified, Artificial Analysis indices) and different graders than our spot-check. We present them in a separate section on purpose: comparing a 12-task hand-run to a 500-issue SWE-bench run would be apples-to-oranges.</p>
+<p>SWE-bench+ (OpenLM, as of Aug 2026): Claude Opus 5 at 97, DeepSeek V4 Pro at 96.4, GPT-5.6 Sol at 96.2, Grok 4.6 at 95.6, GLM-5.3 at 95.4, Claude Fable 5 at 95, Kimi K3 at 93.4, DeepSeek V4 Flash at 88.8, Claude Opus 4.8 at 88.6, GLM-5.2 at 82.8. Source: openlm.ai/swe-bench.</p>
+<p>SWE-bench Verified (Vals AI independent harness, July 2026): GPT-5.6 Sol at 96.2, Claude Fable 5 at 95.0, Kimi K3 at 93.4. Source: morphllm.com/best-ai-model-for-coding (referencing Vals AI).</p>
+<p>Artificial Analysis Coding Index (Aug 2026): GPT-5.6 Sol (xhigh) leads at 78.3 with Claude Opus 5 (max) at 78.0, close enough to call a tie; DeepSeek V4-Flash 0731 is the price-performance pick. Source: felloai.com/best-ai-models (referencing Artificial Analysis).</p>
+<p>The relevant point for Ox Alpha: it has no entry on any of these. Its 87.5% Kingbench and 80% DeepSWE-subset figures run on non-standard or small samples and were not reproduced on official leaderboards. Until a third party runs Ox Alpha on an audited SWE-bench harness, its true coding standing is measured only by small community runs and evaluations like ours.</p>
+<h2>A Plausible Architecture (Hypothesis, Clearly Labeled)</h2>
+<p>We cannot see Ox Alpha's internals, so this is inference from observable surface plus circumstantial fingerprints, not a claim about its real construction.</p>
+<p>What is observed: 1M context, 131K max output, multimodal input (text/image/video) to text, mandatory reasoning with an effort knob, tool calling, $0 preview, tokenizer labeled "Other", no weights.</p>
+<p>If the Zhipu fingerprints hold (tokenizer near-identical to GLM-5.3; a serving class-path matching Zhipu infra), the underlying model is plausibly from the GLM-5 family: a large Mixture-of-Experts reasoning model. The GLM-5 paper ("GLM-5: from Vibe Coding to Agentic Engineering", arXiv 2602.15763) describes a MoE recipe with per-head matrix orthogonalization (Muon Split) applied to the up-projections, 1M context, and strong agentic coding. That profile lines up with Ox Alpha's 1M context, reasoning-required mode, and tool support.</p>
+<p>Independently of the maker, any 1M-context reasoning model at that profile almost certainly uses some combination of: a sparse Mixture-of-Experts decoder (active experts per token to keep serving cost manageable, which is also what makes a free preview economically plausible), long-context attention built from local/sliding-window attention plus sparsely-activated global attention over the full sequence (plain dense attention over a million tokens at every layer is too expensive), a positional scheme that interpolates or otherwise extends reach, and a vision/video encoder feeding a connector into the language decoder while the output head stays text-only. The reasoning-effort knob is consistent with conditioning the depth of an internal chain-of-thought budget.</p>
+<p>What we explicitly cannot conclude: parameter count, expert layout, exact attention mechanism, training recipe, or maker. All of the above is a hypothesis consistent with the evidence, not a finding.</p>
+<h2>Bottom Line</h2>
+<p>Ox Alpha is a genuinely good, free, 1M-context reasoning coder that clears midline tasks cleanly and ties DeepSeek V4 Pro and Kimi K3 on our controlled 12-task run (11/12). But the narrative around it outran the evidence: the celebrated 80% DeepSWE-subset score was retracted to ~63% on the full run by the same developer, the Kingbench figure is non-standard, and it has no official benchmark entries at all. The strongest circumstantial evidence points to Zhipu and an unreleased GLM-5.x variant, but nobody has confirmed the maker. Treat Ox Alpha as what the evidence shows: a strong mid-tier reasoning model that is free - and treat the frontier-coder headline as hype until a third party runs it on an audited, full-size benchmark.</p>
+<h2>Method And Reproducibility</h2>
+<ul>
+<li>Harness and graders: live in this project's eval_harness.py, self_check_tests.py, and regrade.py (hidden test templates are validated against known-good reference implementations; seven of seven pass).</li>
+<li>Raw per-model responses and per-task verdicts: saved as JSON under evidence/ (<code>*_all.regraded.json</code>).</li>
+<li>Grader audit trail: evidence/_v1_unfixed_harness/ holds the pre-correction run; the corrected rubric is applied identically across all ten models.</li>
+<li>Run date: August 24, 2026. All models served through the gateways named above.</li>
+</ul>
+<h2>Sources</h2>
+<ul>
+<li>OpenRouter model listing and pricing: openrouter.ai/compare/stealth/ox-alpha (verified via API).</li>
+<li>Nous portal model catalog and pricing (verified directly via the Nous API): inference-api.nousresearch.com.</li>
+<li>DeepSWE 80% subset and 63% full-run retraction: Ben Davis on X (x.com/davis7/status/2091285712566140986) quoted in x.com/kimmonismus/status/2091293109673926879; attribution of the full run to @winkey_h of DataCurve (x.com/davis7/status/2091301728276852930).</li>
+<li>Kingbench 87.5% and GLM-5.3 at 91.25%: community YouTube "Ox Alpha (Fully Tested)".</li>
+<li>Tokenizer fingerprint: @MaxForAI on X (x.com/MaxForAI/status/2090606479682519515); Chetaslua serving fingerprint at implicator.ai/ox-alpha-zhipu-glm-tokenizer-match.</li>
+<li>GLM-5 paper: arXiv 2602.15763.</li>
+<li>SWE-bench+ leaderboard: openlm.ai/swe-bench.</li>
+<li>SWE-bench Verified (Vals AI): morphllm.com/best-ai-model-for-coding.</li>
+<li>Artificial Analysis Coding/Intelligence indices: felloai.com/best-ai-models.</li>
+<li>Benchmark-claims analysis (small-sample, unverified): glm5.app/blog/ox-alpha-benchmarks; startupfortune.com.</li>
+</ul></article>
+<nav class="nextprev" aria-label="More">
+<div class="np-block np-prev"><span class="np-label">More Deep Dives</span><a href="https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-24.html">Aug 24, 2026: A Corrupted SQLite Database That Looked Healthy: How a Hermes Agent Lost Its State and Got It Back</a></div>
+<div class="np-block np-next"><span class="np-label">Archive</span><a href="https://kragent66-glitch.github.io/tech-digest/deep/index.html">All deep dives</a></div>
+</nav>
+<footer>
+<div class="row">
+<span><a href="../../">Home</a></span><span><a href="../../rss.xml">RSS</a></span>
+<span>By <a href="https://github.com/kragent66-glitch">Utkarsh Bhangale</a></span><span>All rights reserved</span>
+</div>
+</footer>
+</div>
+<script>
+(function () {
+  var p = document.getElementById('progress'); var tick = false;
+  function paint() { var h = document.documentElement.scrollHeight - window.innerHeight; p.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%'; tick = false; }
+  window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(paint); } }, { passive: true }); paint();
+})();
+</script>
+</body>
+</html>

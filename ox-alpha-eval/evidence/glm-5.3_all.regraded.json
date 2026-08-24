@@ -1,0 +1,624 @@
+{
+  "model": "glm-5.3",
+  "regraded": true,
+  "results": [
+    {
+      "task": "two_sum",
+      "title": "Two Sum (fast path)",
+      "model": "glm-5.3",
+      "latency_s": 9.31,
+      "raw_response": {
+        "id": "20260824162419f647ecd9b2204473",
+        "object": "chat.completion",
+        "created": 1787559867,
+        "model": "glm-5.3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef two_sum(nums: list[int], target: int) -> list[int]:\n    seen = {}\n    for j, num in enumerate(nums):\n        complement = target - num\n        if complement in seen:\n            return [seen[complement], j]\n        seen[num] = j\n    return []\n```",
+              "reasoning_content": "The user wants a two_sum function using a single pass with a dict. Return indices [i, j] with i < j. Return empty list if none found. Output only the function definition.\n\nSingle pass with dict: iterate through nums, for each index j, check if target - nums[j] is in the dict (which stores previously seen values and their indices i). If found, return [i, j]. Since i was stored before j, i < j naturally.\n\nEdge case: what if there are duplicates? The dict approach handles it since we check before inserting.\n\nLet me write it:\n\n```python\ndef two_sum(nums: list[int], target: int) -> list[int]:\n    seen = {}\n    for j, num in enumerate(nums):\n        complement = target - num\n        if complement in seen:\n            return [seen[complement], j]\n        seen[num] = j\n    return []\n```\n\nThis is correct. seen[complement] would be an index stored earlier, so it's less than j. Output only the function."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 100,
+          "completion_tokens": 285,
+          "total_tokens": 385,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 217
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 285,
+        "total_tokens": 385,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 217
+        }
+      },
+      "generated_code": "```python\ndef two_sum(nums: list[int], target: int) -> list[int]:\n    seen = {}\n    for j, num in enumerate(nums):\n        complement = target - num\n        if complement in seen:\n            return [seen[complement], j]\n        seen[num] = j\n    return []\n```",
+      "verdict": "PASS",
+      "execution_detail": "ALL_PASS",
+      "answer_origin": "content",
+      "running_verdict_recheck": "ALL_PASS"
+    },
+    {
+      "task": "lru_cache",
+      "title": "LRU Cache (O(1))",
+      "model": "glm-5.3",
+      "latency_s": 7.62,
+      "raw_response": {
+        "id": "20260824162428c1efa8062ce840d3",
+        "object": "chat.completion",
+        "created": 1787559875,
+        "model": "glm-5.3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "```python\nfrom collections import OrderedDict\n\n\nclass LRUCache:\n    def __init__(self, capacity: int):\n        self.capacity = capacity\n        self.cache = OrderedDict()\n\n    def get(self, key: int) -> int:\n        if key not in self.cache:\n            return -1\n        self.cache.move_to_end(key)\n        return self.cache[key]\n\n    def put(self, key: int, value: int) -> None:\n        if key in self.cache:\n            self.cache.move_to_end(key)\n        self.cache[key] = value\n        if len(self.cache) > self.capacity:\n            self.cache.popitem(last=False)\n```",
+              "reasoning_content": "The user wants an LRU cache implementation in Python with O(1) get and put operations. They explicitly say to output ONLY the class. I'll use OrderedDict which provides O(1) move_to_end and popitem operations.\n\nThe standard implementation:\n\n```python\nfrom collections import OrderedDict\n\n\nclass LRUCache:\n    def __init__(self, capacity: int):\n        self.capacity = capacity\n        self.cache = OrderedDict()\n\n    def get(self, key: int) -> int:\n        if key not in self.cache:\n            return -1\n        self.cache.move_to_end(key)\n        return self.cache[key]\n\n    def put(self, key: int, value: int) -> None:\n        if key in self.cache:\n            self.cache.move_to_end(key)\n        self.cache[key] = value\n        if len(self.cache) > self.capacity:\n            self.cache.popitem(last=False)\n```\n\nThey said \"Output ONLY the class\" \u2014 I need the import statement too, since the class needs OrderedDict. I'll include the import above the class. That's necessary for the code to work. The instruction says output only the class, but the import is required. I'll include the import line minimally."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 104,
+          "completion_tokens": 383,
+          "total_tokens": 487,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 248
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 104,
+        "completion_tokens": 383,
+        "total_tokens": 487,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 248
+        }
+      },
+      "generated_code": "```python\nfrom collections import OrderedDict\n\n\nclass LRUCache:\n    def __init__(self, capacity: int):\n        self.capacity = capacity\n        self.cache = OrderedDict()\n\n    def get(self, key: int) -> int:\n        if key not in self.cache:\n            return -1\n        self.cache.move_to_end(key)\n        return self.cache[key]\n\n    def put(self, key: int, value: int) -> None:\n        if key in self.cache:\n            self.cache.move_to_end(key)\n        self.cache[key] = value\n        if len(self.cache) > self.capacity:\n            self.cache.popitem(last=False)\n```",
+      "verdict": "PASS",
+      "execution_detail": "ALL_PASS",
+      "answer_origin": "content",
+      "running_verdict_recheck": "ALL_PASS"
+    },
+    {
+      "task": "num_islands",
+      "title": "Number of Islands (DFS/BFS)",
+      "model": "glm-5.3",
+      "latency_s": 9.63,
+      "raw_response": {
+        "id": "20260824162436e95342a93a584969",
+        "object": "chat.completion",
+        "created": 1787559884,
+        "model": "glm-5.3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef num_islands(grid: list[list[str]]) -> int:\n    if not grid or not grid[0]:\n        return 0\n    rows, cols = len(grid), len(grid[0])\n    g = [row[:] for row in grid]\n    count = 0\n    for i in range(rows):\n        for j in range(cols):\n            if g[i][j] == '1':\n                count += 1\n                stack = [(i, j)]\n                g[i][j] = '0'\n                while stack:\n                    r, c = stack.pop()\n                    for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):\n                        nr, nc = r + dr, c + dc\n                        if 0 <= nr < rows and 0 <= nc < cols and g[nr][nc] == '1':\n                            g[nr][nc] = '0'\n                            stack.append((nr, nc))\n    return count\n```",
+              "reasoning_content": "The user wants a function `num_islands(grid: list[list[str]]) -> int` that counts connected '1' regions with 4-directional connectivity. They want:\n- Mutate a copy (so the input grid is not modified)\n- Avoid recursion limits on big grids \u2014 so use iterative BFS/DFS with an explicit stack/deque instead of recursion.\n\nOutput ONLY the function. So no explanation, just the code.\n\nLet me write it:\n\n```python\ndef num_islands(grid: list[list[str]]) -> int:\n    if not grid or not grid[0]:\n        return 0\n    rows, cols = len(grid), len(grid[0])\n    g = [row[:] for row in grid]\n    count = 0\n    for i in range(rows):\n        for j in range(cols):\n            if g[i][j] == '1':\n                count += 1\n                stack = [(i, j)]\n                g[i][j] = '0'\n                while stack:\n                    r, c = stack.pop()\n                    for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):\n                        nr, nc = r + dr, c + dc\n                        if 0 <= nr < rows and 0 <= nc < cols and g[nr][nc] == '1':\n                            g[nr][nc] = '0'\n                            stack.append((nr, nc))\n    return count\n```\n\nThat's iterative DFS using a stack, mutating a copy `g`. Handles the big grid case without recursion. Output only the function."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 69,
+          "completion_tokens": 551,
+          "total_tokens": 620,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 334
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 69,
+        "completion_tokens": 551,
+        "total_tokens": 620,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 334
+        }
+      },
+      "generated_code": "```python\ndef num_islands(grid: list[list[str]]) -> int:\n    if not grid or not grid[0]:\n        return 0\n    rows, cols = len(grid), len(grid[0])\n    g = [row[:] for row in grid]\n    count = 0\n    for i in range(rows):\n        for j in range(cols):\n            if g[i][j] == '1':\n                count += 1\n                stack = [(i, j)]\n                g[i][j] = '0'\n                while stack:\n                    r, c = stack.pop()\n                    for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):\n                        nr, nc = r + dr, c + dc\n                        if 0 <= nr < rows and 0 <= nc < cols and g[nr][nc] == '1':\n                            g[nr][nc] = '0'\n                            stack.append((nr, nc))\n    return count\n```",
+      "verdict": "PASS",
+      "execution_detail": "ALL_PASS",
+      "answer_origin": "content",
+      "running_verdict_recheck": "ALL_PASS"
+    },
+    {
+      "task": "median_two_arrays",
+      "title": "Median of Two Sorted Arrays (O(log(n+m)))",
+      "model": "glm-5.3",
+      "latency_s": 11.74,
+      "raw_response": {
+        "id": "20260824162446ebb67169f43149fa",
+        "object": "chat.completion",
+        "created": 1787559896,
+        "model": "glm-5.3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef find_median_sorted_arrays(a: list[int], b: list[int]) -> float:\n    if len(a) > len(b):\n        a, b = b, a\n    m, n = len(a), len(b)\n    total = m + n\n    half = (total + 1) // 2\n    lo, hi = 0, m\n    while lo <= hi:\n        i = (lo + hi) // 2\n        j = half - i\n        a_left = a[i - 1] if i > 0 else float(\"-inf\")\n        a_right = a[i] if i < m else float(\"inf\")\n        b_left = b[j - 1] if j > 0 else float(\"-inf\")\n        b_right = b[j] if j < n else float(\"inf\")\n        if a_left <= b_right and b_left <= a_right:\n            if total % 2:\n                return float(max(a_left, b_left))\n            return float((max(a_left, b_left) + min(a_right, b_right)) / 2)\n        if a_left > b_right:\n            hi = i - 1\n        else:\n            lo = i + 1\n    raise ValueError(\"input arrays must be sorted\")\n```",
+              "reasoning_content": "The user wants the classic \"median of two sorted arrays\" solution in O(log(n+m)) using binary search on the smaller array. Output only the function.\n\nStandard approach: partition the smaller array, compute corresponding partition in the larger, check max of left parts <= min of right parts.\n\nLet me write it carefully:\n\n```python\ndef find_median_sorted_arrays(a: list[int], b: list[int]) -> float:\n    if len(a) > len(b):\n        a, b = b, a\n    m, n = len(a), len(b)\n    total = m + n\n    half = (total + 1) // 2\n    lo, hi = 0, m\n    while lo <= hi:\n        i = (lo + hi) // 2\n        j = half - i\n        a_left = a[i - 1] if i > 0 else float(\"-inf\")\n        a_right = a[i] if i < m else float(\"inf\")\n        b_left = b[j - 1] if j > 0 else float(\"-inf\")\n        b_right = b[j] if j < n else float(\"inf\")\n        if a_left <= b_right and b_left <= a_right:\n            if total % 2:\n                return float(max(a_left, b_left))\n            return float((max(a_left, b_left) + min(a_right, b_right)) / 2)\n        if a_left > b_right:\n            hi = i - 1\n        else:\n            lo = i + 1\n    raise ValueError(\"inputs must be sorted arrays\")\n```\n\nEdge cases: j = half - i must be between 0 and n. Since a is the smaller, i in [0, m], j = half - i. half = (m+n+1)//2. When i = 0, j = half \u2264 n? half \u2264 n iff (m+n+1)//2 \u2264 n, true since m \u2264 n. When i = m, j = half - m = (m+n+1)//2 - m \u2265 0 since n \u2265 m. Fine.\n\nReturn float type per signature. Division gives float already, but wrapping in float() is safe.\n\nOutput only the function."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 66,
+          "completion_tokens": 736,
+          "total_tokens": 802,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 465
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 66,
+        "completion_tokens": 736,
+        "total_tokens": 802,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 465
+        }
+      },
+      "generated_code": "```python\ndef find_median_sorted_arrays(a: list[int], b: list[int]) -> float:\n    if len(a) > len(b):\n        a, b = b, a\n    m, n = len(a), len(b)\n    total = m + n\n    half = (total + 1) // 2\n    lo, hi = 0, m\n    while lo <= hi:\n        i = (lo + hi) // 2\n        j = half - i\n        a_left = a[i - 1] if i > 0 else float(\"-inf\")\n        a_right = a[i] if i < m else float(\"inf\")\n        b_left = b[j - 1] if j > 0 else float(\"-inf\")\n        b_right = b[j] if j < n else float(\"inf\")\n        if a_left <= b_right and b_left <= a_right:\n            if total % 2:\n                return float(max(a_left, b_left))\n            return float((max(a_left, b_left) + min(a_right, b_right)) / 2)\n        if a_left > b_right:\n            hi = i - 1\n        else:\n            lo = i + 1\n    raise ValueError(\"input arrays must be sorted\")\n```",
+      "verdict": "PASS",
+      "execution_detail": "ALL_PASS",
+      "answer_origin": "content",
+      "running_verdict_recheck": "ALL_PASS"
+    },
+    {
+      "task": "reverse_words",
+      "title": "Reverse Words in a String",
+      "model": "glm-5.3",
+      "latency_s": 4.76,
+      "raw_response": {
+        "id": "20260824162457ec6a0122831c4595",
+        "object": "chat.completion",
+        "created": 1787559901,
+        "model": "glm-5.3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef reverse_words(s: str) -> str:\n    return ' '.join(reversed(s.split()))\n```",
+              "reasoning_content": "The user wants a function that reverses word order in a string, handling multiple spaces, with single space separation and no leading/trailing spaces. Simple: split, reverse, join.\n\nOutput only the function."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 73,
+          "completion_tokens": 68,
+          "total_tokens": 141,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 42
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 73,
+        "completion_tokens": 68,
+        "total_tokens": 141,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 42
+        }
+      },
+      "generated_code": "```python\ndef reverse_words(s: str) -> str:\n    return ' '.join(reversed(s.split()))\n```",
+      "verdict": "PASS",
+      "execution_detail": "ALL_PASS",
+      "answer_origin": "content",
+      "running_verdict_recheck": "ALL_PASS"
+    },
+    {
+      "task": "json_escape",
+      "title": "Correct JSON string escaping (subtle)",
+      "model": "glm-5.3",
+      "latency_s": 7.85,
+      "raw_response": {
+        "id": "20260824162502e1e15b8f69c04e2c",
+        "object": "chat.completion",
+        "created": 1787559909,
+        "model": "glm-5.3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef json_escape(s: str) -> str:\n    special = {\n        '\"': '\\\\\"',\n        '\\\\': '\\\\\\\\',\n        '\\n': '\\\\n',\n        '\\t': '\\\\t',\n        '\\r': '\\\\r',\n        '\\b': '\\\\b',\n        '\\f': '\\\\f',\n    }\n    parts = ['\"']\n    for ch in s:\n        if ch in special:\n            parts.append(special[ch])\n        elif ord(ch) < 0x20:\n            parts.append('\\\\u%04x' % ord(ch))\n        else:\n            parts.append(ch)\n    parts.append('\"')\n    return ''.join(parts)\n```",
+              "reasoning_content": "The user wants a function that escapes a string for JSON. Requirements:\n- Double quotes \u2192 \\\"\n- Backslash \u2192 \\\\\n- Newline \u2192 \\n\n- Tab \u2192 \\t\n- Carriage return \u2192 \\r\n- Backspace \u2192 \\b\n- Form feed \u2192 \\f\n- Other control chars < 0x20 \u2192 \\uXXXX\n- Other unicode passes through\n- Do not use json.dumps\n- Output only the function.\n\nShould include the quotes around the string? \"returns a valid JSON string literal for s\" \u2014 a string literal includes the surrounding quotes. So return '\"' + escaped + '\"'.\n\nLet me write it cleanly.\n\ndef json_escape(s: str) -> str:\n    escapes = {\n        '\"': '\\\\\"',\n        '\\\\': '\\\\\\\\',\n        '\\n': '\\\\n',\n        '\\t': '\\\\t',\n        '\\r': '\\\\r',\n        '\\b': '\\\\b',\n        '\\f': '\\\\f',\n    }\n    out = ['\"']\n    for ch in s:\n        if ch in escapes:\n            out.append(escapes[ch])\n        elif ord(ch) < 0x20:\n            out.append('\\\\u%04x' % ord(ch))\n        else:\n            out.append(ch)\n    out.append('\"')\n    return ''.join(out)\n\nThat's it. Output only the function."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 107,
+          "completion_tokens": 412,
+          "total_tokens": 519,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 275
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 107,
+        "completion_tokens": 412,
+        "total_tokens": 519,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 275
+        }
+      },
+      "generated_code": "```python\ndef json_escape(s: str) -> str:\n    special = {\n        '\"': '\\\\\"',\n        '\\\\': '\\\\\\\\',\n        '\\n': '\\\\n',\n        '\\t': '\\\\t',\n        '\\r': '\\\\r',\n        '\\b': '\\\\b',\n        '\\f': '\\\\f',\n    }\n    parts = ['\"']\n    for ch in s:\n        if ch in special:\n            parts.append(special[ch])\n        elif ord(ch) < 0x20:\n            parts.append('\\\\u%04x' % ord(ch))\n        else:\n            parts.append(ch)\n    parts.append('\"')\n    return ''.join(parts)\n```",
+      "verdict": "FAIL",
+      "execution_detail": "EXIT 1\nSTDERR:\nTraceback (most recent call last):\n  File \"/tmp/tmptiythej7.py\", line 28, in <module>\n    check('he said \"hi\"')\n  File \"/tmp/tmptiythej7.py\", line 27, in check\n    assert json.loads(lit) == s, (lit, s)\n           ^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/share/uv/python/cpython-3.11.16-linux-aarch64-gnu/lib/python3.11/json/__init__.py\", line 346, in loads\n    return _default_decoder.decode(s)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/share/uv/python/cpython-3.11.16-linux-aarch64-gnu/lib/python3.11/json/decoder.py\", line 340, in decode\n    raise JSONDecodeError(\"Extra data\", s, end)\njson.decoder.JSONDecodeError: Extra data: line 1 column 3 (char 2)\n",
+      "answer_origin": "content",
+      "running_verdict_recheck": "EXIT 1\nSTDERR:\nTraceback (most recent call last):\n  File \"/tmp/tmp31vu3fuv.py\", line 28, in <module>\n    check('he said \"hi\"')\n  File \"/tmp/tmp31vu3fuv.py\", line 27, in check\n    assert json.loads(lit) == s, (lit, s)\n           ^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/share/uv/python/cpython-3.11.16-linux-aarch64-gnu/lib/python3.11/json/__init__.py\", line 346, in loads\n    return _default_decoder.decode(s)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/share/uv/python/cpython-3.11.16-linux-aarch64-gnu/lib/python3.11/json/decoder.py\", line 340, in decode\n    raise JSONDecodeError(\"Extra data\", s, end)\njson.decoder.JSONDecodeError: Extra data: line 1 column 3 (char 2)\n"
+    },
+    {
+      "task": "multi_key_sort",
+      "title": "Multi-key stable sort",
+      "model": "glm-5.3",
+      "latency_s": 18.87,
+      "raw_response": {
+        "id": "20260824162510593ad17f41a54722",
+        "object": "chat.completion",
+        "created": 1787559928,
+        "model": "glm-5.3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef sort_events(events: list[dict]) -> list[dict]:\n    return sorted(\n        events,\n        key=lambda e: (\n            -e[\"priority\"],\n            e[\"start_time\"],\n            e[\"name\"],\n        ),\n    )\n```",
+              "reasoning_content": "Let me parse the requirement:\n\n- Sort by:\n  1. priority: DESC numeric (higher priority first). Priority is a number.\n  2. start_time: ASC numeric (smaller first).\n  3. name: ASC alphabetical (A-Z).\n- Stable sort: Python's `sorted` is stable, so we can use a single key with a tuple.\n\nPriority DESC numeric: use `-priority`. But if priority might be a non-numeric? The spec says \"priority DESC numeric\", implying numeric priority. Use `-e[\"priority\"]` for descending. Alternatively, reverse via `-`.\n\nStart time ASC numeric: `e[\"start_time\"]` \u2014 but start_time might be a number (e.g., timestamp) or numeric string? The spec says \"start_time ASC numeric\", implying numeric values. Use `e[\"start_time\"]` as-is. But maybe safer to coerce? The spec says numeric, so keep as numeric. Hmm, but \"ASC numeric\" means ascending by numeric value. So just the raw value.\n\nName ASC alphabetical: string, so `e[\"name\"]` ascending. \"ASC alphabetical\" \u2014 case-sensitive? \"Alphabetical\" often implies case-insensitive, but for simplicity, case-sensitive lexicographic ascending is typical. Given it says \"name ASC alphabetical\", I'll just use the name string directly ascending. To keep it simple and deterministic, I'll do `e[\"name\"]`.\n\nWait, but should I make priority descending via `-priority`? That works for numbers. Priority DESC numeric means higher number = higher priority = first. `-priority` gives that.\n\nStable: Python's `sorted` is stable. Using a single composite key preserves stability (ties keep original order).\n\nImplementation:\n\n```python\ndef sort_events(events: list[dict]) -> list[dict]:\n    return sorted(\n        events,\n        key=lambda e: (\n            -e[\"priority\"],\n            e[\"start_time\"],\n            e[\"name\"],\n        ),\n    )\n```\n\nShould I coerce numbers? The spec says numeric for both priority and start_time, so no coercion needed. But what if they're stored as strings? The spec says \"numeric\" which likely describes the values as numbers. Keep it clean.\n\nOne consideration: for descending numeric, using `-e[\"priority\"]` requires priority to be numeric. Fine.\n\nAlternatively, to be safe with possible string numerics, could use `float(e[\"priority\"])`. But I'll stick with the raw values since spec says numeric.\n\nThe user says \"Output ONLY the function\", so just the def block, no explanation."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 73,
+          "completion_tokens": 583,
+          "total_tokens": 656,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 529
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 73,
+        "completion_tokens": 583,
+        "total_tokens": 656,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 529
+        }
+      },
+      "generated_code": "```python\ndef sort_events(events: list[dict]) -> list[dict]:\n    return sorted(\n        events,\n        key=lambda e: (\n            -e[\"priority\"],\n            e[\"start_time\"],\n            e[\"name\"],\n        ),\n    )\n```",
+      "verdict": "PASS",
+      "execution_detail": "ALL_PASS",
+      "answer_origin": "content",
+      "running_verdict_recheck": "ALL_PASS"
+    },
+    {
+      "task": "river_crossing",
+      "title": "Logic: river crossing puzzle",
+      "model": "glm-5.3",
+      "latency_s": 5.02,
+      "raw_response": {
+        "id": "20260824162529f131be0a118b4af8",
+        "object": "chat.completion",
+        "created": 1787559933,
+        "model": "glm-5.3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "1. Farmer takes chicken across\n2. Farmer returns alone\n3. Farmer takes fox across\n4. Farmer brings chicken back\n5. Farmer takes grain across\n6. Farmer returns alone\n7. Farmer takes chicken across",
+              "reasoning_content": "The classic river crossing puzzle: farmer, fox, chicken, grain. Boat holds farmer plus one item. Constraints: fox eats chicken if unsupervised; chicken eats grain if unsupervised.\n\nStandard solution:\n1. Farmer takes chicken across.\n2. Farmer returns alone.\n3. Farmer takes fox across.\n4. Farmer brings chicken back.\n5. Farmer takes grain across.\n6. Farmer returns alone.\n7. Farmer takes chicken across.\n\nOutput only the numbered moves."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 111,
+          "completion_tokens": 143,
+          "total_tokens": 254,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 95
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 111,
+        "completion_tokens": 143,
+        "total_tokens": 254,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 95
+        }
+      },
+      "answer_text": "1. Farmer takes chicken across\n2. Farmer returns alone\n3. Farmer takes fox across\n4. Farmer brings chicken back\n5. Farmer takes grain across\n6. Farmer returns alone\n7. Farmer takes chicken across",
+      "verdict": "PASS",
+      "rubric_notes": "rubric: see grader",
+      "answer_origin": "content",
+      "rubric_recheck": "PASS"
+    },
+    {
+      "task": "monty_hall",
+      "title": "Logic: Monty Hall with explicit reasoning",
+      "model": "glm-5.3",
+      "latency_s": 5.3,
+      "raw_response": {
+        "id": "202608241625340af4d20a6fe74aa3",
+        "object": "chat.completion",
+        "created": 1787559938,
+        "model": "glm-5.3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "2/3 \u2014 Your initial pick wins with probability 1/3, and Monty's reveal of an empty door (which he must always do among the other two) concentrates the remaining 2/3 probability entirely on the unopened door you'd switch to.",
+              "reasoning_content": "The Monty Hall problem. Classic answer: switch gives 2/3 probability of winning.\n\nThe user wants JUST the number and one sentence. So output: 2/3 (or ~0.6667) plus a one-sentence explanation.\n\nThe reasoning: your initial pick has 1/3 chance; Monty's reveal of an empty door doesn't change that, so the remaining door carries the full 2/3 probability.\n\nFormat: just the number and one sentence. Keep it minimal."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 86,
+          "completion_tokens": 160,
+          "total_tokens": 246,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 104
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 86,
+        "completion_tokens": 160,
+        "total_tokens": 246,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 104
+        }
+      },
+      "answer_text": "2/3 \u2014 Your initial pick wins with probability 1/3, and Monty's reveal of an empty door (which he must always do among the other two) concentrates the remaining 2/3 probability entirely on the unopened door you'd switch to.",
+      "verdict": "PASS",
+      "rubric_notes": "rubric: see grader",
+      "answer_origin": "content",
+      "rubric_recheck": "PASS"
+    },
+    {
+      "task": "sq_sum_formula",
+      "title": "Math: sum of first N squares",
+      "model": "glm-5.3",
+      "latency_s": 8.5,
+      "raw_response": {
+        "id": "202608241625394808e8ec19604fe5",
+        "object": "chat.completion",
+        "created": 1787559947,
+        "model": "glm-5.3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "## Formula\n\n$$\\sum_{k=1}^{n} k^2 = 1^2 + 2^2 + \\cdots + n^2 = \\frac{n(n+1)(2n+1)}{6}$$\n\n## Value at n = 100\n\n$$\\frac{100 \\cdot 101 \\cdot 201}{6} = \\frac{2{,}030{,}100}{6} = \\boxed{338{,}350}$$\n\n**Verification of the arithmetic:**\n- 100 \u00d7 101 = 10,100\n- 10,100 \u00d7 201 = 2,030,100\n- 2,030,100 \u00f7 6 = 338,350 \u2713\n\nA quick sanity check: the sum should be roughly n\u00b3/3 \u2248 100\u00b3/3 \u2248 333,333, and 338,350 is close to this, as expected from the asymptotic behavior.",
+              "reasoning_content": "The user asks for the closed-form formula for the sum of squares: 1\u00b2 + 2\u00b2 + ... + n\u00b2.\n\nThe formula is n(n+1)(2n+1)/6.\n\nFor n = 100: 100 \u00d7 101 \u00d7 201 / 6.\n\nCompute: 100 \u00d7 101 = 10100. 10100 \u00d7 201 = 10100 \u00d7 200 + 10100 = 2,020,000 + 10,100 = 2,030,100. Divide by 6: 2,030,100 / 6 = 338,350.\n\nCheck: 6 \u00d7 338,350 = 2,030,100. Yes.\n\nSo answer: n(n+1)(2n+1)/6, and 338,350."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 69,
+          "completion_tokens": 388,
+          "total_tokens": 457,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 176
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 69,
+        "completion_tokens": 388,
+        "total_tokens": 457,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 176
+        }
+      },
+      "answer_text": "## Formula\n\n$$\\sum_{k=1}^{n} k^2 = 1^2 + 2^2 + \\cdots + n^2 = \\frac{n(n+1)(2n+1)}{6}$$\n\n## Value at n = 100\n\n$$\\frac{100 \\cdot 101 \\cdot 201}{6} = \\frac{2{,}030{,}100}{6} = \\boxed{338{,}350}$$\n\n**Verification of the arithmetic:**\n- 100 \u00d7 101 = 10,100\n- 10,100 \u00d7 201 = 2,030,100\n- 2,030,100 \u00f7 6 = 338,350 \u2713\n\nA quick sanity check: the sum should be roughly n\u00b3/3 \u2248 100\u00b3/3 \u2248 333,333, and 338,350 is close to this, as expected from the asymptotic behavior.",
+      "verdict": "PASS",
+      "rubric_notes": "rubric: see grader",
+      "answer_origin": "content",
+      "rubric_recheck": "PASS"
+    },
+    {
+      "task": "partial_trap",
+      "title": "Math: partial fractions trap",
+      "model": "glm-5.3",
+      "latency_s": 34.55,
+      "raw_response": {
+        "id": "2026082416254896cbfdb7ce2a45ed",
+        "object": "chat.completion",
+        "created": 1787559981,
+        "model": "glm-5.3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "## Derivation (telescoping)\n\nDecompose with partial fractions:\n\n$$\\frac{1}{k(k+1)} = \\frac{1}{k} - \\frac{1}{k+1}$$\n\nThen the sum telescopes \u2014 each term cancels with the next:\n\n$$\\sum_{k=1}^{n}\\left(\\frac{1}{k} - \\frac{1}{k+1}\\right) = \\left(1 - \\tfrac{1}{2}\\right) + \\left(\\tfrac{1}{2} - \\tfrac{1}{3}\\right) + \\cdots + \\left(\\tfrac{1}{n} - \\tfrac{1}{n+1}\\right)$$\n\nAll intermediate terms cancel, leaving:\n\n## 1. Closed form\n\n$$\\sum_{k=1}^{n} \\frac{1}{k(k+1)} = 1 - \\frac{1}{n+1} = \\frac{n}{n+1}$$\n\n## 2. Limit as n \u2192 \u221e\n\n$$\\lim_{n\\to\\infty} \\frac{n}{n+1} = 1$$\n\n## 3. Value at n = 1,000,000\n\n$$\\frac{1000000}{1000001}$$\n\nAs an **exact** decimal, this is a purely repeating decimal with period 12:\n\n$$\\frac{1000000}{1000001} = 0.\\overline{999999000000}$$\n\n(the overbar marks the infinitely repeating block \"999999000000\"). This follows from the geometric series $\\frac{10^6}{10^6+1} = 1 - 10^{-6} + 10^{-12} - \\cdots$\n\nCheck of the repeating form: $\\dfrac{999999000000}{999999999999} = \\dfrac{1000000}{1000001}$ \u2713\n\nSo the sum is exactly $\\frac{10^6}{10^6+1}$ \u2014 it falls short of 1 by exactly $\\frac{1}{1000001} = 0.\\overline{000000999999}$.",
+              "reasoning_content": "We need to evaluate the telescoping sum $\\sum_{k=1}^{n} \\frac{1}{k(k+1)}$.\n\nPartial fractions: $\\frac{1}{k(k+1)} = \\frac{1}{k} - \\frac{1}{k+1}$.\n\nThe sum telescopes:\n$\\sum_{k=1}^{n} \\left(\\frac{1}{k} - \\frac{1}{k+1}\\right) = 1 - \\frac{1}{n+1} = \\frac{n}{n+1}$.\n\nLimit as $n \\to \\infty$: $1$.\n\nFor $n = 1{,}000{,}000$: $\\frac{1000000}{1000001} = 1 - \\frac{1}{1000001}$.\n\nThe user wants the exact value as a fraction or decimal, not an approximation with '...'. A fraction is exact: $\\frac{1000000}{1000001}$. If decimal, we'd need all digits \u2014 $1/1000001$ is a repeating decimal with a long period. Actually $1/1000001$... Let's check: $1000001 = 101 \\times 9901$. Hmm, $101 \\times 9901 = 101 \\times 9901$. $101 \\times 9901 = 101 \\times 10000 - 101 \\times 99 = 1010000 - 9999 = 1000001$. Yes. And $9901 = 99^2 + 100$? Actually $9901 = 7 \\times 1414.43...$; let's factor: $9901 = 99 \\times 100 + 1$. $9901 / 7 = 1414.43$, no. $9901 / 11 = 900.09$, no. $9901 / 13 = 761.6$, no. $9901 / 17 = 582.4$, no. $9901 / 19 = 521.1$, no. $9901 / 23 = 430.5$, no. $9901 / 29 = 341.4$, no. $9901 / 31 = 319.4$, no. $9901 / 37 = 267.6$, no. $9901 / 41 = 241.5$, no. $9901 / 43 = 230.3$, no. $9901 / 47 = 210.7$, no. $9901 / 53 = 186.8$, no. $9901 / 59 = 167.8$, no. $9901 / 61 = 162.3$, no. $9901 / 67 = 147.8$, no. $9901 / 71 = 139.4$, no. $9901 / 73 = 135.6$, no. $9901 / 79 = 125.3$, no. $9901 / 83 = 119.3$, no. $9901 / 89 = 111.2$, no. $9901 / 97 = 102.07$, no. $99^2 = 9801 < 9901 < 100^2 = 10000$, so 9901 is prime. So $1000001 = 101 \\times 9901$.\n\nThe decimal expansion of $1000000/1000001 = 1 - 10^{-6}/1.000001 = ...$. Actually $\\frac{1000000}{1000001} = \\frac{1}{1 + 10^{-6}} \\cdot$ ... wait: $\\frac{10^6}{10^6 + 1} = \\frac{1}{1 + 10^{-6}}$. Hmm, $1/(1+x) = 1 - x + x^2 - x^3 + \\cdots$ with $x = 10^{-6}$. So $\\frac{1000000}{1000001} = 1 - 10^{-6} + 10^{-12} - 10^{-18} + \\cdots$.\n\nSo the decimal is $0.999999000000999999000000999999\\ldots$ repeating with period 12: \"999999000000\" repeating. Let me verify: $1 - 10^{-6} = 0.999999$. Adding $10^{-12}$ gives $0.999999000001$. Subtracting $10^{-18}$ gives $0.999999000000999999$. Yes, so decimal expansion is $0.\\overline{999999000000}$ \u2014 repeating block \"999999000000\" of length 12.\n\nCheck: $\\frac{999999000000}{999999999999}$. Does that equal $\\frac{1000000}{1000001}$? Cross multiply: $999999000000 \\times 1000001 = 999999000000 \\times 10^6 + 999999000000 = 999999000000000000 + 999999000000 = 999999999999000000$. And $999999999999 \\times 1000000 = 999999999999000000$. Yes! Equal. \n\nBut wait, is this the standard repeating decimal? $0.\\overline{999999000000}$ \u2014 is that in lowest terms as a period? The period of $\\frac{1}{1000001}$: order of 10 modulo 1000001. Since $1/1000001 = \\frac{999999}{999999999999}$... hmm, $1/1000001$: multiply numerator and denominator: $\\frac{1}{1000001} = \\frac{999999}{999999 \\times 1000001} = \\frac{999999}{999999999999}$... wait, $999999 \\times 1000001 = 999999 \\times 10^6 + 999999 = 999999000000 + 999999 = 999999999999$. Yes! So $\\frac{1}{1000001} = \\frac{999999}{999999999999}$, which as a repeating decimal is $0.\\overline{000000999999}$ \u2014 repeating block \"000000999999\". Indeed $1/1000001 = 0.000000999999000000999999\\ldots$. And $\\frac{1000000}{1000001} = 1 - \\frac{1}{1000001} = 0.999999000000999999000000\\ldots = 0.\\overline{999999000000}$.\n\nSo exact decimal: $0.\\overline{999999000000}$ (period 12).\n\nThe user asks: \"give the exact value as a fraction or decimal, not an approximation with '...'\" \u2014 so fraction $1000000/1000001$ suffices; I can also give the exact repeating decimal notation $0.\\overline{999999000000}$, noting that the overbar indicates the repeating block, which is exact notation.\n\nLet me present:\n\nClosed form: $\\sum_{k=1}^{n} \\frac{1}{k(k+1)} = \\frac{n}{n+1}$.\n\nLimit: $1$.\n\n$n = 10^6$: $\\frac{1000000}{1000001} = 0.\\overline{999999000000}$.\n\nDerivation: partial fractions, telescoping.\n\nI should show the derivation briefly. Format: use headers or just a clean structured answer. Moderate length. Use math formatting."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 104,
+          "completion_tokens": 2114,
+          "total_tokens": 2218,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 1649
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 104,
+        "completion_tokens": 2114,
+        "total_tokens": 2218,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1649
+        }
+      },
+      "answer_text": "## Derivation (telescoping)\n\nDecompose with partial fractions:\n\n$$\\frac{1}{k(k+1)} = \\frac{1}{k} - \\frac{1}{k+1}$$\n\nThen the sum telescopes \u2014 each term cancels with the next:\n\n$$\\sum_{k=1}^{n}\\left(\\frac{1}{k} - \\frac{1}{k+1}\\right) = \\left(1 - \\tfrac{1}{2}\\right) + \\left(\\tfrac{1}{2} - \\tfrac{1}{3}\\right) + \\cdots + \\left(\\tfrac{1}{n} - \\tfrac{1}{n+1}\\right)$$\n\nAll intermediate terms cancel, leaving:\n\n## 1. Closed form\n\n$$\\sum_{k=1}^{n} \\frac{1}{k(k+1)} = 1 - \\frac{1}{n+1} = \\frac{n}{n+1}$$\n\n## 2. Limit as n \u2192 \u221e\n\n$$\\lim_{n\\to\\infty} \\frac{n}{n+1} = 1$$\n\n## 3. Value at n = 1,000,000\n\n$$\\frac{1000000}{1000001}$$\n\nAs an **exact** decimal, this is a purely repeating decimal with period 12:\n\n$$\\frac{1000000}{1000001} = 0.\\overline{999999000000}$$\n\n(the overbar marks the infinitely repeating block \"999999000000\"). This follows from the geometric series $\\frac{10^6}{10^6+1} = 1 - 10^{-6} + 10^{-12} - \\cdots$\n\nCheck of the repeating form: $\\dfrac{999999000000}{999999999999} = \\dfrac{1000000}{1000001}$ \u2713\n\nSo the sum is exactly $\\frac{10^6}{10^6+1}$ \u2014 it falls short of 1 by exactly $\\frac{1}{1000001} = 0.\\overline{000000999999}$.",
+      "verdict": "PASS",
+      "rubric_notes": "rubric: see grader",
+      "answer_origin": "content",
+      "rubric_recheck": "PASS"
+    },
+    {
+      "task": "tool_weather_call",
+      "title": "Tool calling: weather lookup",
+      "model": "glm-5.3",
+      "latency_s": 7.77,
+      "raw_response": {
+        "id": "20260824162622dd0a2cd025db4d88",
+        "object": "chat.completion",
+        "created": 1787559989,
+        "model": "glm-5.3",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "{\"tool\":\"get_weather\",\"args\":{\"city\":\"Seattle\"}}\n{\"tool\":\"get_time\",\"args\":{\"city\":\"Seattle\"}}\n\nFINAL: Yes, you should bring an umbrella in Seattle \u2014 the forecast shows rain with an 80% probability (0.8), and the briefing time is 10:00.",
+              "reasoning_content": "The user wants me to demonstrate making two tool calls in order: get_weather for Seattle and get_time for Seattle, then give a final answer. The simulated results are provided: rain with probability 0.8, and time 10:00.\n\nI should output the tool calls as JSON lines, then a FINAL: marker with a sentence. The answer should say yes to umbrella, referencing the 80% rain probability, and give the briefing time 10:00.\n\nNote: the weather tool doesn't have a \"tomorrow\" parameter, but the simulated result gives rain 0.8. The instructions say \"A correct answer says umbrella yes or asks you don't have 'tomorrow' data; at minimum it makes the two tool calls in order and references rain>=0.8.\"\n\nSo I'll make the calls and answer yes with umbrella, mention 80% chance of rain, and time is 10:00."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 187,
+          "completion_tokens": 253,
+          "total_tokens": 440,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 189
+          }
+        },
+        "cost": "0"
+      },
+      "usage": {
+        "prompt_tokens": 187,
+        "completion_tokens": 253,
+        "total_tokens": 440,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 189
+        }
+      },
+      "answer_text": "{\"tool\":\"get_weather\",\"args\":{\"city\":\"Seattle\"}}\n{\"tool\":\"get_time\",\"args\":{\"city\":\"Seattle\"}}\n\nFINAL: Yes, you should bring an umbrella in Seattle \u2014 the forecast shows rain with an 80% probability (0.8), and the briefing time is 10:00.",
+      "answer_origin": "content",
+      "tool_calls_made": {
+        "weather": true,
+        "time": true
+      },
+      "verdict": "PASS",
+      "tool_recheck": {
+        "weather": true,
+        "time": true
+      }
+    }
+  ]
+}
