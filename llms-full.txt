@@ -349,6 +349,16 @@ Ox Alpha (OpenRouter id `stealth/ox-alpha`) is an anonymous, free, 1M-context re
 - Preview window: roughly one week after Aug 20 (sources vary on the exact end date, some cite ~Aug 27, 2026).
 - Weights: none published. No HuggingFace id. No architecture disclosure.
 
+## How Big It Got (Real Adoption Data)
+
+However the benchmarks are read, the adoption numbers are not in dispute. OpenRouter's own Apps tab and global token rankings show Ox Alpha received enormous real production traffic almost immediately:
+
+- By Aug 22 (roughly two days after launch), a snapshot reported ~657B prompt tokens and ~7.95B completion tokens processed, with the top consumer apps Hermes Agent (~120B), Claude Code (~108B), Oh-My-Pi (~93.5B), the DeepSeek Harness multimodal bridge (~84.8B) and ZCode (~51.5B). An earlier Aug 21 snapshot had already put Claude Code at 36.2B and Hermes Agent at 28.8B (about 173B prompt tokens total then).
+- By Aug 24, the live OpenRouter Apps page had grown to Hermes Agent ~2.2T tokens and Claude Code ~1.08T, and Ox Alpha sat at roughly #2 on OpenRouter's global token rankings at ~11.6T tokens. OpenRouter tags its own ranking page: "These rankings measure adoption, not quality."
+- A Korean outlet (Chosun) reported over 1.4 trillion tokens through the top five apps in three days, including ~314B tokens through Claude Code after people replaced its model with Ox Alpha.
+
+The capacity claim behind it is also striking and operator-supplied: roughly 100 trillion tokens per day, a figure that would put the operator among the largest inference providers anywhere (Business Insider notes it is ~100x Visa's stated monthly AI-token volume). We repeat that as an operator claim, not a verified spec. The traffic you can check yourself; the architecture you cannot.
+
 ## The Hype vs The Retraction
 
 The two headline numbers are real community claims, but both are small-sample and neither is officially published.
@@ -365,14 +375,15 @@ The honest read: Ox Alpha has no official scores, its most-cited 80% was retract
 
 ## Who Is Behind It (Circumstantial Only)
 
-Ox Alpha's maker has made no official statement, and nothing here should be read as confirmed attribution. The strongest circumstantial evidence points at Zhipu AI / Z.ai and an unreleased GLM-5.x variant:
+Ox Alpha's maker has made no official statement. OpenRouter, which routes it, states plainly that it "is not its developer, owner, or provider" and that the model "is developed and operated by a third-party provider who has chosen to remain anonymous." Zhipu, OpenRouter and the anonymous provider have all declined to confirm or deny (as of Aug 23). Here is the honest state of the evidence:
 
-- Ben Davis reported ~99% confidence Ox Alpha is Zhipu's unreleased GLM-5.x.
-- Tokenizer fingerprint work: a Chinese-language thread (@MaxForAI) reported that across 25 prompt sets Ox Alpha's raw token counts were nearly identical to GLM-5.3, "each time just 75 extra tokens", which points to a shared tokenizer.
-- Serving fingerprint: researcher Chetaslua sent malformed input and reportedly received a Java stack trace containing the internal class path `com.wd.paas...`, an infrastructure fingerprint associated with Zhipu.
-- Zhipu's GLM-5 line is MoE-based, MIT open weights, and 1M context; GLM-5.x cleanly matches Ox Alpha's 1M-context, reasoning-required, multimodal-in profile.
+- A prior pattern says "Chinese lab". The last four OpenRouter/anonymous stealth releases were all eventually claimed by Chinese labs: Zhipu AI's GLM-5 (shipped anonymously as "Pony Alpha", Feb 2026), Xiaomi's MiMo-V2-Pro ("Hunter Alpha"), Ant Group's Lingxi ("Elephant Alpha") and Meituan's LongCat ("Owl Alpha"). Ox Alpha is the fifth in that series, and several analysts read it the same way.
+- Ben Davis reported "99% certainty" Ox Alpha is Zhipu's unreleased GLM-5.x, citing video-encoder behavior, tokenizer characteristics, audio-interface responses and output style. (That figure is one researcher's assessment, not an audited probability.)
+- Serving fingerprint: researcher Chetaslua sent a deliberately malformed request and reportedly received a Java stack trace naming the internal class `com.wd.paas.api.domain.v4.chat.ChatCompletionRequest`, a package path that maps to Zhipu's documented API route; the same test also reproduced Z.ai's error code 1214 envelope. Chetaslua rated operator confidence at 0.98 (again, the researcher's own figure).
+- Tokenizer: contested, and we flag it honestly. One line of work (MaxForAI, and implicator.ai in a 95-of-95 probe) reports Ox Alpha token counts matching Zhipu's GLM-5.3 within a fixed +75-token wrapper and a 95/95 vocabulary match - but the analyst notes that establishes "vocabulary identity, not ownership: a third-party host can use a public vocabulary." A different analyst (WCCFtech) reads the same signal as a `cl100k_base` BPE tokenizer pointing to Microsoft's MAI/Phi lineage instead. The OpenRouter listing's tokenizer field simply says "Other". We therefore do not lean on the tokenizer as proof of Zhipu.
+- Contradicting guesses existed in the noise: an early (later-weakened) Xiaomi MiMo theory, a Microsoft MAI alternative, and at least one joke ("three Gemini flashes wearing a trenchcoat"). One X user claimed to have a direct confirmation but declined to share it - unverifiable and unsubstantiated.
 
-Counter-signals: at least one observer (Orphis/Anrahya) guessed the opposite direction, "a lab (maybe frontier) has taken GLM 5.2 base and done some magic", noting the cost of serving this for free. We treat all of this as hypothesis, not fact.
+Bottom line: the weight of forensic evidence tilts toward Zhipu and an unreleased GLM-5.x variant, and the anomalous-release playbook matches, but no named party has confirmed it. We treat this as hypothesis, not fact.
 
 ## Our Controlled Eval: 12 Identical Tasks, 10 Models
 
@@ -428,9 +439,11 @@ We cannot see Ox Alpha's internals, so this is inference from observable surface
 
 What is observed: 1M context, 131K max output, multimodal input (text/image/video) to text, mandatory reasoning with an effort knob, tool calling, $0 preview, tokenizer labeled "Other", no weights.
 
-If the Zhipu fingerprints hold (tokenizer near-identical to GLM-5.3; a serving class-path matching Zhipu infra), the underlying model is plausibly from the GLM-5 family: a large Mixture-of-Experts reasoning model. The GLM-5 paper ("GLM-5: from Vibe Coding to Agentic Engineering", arXiv 2602.15763) describes a MoE recipe with per-head matrix orthogonalization (Muon Split) applied to the up-projections, 1M context, and strong agentic coding. That profile lines up with Ox Alpha's 1M context, reasoning-required mode, and tool support.
+If the Zhipu fingerprints hold, the underlying model is plausibly from the GLM-5 family. The GLM-5 paper ("GLM-5: from Vibe Coding to Agentic Engineering", arXiv 2602.15763) describes a sparse Mixture-of-Experts transformer: 744B total / ~40B active, 80 layers, ~256 experts, trained on ~28.5T tokens. Its attention uses Multi-latent Attention (MLA) with a compact latent KV-cache plus DeepSeek-style content-addressed sparse attention (DSA) via a "lightning indexer" - and the paper explicitly rejects naive sliding-window or linear-attention variants as lossy for long-context recall. Context grows 4K to 200K in stages (with GLM-5.2 being the first in the line to claim a solid 1M context with 131,072 max output). A Multi-token-prediction (MTP) draft layer drives speculative decoding.
 
-Independently of the maker, any 1M-context reasoning model at that profile almost certainly uses some combination of: a sparse Mixture-of-Experts decoder (active experts per token to keep serving cost manageable, which is also what makes a free preview economically plausible), long-context attention built from local/sliding-window attention plus sparsely-activated global attention over the full sequence (plain dense attention over a million tokens at every layer is too expensive), a positional scheme that interpolates or otherwise extends reach, and a vision/video encoder feeding a connector into the language decoder while the output head stays text-only. The reasoning-effort knob is consistent with conditioning the depth of an internal chain-of-thought budget.
+There is a real tension worth naming: GLM-5.3 (released 6 days before Ox Alpha) is explicitly text-only, and the community's top ask - vision - was not included. Ox Alpha takes text + image + video input. That is precisely why several analysts read Ox Alpha as an unreleased upstream multimodal GLM variant rather than the public GLM-5.3: it would already contain the encoder stack GLM-5.3's public release lacks. It is also worth noting the anomalous-release playbook matches: Zhipu's own GLM-5 first appeared anonymously as "Pony Alpha" in Feb 2026 before Zhipu claimed it.
+
+Independently of the maker, any 1M-context reasoning model at that profile almost certainly uses some combination of: a sparse Mixture-of-Experts decoder (active experts per token to keep serving cost manageable, which is also what makes a free preview economically plausible), long-context attention from content-based sparse attention (DSA-style) rather than a naive sliding window, a compact latent KV-cache so that 1M-token serving and a claimed ~100T tokens/day of capacity are feasible, a shared image + video encoder stack feeding a projector into the language trunk with a text-only decode head, and speculative/MTP decoding to sustain measured throughput around 22 tok/s. A 100T-tokens/day capacity claim, near-100% 3-day uptime and fast time-to-first-token all point to a massive, well-provisioned fleet - consistent with a major lab's preview.
 
 What we explicitly cannot conclude: parameter count, expert layout, exact attention mechanism, training recipe, or maker. All of the above is a hypothesis consistent with the evidence, not a finding.
 
@@ -451,7 +464,10 @@ Ox Alpha is a genuinely good, free, 1M-context reasoning coder that clears midli
 - Nous portal model catalog and pricing (verified directly via the Nous API): inference-api.nousresearch.com.
 - DeepSWE 80% subset and 63% full-run retraction: Ben Davis on X (x.com/davis7/status/2091285712566140986) quoted in x.com/kimmonismus/status/2091293109673926879; attribution of the full run to @winkey_h of DataCurve (x.com/davis7/status/2091301728276852930).
 - Kingbench 87.5% and GLM-5.3 at 91.25%: community YouTube "Ox Alpha (Fully Tested)".
-- Tokenizer fingerprint: @MaxForAI on X (x.com/MaxForAI/status/2090606479682519515); Chetaslua serving fingerprint at implicator.ai/ox-alpha-zhipu-glm-tokenizer-match.
+- Tokenizer fingerprint: @MaxForAI on X (x.com/MaxForAI/status/2090606479682519515); Chetaslua serving fingerprint at implicator.ai/ox-alpha-zhipu-glm-tokenizer-match; the contesting cl100k/Microsoft read at wccftech.com.
+- OpenRouter primary statement (router, not owner; no training): openrouter.ai/stealth/ox-alpha; announcement tweet x.com/OpenRouter/status/2090544970923184269.
+- Prior stealth-release pattern (Chinese labs): orcarouter.ai/blog/ox-alpha-stealth-model-what-we-know; chosun.com/english/industry-en/2026/08/23.
+- Adoption/traffic: openrouter.ai/rankings live page; glm5.app/blog/what-is-ox-alpha; moclaw.ai/blog/ox-alpha; chosun.com/english/industry-en/2026/08/23.
 - GLM-5 paper: arXiv 2602.15763.
 - SWE-bench+ leaderboard: openlm.ai/swe-bench.
 - SWE-bench Verified (Vals AI): morphllm.com/best-ai-model-for-coding.
