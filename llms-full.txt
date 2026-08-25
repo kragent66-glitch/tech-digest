@@ -1,5 +1,59 @@
 # Tech Digest - Full Text
 
+## OpenAI Brings ChatGPT Ads to 31 European Markets as NVIDIA Courts Perplexity at a $30 Billion Valuation
+Source: https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-08-25.html
+# OpenAI Brings ChatGPT Ads to 31 European Markets as NVIDIA Courts Perplexity at a $30 Billion Valuation
+
+OpenAI switched on ChatGPT advertising across 31 European markets on 24 August 2026, and NVIDIA entered talks to invest in Perplexity at a valuation above $30 billion, according to The Information and Reuters. Together the two moves show the AI industry shifting from model one-upmanship to distribution and compute control. Below are the day's four most consequential AI stories, the GitHub releases trending now, and five under-the-radar repos worth your attention.
+
+## AI & ML News
+
+### OpenAI Launches ChatGPT Ads Across 31 European Markets
+OpenAI flipped the switch on ChatGPT advertising across 31 European markets on 24 August 2026 — the 27 EU member states plus Iceland, Liechtenstein, Norway, and Switzerland — six months after the U.S. pilot began. Ads appear only for Free and Go tier users; Plus, Pro, Business, Enterprise, and Edu accounts remain ad-free. The company says "tens of thousands of marketers" have already onboarded, and ads sit below answers without influencing model outputs. OpenAI confirmed the rollout on 21 August, with businesses in those 31 markets able to open advertiser accounts the same week. The UK, which launched separately in June, is not part of this wave.
+
+### NVIDIA in Talks to Invest in Perplexity at $30 Billion+ Valuation
+NVIDIA is discussing an equity investment in Perplexity that would value the AI search startup at more than $30 billion — over 50% above its last round in 2025 — according to The Information on 23 August, confirmed by Reuters the following day. Perplexity's annualised revenue has surged to over $750 million from under $250 million at the start of 2026, driven partly by Perplexity Computer, its cloud-based AI agent for automating computer tasks. The round would deepen NVIDIA's ecosystem moat: Perplexity already runs on NVIDIA GPUs and the investment would lock in preferred compute access. CEO Aravind Srinivas has said the company plans to go public in 2028 regardless of how Anthropic's and OpenAI's listings land.
+
+### xAI's Grok 4.6 Goes Live on Google Vertex AI
+xAI announced on 24 August that Grok 4.6 is now generally available on Google Cloud's Vertex AI, expanding from its 19 August debut on Amazon Bedrock and 14 August integration with GitHub Copilot. The model is priced at $2 per million input tokens and $6 per million output tokens — roughly half the cost of other frontier models, xAI says. The company claims 300 million-plus daily queries across 150,000 GPUs. Grok 4.6 supports 128K context, function calling, and system prompts tuned for coding and agentic workflows. The Vertex launch gives Google Cloud customers a third major model family alongside Gemini and Anthropic's Claude.
+
+### OpenAI to Retire o3 From ChatGPT Tomorrow
+OpenAI's live release notes confirm that o3 will be removed from ChatGPT on 26 August 2026, concluding a 90-day sunset period that began in May. GPT-4.5 was already retired from ChatGPT on 26 June 2026 after a 30-day sunset, and the DALL·E GPT will follow on 30 August. The changes apply to ChatGPT only; API access remains unchanged. The consolidation comes alongside a partial rollback on 4 February that restored Extended thinking for GPT-5.2 Thinking to its prior setting after an inadvertent January reduction. OpenAI says the retirements let it "better serve our newer, most capable models" including GPT-5.6 Sol and GPT-5.6 Luna.
+
+## Big GitHub Releases
+
+### openclaw/openclaw — 387,475 stars
+"Your own personal AI assistant. Any OS. Any Platform." The OpenClaw desktop app (Rust/Tauri) hit #1 trending today with a fresh push on 25 August, packing 81,982 commits and 81,300+ forks behind an MIT licence. It bundles a local-first agent runtime, a plugin system, and a polished cross-platform UI — Windows, macOS, Linux — all from a single codebase. The project positions itself as the "lobster way" to self-hosted AI: no cloud dependency, full data ownership, and a hackable architecture that invites forks.
+
+### deepseek-ai/deepseek-harness — 192,775 stars
+DeepSeek's flagship agent harness entered developer preview on 13 August with a radical premise: "Everything is a Plugin." The TypeScript framework exposes a minimal core — LLM client, tool registry, memory, and planning loop — and delegates every capability (RAG, code execution, browser, MCP servers) to hot-swappable plugins. Install via `npx @deepseek-ai/dsh web` to launch the bundled playground. The repo has accumulated 192K stars in six weeks, signalling strong community buy-in for a plugin-first agent architecture backed by a top-tier lab.
+
+### xai-org/grok-build — 26,012 stars
+SpaceXAI's official coding agent harness and full-screen TUI, written in Rust and distributed as the `grok` CLI. The 35-commit public mirror syncs from xAI's internal monorepo and exposes a mouse-driven, fullscreen terminal UI where agents plan, execute, and self-correct in visible steps. It integrates with the Grok 4.6 API (now on Vertex AI and Bedrock) and supports custom tool definitions via JSON schema. The project signals xAI's push to own the developer-agent stack end-to-end, from model to runtime.
+
+### CopilotKit/OpenBot — 2,701 stars
+A fresh launch (created 17 August, pushed today) that gives every AI coworker its own isolated computer — browser, filesystem, and toolset — with every action pre-committed and recorded via a governance gateway. Built on the AG-UI protocol, OpenBot lets you bring any AG-UI-compatible agent (Claude Code, Codex, custom) and run it in a sandboxed desktop that streams decisions before execution. The design targets enterprise workflows where auditability and rollback are non-negotiable.
+
+## Under-the-Radar Finds
+
+### JustVugg/colibri — 26,099 stars
+A pure C, zero-dependency MoE inference engine that streams experts from disk, letting consumer hardware run 744 billion to 2.8 trillion parameter models. The README visualises 19,456 experts as a navigable map — no Python, no PyTorch, no CUDA required. Colibri compiles to a single binary (~2 MB) and demonstrates that mixture-of-experts scaling doesn't need a cluster; it needs a smarter loader. The project is a technical tour de force for anyone tracking on-device frontier-model inference.
+
+### baidu/Unlimited-OCR — 24,491 stars
+Baidu's one-shot long-horizon document OCR system processes arbitrarily long PDFs and images in a single forward pass using a 32,768-token context window. Built on vLLM and SGLang, it extends the DeepSeek-OCR architecture with a hierarchical attention mechanism that maintains coherence across hundreds of pages. Benchmarks show sub-second latency per page on H100, with character-error rates competitive with commercial APIs. The repo includes Dockerfiles for one-command deployment.
+
+### andrewyng/openworker — 15,010 stars
+Andrew Ng's open-source AI coworker ships with 25+ connectors (Slack, Notion, GitHub, Jira, Linear, Gmail, Calendar, and more) and a local-first runtime that delivers finished work — code, documents, tickets — not just chat. The agent plans, executes, and verifies each step through a built-in critic loop, and the connector SDK lets teams add internal tools in minutes. Ng frames it as "the first AI agent that ships work, not answers."
+
+### openai/codex-security — 10,146 stars
+OpenAI's Codex Security CLI and SDK scan repositories, validate findings, and auto-generate fixes with `--create-pr`. It integrates with GitHub Actions, GitLab CI, and Amazon Bedrock, and supports custom rule packs via Rego/OPA. The tool found and patched a critical path-traversal vulnerability in a popular npm package during its internal dogfood run. For teams that treat security as a CI gate rather than an audit, this moves the fix into the same pipeline that caught it.
+
+### trycompai/crm — 8,892 stars
+An agentic-first open-source CRM designed for a world where AI agents sell to AI agents. The schema models conversations, negotiations, and commitments as first-class entities rather than leads and opportunities. It includes a protocol for agent-to-agent handshake, escrow, and SLA enforcement, plus a dashboard for human overseers. Early adopters are using it to automate procurement workflows between autonomous purchasing agents and vendor catalogs.
+
+**Why it matters.** The throughline of 25 August 2026 is consolidation — of models, of distribution, and of the tools that run agents. OpenAI is retiring o3 and GPT-4.5 to streamline toward GPT-5.6 while monetising the free tier across Europe; NVIDIA is buying deeper into the inference stack via Perplexity; and the open agent ecosystem (OpenClaw, DeepSeek Harness, Grok Build, OpenWorker) is converging on a plugin-first, local-first architecture. For builders, the takeaway is clear: the moat is no longer the model — it is the runtime, the connectors, and the compute behind them.
+
+
 ## Anthropic's $2 Trillion IPO, the Open-Source AI Cost Crash, and 5 GitHub Projects Redefining Agents: Daily Tech Digest for August 24 2026
 Source: https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-08-24.html
 # Anthropic's $2 Trillion IPO, the Open-Source AI Cost Crash, and 5 GitHub Projects Redefining Agents: Daily Tech Digest for August 24 2026
