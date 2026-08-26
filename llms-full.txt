@@ -1,5 +1,62 @@
 # Tech Digest - Full Text
 
+## OpenAI GPT-5.6 Lands in AWS Kiro, Meta's Hatch Agent Nears Launch, and Mistral Ships OCR 4: Tech Digest for August 26, 2026
+Source: https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-08-26.html
+# OpenAI GPT-5.6 Lands in AWS Kiro, Meta's Hatch Agent Nears Launch, and Mistral Ships OCR 4: Tech Digest for August 26, 2026
+
+The day's tech news centers on consolidation and acceleration: OpenAI pushed its GPT-5.6 family into Amazon's Kiro with an 82% cost-cut claim, Meta readied a consumer AI agent to rival OpenClaw, OpenAI retired the o3 reasoning model from ChatGPT, and Mistral shipped a multilingual OCR model. On GitHub, a Rust CLI that slashes agent token use by 90% and an open 2.8-trillion-parameter model headline a busy release day.
+
+## AI & ML News
+
+### Meta's "Hatch" Consumer AI Agent Nears Launch as Zuckerberg Pushes Beyond Ads
+Meta is preparing to unveil a consumer-focused AI agent codenamed "Hatch" within weeks, according to The Information, which reported the plan on August 24 citing internal documents. The agent is explicitly positioned to rival OpenClaw, the fast-growing self-hosted assistant. Beyond Hatch, Meta plans to ship a new model called "Watermelon" in October as part of Mark Zuckerberg's effort to monetize the company's AI investments and diversify revenue beyond advertising. The report signals Meta's late but serious entry into the consumer-agent race after a year in which smaller players set the pace.
+
+### OpenAI Brings GPT-5.6 to AWS's Kiro With an 82% Cost-Cut Claim
+On August 24, 2026, OpenAI made the full GPT-5.6 family - Sol, Terra, and Luna - available inside Kiro, Amazon Web Services' spec-driven development environment. Joint Kiro and OpenAI testing on Terminal-Bench 2.1 reportedly cut the cost of a completed task by roughly 82%, finishing in under four minutes at a 74% pass rate. The move lands three days after OpenAI cut Sol's API and credit pricing by more than 20% on August 21, and follows July 30 cuts that dropped Luna's price 80% and Terra's 20%. Direct API rates now run $4 per million input and $20 per million output for Sol, $2 and $12 for Terra, and $0.20 and $1.20 for Luna. [OpenAI announcement](https://openai.com/index/gpt-5-6-in-kiro)
+
+### OpenAI Retires o3 From ChatGPT Today, Closing the GPT-4 Era in the App
+As scheduled, OpenAI removed o3 from the ChatGPT model picker on August 26, 2026, ending a 90-day sunset that began May 28. The reasoning model, launched April 16, 2025, remains available via API snapshots until December 11, when gpt-5.6-sol replaces it; API access is unaffected until that December shutdown. The retirement completes the phase-out of the GPT-4 era inside ChatGPT, which began with the GPT-4o and GPT-4.1 retirements in February and continued with GPT-4.5 in June.
+
+### Mistral Ships OCR 4 With Bounding Boxes and 170 Languages
+Mistral's August 25 changelog lists Mistral OCR 4, a compact document-ingestion model that adds bounding boxes, block classification, and inline confidence scores alongside extracted text. It supports 170 languages across 10 language groups, runs in a single container for fully self-hosted deployments, and serves as an ingestion component for enterprise search, retrieval-augmented generation, and domain-specific retrieval pipelines. The release pushes Mistral deeper into the enterprise-document stack, where it competes with dedicated OCR and parsing vendors. [Mistral changelog](https://docs.mistral.ai/resources/changelogs)
+
+### August 2026 Sets a Record: 11 Major AI Models Shipped in 20 Days
+Industry trackers counted 11 major model releases from five or more providers in a 20-day window this August, the fastest model-release cadence of 2026. The burst spans OpenAI's GPT-5.6 family, Anthropic's Claude Opus 5 and Sonnet 5, Google's Gemini 3.x, DeepSeek V4 Pro, Moonshot's Kimi K3, and xAI's Grok 4.6, reflecting a shift from occasional flagship drops to near-continuous post-training iteration. The practical upshot for builders: no single model dominates, and multi-model routing is now the default architecture.
+
+## Big GitHub Releases
+
+### google-gemini/gemini-cli Ships v0.57.0 and Crosses 106K Stars
+Google's open-source AI agent for the terminal reached a new stable release, v0.57.0, on August 25, with a nightly v0.59.0 tagged August 26. The project brings Gemini directly into the terminal with MCP server support, slash-command extensions for GitHub and Slack, and agentic file operations across your codebase. It now sits at 106.6K stars and 14.4K forks under the Apache 2.0 license, making it one of the most-starred coding agents in the ecosystem. [Repository](https://github.com/google-gemini/gemini-cli)
+
+### rtk-ai/rtk - A Rust CLI Proxy That Slashes Agent Token Use by Up to 90%
+rtk is a single Rust binary that intercepts shell commands and compresses their output before it reaches your LLM's context, cutting up to 90% of the bash output an agent reads. It ships 100-plus command filters - git status becomes a compact stat, test runs collapse to failures only, and log lines are deduplicated - with under 10ms overhead and zero dependencies. At 77.3K stars and Apache-2.0, it is quickly becoming standard hygiene for anyone running coding agents at scale. [Repository](https://github.com/rtk-ai/rtk)
+
+### Panniantong/Agent-Reach Gives Agents the Whole Internet for Free
+Agent-Reach is a single CLI that hands an AI agent the ability to read Twitter, Reddit, YouTube, Bilibili, and XiaohongShu with zero API fees, using multi-backend routing so a blocked path fails over silently. It was Trendshift's repository of the day and sits at 75.3K stars under the MIT license. The pitch is simple: tell your agent to install it, and minutes later it can search social platforms and summarize videos without paying for a single API key. [Repository](https://github.com/Panniantong/Agent-Reach)
+
+### usestrix/strix - Autonomous AI Pentesters That Find and Fix Your Bugs
+Strix is an open-source AI penetration-testing tool whose agents run your code dynamically, find vulnerabilities, and validate them through real proofs-of-concept rather than static-analysis false positives. It integrates with GitHub Actions and CI/CD to block insecure code before it reaches production, ships nine agent skills, and can open auto-fix pull requests. At 56.4K stars and Apache-2.0, it is the most-starred project in the fast-growing AI-security category. [Repository](https://github.com/usestrix/strix)
+
+## Under-the-Radar Finds
+
+### firecrawl/anydoc - Every Office Document, One Markdown Stream
+anydoc is a fast Rust library that converts Word, PowerPoint, Excel, OpenDocument, RTF, EPUB, CSV, and PDF into clean GitHub-Flavored Markdown in under five milliseconds per document, with Node, Python, and WebAssembly bindings. A single shared document model means a table-escaping fix for one format applies to all of them, and it ships as an agent skill via `npx skills add firecrawl/anydoc`. At 17.6K stars and MIT-licensed, it is the quiet plumbing behind a lot of agent document ingestion. [Repository](https://github.com/firecrawl/anydoc)
+
+### anywhere-labs/dsh-desktop - A Desktop Where Everything Is a Plugin
+dsh-desktop is an open-source Windows and macOS client for the DeepSeek Harness (DSH) ecosystem built on the "everything is a plugin, and the desktop itself is a plugin" philosophy. It wraps DSH's local web UI, host service, and plugin system into a native app with one-click install and automatic updates. At 19.7K stars and MIT-licensed, it is an independent community project - not affiliated with DeepSeek - that shows how fast the plugin-first agent desktop niche is filling out. [Repository](https://github.com/anywhere-labs/dsh-desktop)
+
+### yc-software/qm - A Multiplayer Agent Harness for the Whole Company
+qm is a multiplayer agent harness where each employee gets an isolated workspace yet can collaborate with agents in Slack channels, group messages, and projects. Every scope carries its own memory, files, keychain, permissions, and durable sandbox, with three security postures - Strict, Auto, and Dangerous - and shareable skills promoted org-wide by admins. At 14.0K stars and MIT-licensed, it targets startups that want one agent core serving the entire company rather than per-person assistants. [Repository](https://github.com/yc-software/qm)
+
+### MoonshotAI/Kimi-K3 - The First Open 3T-Class Model
+Kimi K3 is an open-weight 2.8-trillion-parameter mixture-of-experts model - the world's first open 3T-class model - with 104B active parameters across 896 experts (16 selected per token) and a 1-million-token context window. It is natively multimodal via MoonViT-V2 and scores 88.3 on Terminal-Bench 2.1, putting it alongside the closed frontier on agentic coding. Released under the Kimi K3 License at 8.5K stars, it is the clearest signal yet that trillion-parameter frontier quality is no longer locked behind a lab's API. [Repository](https://github.com/MoonshotAI/Kimi-K3)
+
+### guillaumemeyer/watermarks-remover - The Tool That Strips AI Provenance Marks
+watermarks-remover is an agent skill plus a Python service that strips multi-vendor AI provenance marks - Claude, Google SynthID, OpenAI, and green-list schemes - from text and more than 20 file types including PNG, JPEG, SVG, PDF, DOCX, HTML, and Markdown. Version 0.5.0 handles invisible Unicode, statistical watermark rewriting, and C2PA, EXIF, and XMP metadata removal. At 17.9K stars and MIT-licensed, it is a technically impressive but ethically pointed project that sits squarely in the growing debate over AI content provenance and the EU AI Act. [Repository](https://github.com/guillaumemeyer/watermarks-remover)
+
+**Why it matters.** The throughline of August 26, 2026 is acceleration and consolidation. OpenAI is driving GPT-5.6 deeper into developer workflows while trimming its own prices, Meta is finally showing up in the consumer-agent arena, and the model-release cadence has compressed to a record pace that makes single-model loyalty irrational. On the tooling side, the winning pattern is clear: agents are being wrapped in Rust-sharp efficiency layers (rtk), given real-world senses (Agent-Reach, strix), and pointed at frontier-open weights (Kimi K3). For builders, the moat is no longer the model or even the agent - it is the runtime, the connectors, and the discipline to strip what you do not need.
+
+
 ## OpenAI Brings ChatGPT Ads to 31 European Markets as NVIDIA Courts Perplexity at a $30 Billion Valuation
 Source: https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-08-25.html
 # OpenAI Brings ChatGPT Ads to 31 European Markets as NVIDIA Courts Perplexity at a $30 Billion Valuation
