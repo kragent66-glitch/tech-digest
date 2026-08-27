@@ -503,6 +503,81 @@ GenLayer's project boilerplate for building "intelligent contracts" on their blo
 **Why it matters.** The stories today paint a picture of an industry simultaneously consolidating (Stripe buying OpenRouter at $7B+), exposing its vulnerabilities (Microsoft's 8-month Copilot patch delay), and building the tooling layer that will determine which AI agents actually ship to production (the skills explosion, orchestration frameworks, memory systems). The Samsung foundry price hikes and Fractile's $6.5B valuation remind us that the physical infrastructure — the chips and the foundries — remains the bottleneck. And the GitHub Trending data makes one thing clear: the market has moved past "build one agent" to "manage a fleet of agents." The winners will be those who own the metering, routing, memory, and orchestration layers — not just the models themselves.
 
 
+## Microsoft MDASH: Agentic AI Finds Vulnerabilities at Scale
+Source: https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-27.html
+# Microsoft MDASH: Agentic AI Finds Vulnerabilities at Scale
+
+Microsoft's new multi-model agentic system, MDASH (multi-model agentic scanning harness), is transforming cybersecurity by using a coordinated "team of robots" rather than a single model to find and fix software vulnerabilities. This agentic architecture uses over 100 specialized AI agents to scan, validate, debate, and prove exploitable bugs across complex codebases. MDASH has already been used to discover 16 previously unknown Windows vulnerabilities, including four critical remote code execution flaws, and has reached a record 96.5% score on the industry-standard CyberGym benchmark.
+
+## How MDASH Works: The Five-Stage Agentic Pipeline
+
+The core innovation of MDASH (which stands for multi-model agentic scanning harness) is its multi-stage, multi-agent architecture. Rather than relying on a single large language model to do everything, MDASH orchestrates a panel of over 100 specialized AI agents, each with a specific role in a structured pipeline. This approach allows the system to reason across multiple files, identify complex lifecycle and concurrency bugs, and validate whether a vulnerability is practically exploitable rather than just theoretically possible.
+
+The system operates through a five-stage pipeline:
+
+* **Prepare:** The system builds a per-repo knowledge base by analyzing threat models, build steps, call graphs, and CVE patches from Git and CI. It ranks files by risk using call-graph analysis and code complexity metrics, prioritizing the functions most likely to contain vulnerabilities.
+* **Scan:** More than 100 specialized AI agents (such as injection-auditor, memory-safety-auditor, and auth-bypass-auditor) analyze the ranked code using multiple LLMs. Each agent targets a specific vulnerability class, bringing deep expertise to its domain.
+* **Validate:** The system uses taint analysis and type resolution through Language Server Protocol (LSP) servers. A multi-model agentic debate refines confidence and eliminates false positives, with three models debating as different personas using a vote of two out of three.
+* **Dedup:** The system consolidates duplicate findings, producing a final set of unique, actionable vulnerabilities with granular confidence scores.
+* **Prove:** This final stage constructs proof-of-concept attacks to confirm the bugs exist, using three self-contained stages: Docker build, reachability harness, and fuzzing. The system can also generate and apply code fixes directly from scan results.
+
+As Sandesh KS noted on LinkedIn, this orchestration layer is where both the power and the risk lie: "When specialized agents start coordinating across identity systems, financial monitoring, and cloud infrastructure simultaneously, the blast radius of a single misconfigured permission boundary becomes enormous."
+
+## Breaking Benchmarks: From 88% to 96.5%
+
+MDASH has consistently outperformed rival systems on the CyberGym benchmark, a test developed by UC Berkeley researchers that measures how well AI systems can reproduce real-world vulnerabilities across 1,507 tasks drawn from 188 open-source software projects.
+
+When first introduced in May 2026, MDASH achieved an 88.45% score on the benchmark, outperforming Anthropic's Mythos (83.1%) and OpenAI's GPT-5.5 (81.8%). By June 2026, the system had evolved significantly, reaching 96.5% on the benchmark's "any crash" metric. Microsoft reports that the latest version, which includes the MAI-Augmented scan profile with the specialized MAI-Cyber-1-Flash model, delivers 96% on CyberGym's "any crash" score and 90.4% on the "any-of" target measure.
+
+The system's internal performance has been equally impressive: 96% recall on historical clfs.sys vulnerabilities reviewed by the Microsoft Security Response Center, and 100% recall on historical tcpip.sys cases. In a private test, MDASH correctly identified all 21 ground-truth vulnerabilities planted in a test driver with zero false positives.
+
+Importantly, MDASH achieves these results while being model-agnostic by design. As Microsoft explains, "The model is one input. The system is the product." The framework allows teams to swap or upgrade models while keeping the surrounding validation, proving, and workflow infrastructure intact.
+
+## Real-World Impact: The August 2026 Patch Tuesday
+
+MDASH's most significant real-world impact came just before Microsoft's August 2026 Patch Tuesday, which addressed 398 CVEs across Windows and other products. Using MDASH, Microsoft's security team discovered 16 previously unknown vulnerabilities across the Windows ecosystem, including four critical remote code execution flaws.
+
+The vulnerabilities span critical infrastructure layers, including the Windows kernel TCP/IP stack, Hyper-V, Active Directory Domain Services, and Remote Desktop Client. Several of the most severe findings include:
+
+* **CVE-2026-45657** (Windows Kernel, Use-after-free, RCE, CVSS 9.8) - A critical flaw in the Windows kernel that could allow remote code execution.
+* **CVE-2026-47291** (HTTP.sys, Integer Overflow, RCE, CVSS 9.8) - A critical vulnerability in the HTTP.sys component that could be exploited remotely.
+* **CVE-2026-45648** (Windows Active Directory Domain Services, Stack-based Buffer Overflow, RCE, CVSS 8.8) - A serious flaw in Active Directory that could enable remote code execution.
+* **CVE-2026-47289** (Remote Desktop Client, Heap-based Buffer Overflow, RCE, CVSS 8.8) - A critical vulnerability in the Remote Desktop Client.
+
+As Microsoft's Windows security team noted, "Codename MDASH has enabled our security team to perform vulnerability hunting at the scale of Windows with a much higher depth of analysis than was previously possible." The company has warned customers to expect bigger Patch Tuesdays going forward as AI accelerates the discovery of vulnerabilities.
+
+## The Rise of Agentic AI in Cybersecurity
+
+MDASH is part of a broader trend toward agentic AI systems in cybersecurity, where multiple specialized agents work together rather than relying on single models. This approach is gaining traction across the industry as organizations recognize that the orchestration layer around models matters more than the models themselves.
+
+Google DeepMind's CodeMender is another notable example, an agent that improves code security automatically. Early results demonstrate its ability to find new zero-day vulnerabilities in well-tested software. Researchers at Nanyang Technological University built iFinder, an LLM-driven multi-agent system that discovered 84 flaws in 5G cores, highlighting the potential for AI agents to secure critical telecommunications infrastructure.
+
+However, the rise of agentic AI also creates new security challenges. A Cloud Security Alliance report from August 2026 documented the "Agentic AI Trust-Boundary Crisis," with five independent vulnerability disclosures against five unrelated agentic AI products in July 2026 alone. The report noted that 36.7% of analyzed MCP servers were potentially vulnerable to server-side request forgery (SSRF), a class of vulnerability where an attacker tricks a server into making requests to internal resources it should not reach.
+
+The Microsoft MDASH approach offers a potential blueprint for addressing these challenges by building robust validation and governance into the agentic pipeline itself, rather than treating security as an afterthought.
+
+## Challenges and the Road Ahead
+
+Despite its impressive performance, MDASH is not without limitations. Microsoft's analysis of the 3.5% of cases it missed (52 tasks in total) revealed several key challenges:
+
+* **Incorrect scope from ambiguous descriptions:** In some cases, the scope generated during the prepare stage did not include the files or functions containing the intended vulnerability. This occurs when bug descriptions are too general, especially in repositories with multiple modules.
+* **Missed prioritization of vulnerable components:** The system prioritizes which files and functions to analyze first and can sometimes de-emphasize less obvious components, potentially missing vulnerabilities in overlooked code paths.
+* **Incomplete code understanding:** Some vulnerabilities involve complex logic that requires understanding multiple interacting components, which can challenge even sophisticated AI agents.
+
+As Microsoft's Taesoo Kim, Vice President of Agentic Security, explained, "The durable advantage lies in the agentic system around the model rather than any single model itself." This philosophy suggests that the future of AI-driven cybersecurity will depend less on breakthrough models and more on the engineering of robust, multi-agent systems that can reason, debate, and validate findings across complex codebases.
+
+MDASH is currently available in private preview through Microsoft Security Exposure Management, with plans for broader availability. As the system continues to evolve, it represents a significant step toward what Microsoft calls "defense at AI speed" - a security posture that keeps pace with the way software is actually built and shipped today.
+
+## Sources
+
+1. Microsoft Security Blog: "Defense at AI speed: Microsoft's new multi-model agentic security system tops leading industry benchmark" (May 12, 2026) - https://www.microsoft.com/en-us/security/blog/2026/05/12/defense-at-ai-speed-microsofts-new-multi-model-agentic-security-system-tops-leading-industry-benchmark
+2. InfoQ: "Microsoft Introduces MDASH for Large-Scale AI Vulnerability Research" (May 25, 2026) - https://www.infoq.com/news/2026/05/microsoft-mdash
+3. GeekWire: "Microsoft's multi-agent AI system tops Anthropic's Mythos on cybersecurity benchmark" (May 13, 2026) - https://www.geekwire.com/2026/microsofts-multi-agent-ai-system-tops-anthropics-mythos-on-cybersecurity-benchmark
+4. Microsoft Learn: "Codename MDASH overview" - https://learn.microsoft.com/en-us/security-exposure-management/ai-code-security-overview
+5. Microsoft Security Blog: "Beyond the benchmark: Advancing security at AI speed" (June 17, 2026) - https://www.microsoft.com/en-us/security/blog/2026/06/17/beyond-the-benchmark-advancing-security-at-ai-speed
+6. Microsoft Community Hub: "Monthly News-August 2026" - https://techcommunity.microsoft.com/blog/microsoftthreatprotectionblog/monthly-news-august-2026/4544388
+
+
 ## The AI Coding Agent War of 2026: How Claude Code Overthrew Copilot and Reshaped Software Development
 Source: https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-26.html
 # The AI Coding Agent War of 2026: How Claude Code Overthrew Copilot and Reshaped Software Development
