@@ -24,6 +24,12 @@ def post_intro(p):
     paras = [x.strip() for x in re.split(r'\n\s*\n', body) if x.strip()]
     return no_emdash(paras[0]) if paras else p['desc']
 
+def standfirst(p):
+    """One-sentence standfirst for the Key facts box, so it never verbatim-duplicates the article's full opening paragraph."""
+    intro = post_intro(p)
+    s = re.split(r'(?<=[.!?])[ \n]', intro, maxsplit=1)[0]
+    return s if s else intro
+
 
 def load_posts(kind):
     out = []
@@ -159,7 +165,7 @@ def render_post(p):
 </header>
 <section class="key-facts" aria-label="Key facts">
 <h2>Key facts</h2>
-<p>{esc(post_intro(p))}</p>
+<p>{esc(standfirst(p))}</p>
 </section>
 <article class="article">{p['body']}</article>
 <nav class="nextprev" aria-label="More">
