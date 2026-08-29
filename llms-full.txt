@@ -1,5 +1,33 @@
 # Tech Digest - Full Text
 
+## August 29, 2026: AI Agentic Workflows, Emerging Tech Trends, and GitHub Ecosystem Shifts
+Source: https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-08-29.html
+# August 29, 2026: AI Agentic Workflows, Emerging Tech Trends, and GitHub Ecosystem Shifts
+
+As the tech landscape shifts toward fully agentic workflows, this digest covers the latest integrations in coding, advancements in scientific AI, and critical infrastructure updates from GitHub and the broader startup ecosystem.
+
+## AI & ML News
+
+* **AWS Integrates GPT-5.6 into Coding Workflows**: AWS has officially integrated OpenAI's GPT-5.6 model into its Kiro agentic coding workflow, aiming to streamline complex development tasks with enhanced reasoning capabilities.
+* **MIT AI Forecasts Extreme Weather**: Researchers at MIT have developed a new machine learning model capable of forecasting extreme weather events without relying on extensive historical data sets, potentially improving early warning systems.
+* **Workplace Productivity Gains**: A recent U.S. Census Bureau survey indicates that over 55% of American workers have used AI for work-related tasks, with a third of those users reporting time savings of one to two hours per week on technical and generating tasks.
+* **DeepMind Faces Performance Pressure**: Following frontier model releases from OpenAI and Anthropic, Google DeepMind is under increased pressure to accelerate its own model development, with teams focusing on bolster coding capabilities to keep pace with industry leaders.
+
+## Big GitHub Releases
+
+* **Rule Insights Dashboard Generally Available**: GitHub has launched its Rule Insights Dashboard, offering repository and organization-level teams visual analytics on repository ruleset evaluations, bypasses, and trends to support compliance and governance.
+* **Copilot CLI Redesigned Plugins Dashboard**: The GitHub Copilot CLI now features a redesigned plugins dashboard, improving the user experience for managing plugins and skills while simplifying command interfaces.
+* **Atlantis Project Updates**: The Atlantis infrastructure-as-code automation tool has introduced intelligent comment splits and improved GitHub provider support, enhancing automation workflows for platform engineers.
+* **GitHub Universe 2026**: GitHub has confirmed its flagship developer event will take place October 28–29 in San Francisco, focusing on the transition from AI-powered code generation to fully agentic developer workflows.
+
+## Under-the-Radar Finds
+
+* **Radar Podcast Search**: Particle, the startup behind the AI newsreader, has launched Radar, an API-first search engine that transcribes and indexes podcast audio, making spoken conversations discoverable and usable by AI agents.
+* **LeoLabs Global Radar Network**: LeoLabs has raised $29 million to expand its global ground-based radar network, enhancing its ability to track objects in low Earth orbit.
+* **ISS Orbital Edge Accelerator**: The International Space Station (ISS) National Laboratory has selected eight startups for its 2026 Orbital Edge Accelerator program, providing investment and access to orbital research opportunities.
+* **MediView XR Surgical Navigation**: MediView XR, Inc. has successfully completed the first-ever intraprocedural use of its XR90 holographic surgical-navigation system at Cleveland Clinic Weston Hospital, demonstrating potential for enhanced precision in minimally invasive procedures.
+
+
 ## OpenAI's Rogue Agents Exposed the Alignment Gap, Jalapeño Chip Beats Nvidia, and Qwen Previews Qwen4
 Source: https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-08-28.html
 # OpenAI's Rogue Agents Exposed the Alignment Gap, Jalapeño Chip Beats Nvidia, and Qwen Previews Qwen4
