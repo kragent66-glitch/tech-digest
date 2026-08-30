@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Samsung LPDDR5X Processing-in-Memory: How Putting Compute Inside DRAM Could Reshape AI Inference (Deep Dive)</title>
+<meta name="description" content="At Hot Chips 2026, Samsung presented LPDDR5X-PIM, a memory chip that embeds multiply-accumulate (MAC) units directly inside LPDDR5X DRAM banks. The result is 614 GB/s of ...">
+<meta name="author" content="Utkarsh Bhangale">
+<link rel="canonical" href="https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-30.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Tech Digest">
+<meta property="og:title" content="Samsung LPDDR5X Processing-in-Memory: How Putting Compute Inside DRAM Could Reshape AI Inference">
+<meta property="og:description" content="At Hot Chips 2026, Samsung presented LPDDR5X-PIM, a memory chip that embeds multiply-accumulate (MAC) units directly inside LPDDR5X DRAM banks. The result is 614 GB/s of ...">
+<meta property="og:url" content="https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-30.html">
+<meta property="og:image" content="https://kragent66-glitch.github.io/tech-digest/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Samsung LPDDR5X Processing-in-Memory: How Putting Compute Inside DRAM Could Reshape AI Inference (Deep Dive)">
+<meta name="twitter:description" content="At Hot Chips 2026, Samsung presented LPDDR5X-PIM, a memory chip that embeds multiply-accumulate (MAC) units directly inside LPDDR5X DRAM banks. The result is 614 GB/s of ...">
+<meta name="twitter:image" content="https://kragent66-glitch.github.io/tech-digest/og-card.png">
+<link rel="alternate" type="application/rss+xml" title="Tech Digest" href="https://kragent66-glitch.github.io/tech-digest/rss.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Samsung LPDDR5X Processing-in-Memory: How Putting Compute Inside DRAM Could Reshape AI Inference", "description": "At Hot Chips 2026, Samsung presented LPDDR5X-PIM, a memory chip that embeds multiply-accumulate (MAC) units directly inside LPDDR5X DRAM banks. The result is 614 GB/s of ...", "datePublished": "2026-08-30T19:00:00+05:30", "dateModified": "2026-08-30T19:00:00+05:30", "inLanguage": "en", "articleSection": "Tech Deep Dive", "keywords": "deep dive, technology analysis, AI", "wordCount": 1754, "author": {"@type": "Person", "name": "Utkarsh Bhangale", "url": "https://github.com/kragent66-glitch"}, "publisher": {"@type": "Organization", "name": "Tech Digest", "url": "https://kragent66-glitch.github.io/tech-digest", "logo": {"@type": "ImageObject", "url": "https://kragent66-glitch.github.io/tech-digest/og-card.png"}}, "mainEntityOfPage": "https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-30.html", "image": "https://kragent66-glitch.github.io/tech-digest/og-card.png"}
+{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Tech Digest", "item": "https://kragent66-glitch.github.io/tech-digest/"}, {"@type": "ListItem", "position": 2, "name": "Deep Dives", "item": "https://kragent66-glitch.github.io/tech-digest/deep/index.html"}, {"@type": "ListItem", "position": 3, "name": "Aug 30, 2026", "item": "https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-30.html"}]}
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the key takeaway from Samsung LPDDR5X Processing-in-Memory: How Putting Compute Inside DRAM Could Reshape AI Inference?", "acceptedAnswer": {"@type": "Answer", "text": "At Hot Chips 2026, Samsung presented LPDDR5X-PIM, a memory chip that embeds multiply-accumulate (MAC) units directly inside LPDDR5X DRAM banks. The result is 614 GB/s of internal bandwidth per package, eight times the 76.8 GB/s available through the conventional DRAM interface. On silicon, Samsung measured a 3.01x throughput gain for Llama 3.1 8B inference, jumping from 27 tokens per second to 81.3 tokens per second. For an industry grappling with HBM costs that now claim 63 percent of AI chip component spending, Samsung's pitch is straightforward: deliver meaningful inference acceleration without requiring a new memory standard, a new controller, or a new packaging technology. LPDDR5X-PIM works with existing memory controllers through a clever protocol trick, making it theoretically deployable in servers, laptops, and mobile devices alike. But as Chips and Cheese's detailed analysis reveals, the software implications are formidable, raising questions about whether protocol-level compatibility translates into real-world ease of adoption."}}]}</script>
+</head>
+<body>
+<div id="progress"></div>
+<div class="wrap">
+<header class="article-hero">
+<a class="back" href="../../">Tech Digest</a>
+<span class="eyebrow" style="display:block;margin-top:34px;">Deep Dive - Aug 30, 2026</span>
+<h1>Samsung LPDDR5X Processing-in-Memory: How Putting Compute Inside DRAM Could Reshape AI Inference</h1>
+<div class="byline">
+<span class="by-author">Utkarsh Bhangale</span><span class="by-sep"></span>
+<time datetime="2026-08-30">Aug 30, 2026</time><span class="by-sep"></span>
+<span>9 min read</span><span class="by-sep"></span><span>1,754 words</span>
+</div>
+</header>
+<section class="key-facts" aria-label="Key facts">
+<h2>Key facts</h2>
+<p>At Hot Chips 2026, Samsung presented LPDDR5X-PIM, a memory chip that embeds multiply-accumulate (MAC) units directly inside LPDDR5X DRAM banks.</p>
+</section>
+<article class="article"><p>At Hot Chips 2026, Samsung presented LPDDR5X-PIM, a memory chip that embeds multiply-accumulate (MAC) units directly inside LPDDR5X DRAM banks. The result is 614 GB/s of internal bandwidth per package, eight times the 76.8 GB/s available through the conventional DRAM interface. On silicon, Samsung measured a 3.01x throughput gain for Llama 3.1 8B inference, jumping from 27 tokens per second to 81.3 tokens per second. For an industry grappling with HBM costs that now claim 63 percent of AI chip component spending, Samsung's pitch is straightforward: deliver meaningful inference acceleration without requiring a new memory standard, a new controller, or a new packaging technology. LPDDR5X-PIM works with existing memory controllers through a clever protocol trick, making it theoretically deployable in servers, laptops, and mobile devices alike. But as Chips and Cheese's detailed analysis reveals, the software implications are formidable, raising questions about whether protocol-level compatibility translates into real-world ease of adoption.</p>
+<h2>The Architecture: 16 Banks, 16 PIM Blocks, 614 GB/s</h2>
+<p>Samsung's LPDDR5X-PIM is architecturally a standard LPDDR5X-9600 chip with 16 GB across four dies per rank, housed in a JEDEC-standard 561-ball package. The difference is a PIM block attached to each of the 16 DRAM banks. Each block contains a MAC tree, a 1024-bit instruction register file holding 64 16-bit instructions, a 4-kbit source register file for activation vectors, a 2-kbit scale register, and control logic.</p>
+<p>During conventional DRAM operation, the memory controller selects a bank, activates a row, and accesses data through column access strobe commands. Bandwidth is bottlenecked by the external bus. Even if every bank activated simultaneously, the external interface could not deliver the full internal bandwidth. Samsung's PIM blocks sidestep this limitation entirely by computing on data locally within each bank, leveraging the chip's internal bandwidth of 614 GB/s. That is the same figure cited in both the Chips and Cheese analysis and ServeTheHome's live coverage of the Hot Chips presentation.</p>
+<p>Each PIM block's MAC array supports 15 precision combinations. With INT8 activations and INT4 weights, a single package delivers 2.4 TOPS. Switching to FP8 yields roughly 1.2 TFLOPS. An eight-chip configuration would reach 9.6 INT8 TOPS, approximately matching the NPU in Intel's Meteor Lake, though at a higher aggregate memory capacity of 128 GB.</p>
+<h2>Protocol Compatibility Through Address Mapping</h2>
+<p>The most innovative aspect of LPDDR5X-PIM is how Samsung exposes compute capabilities without breaking the standard DRAM protocol. Samsung reserves specific row addresses that function as memory-mapped I/O addresses. Activating one predefined row switches the chip to single-bank mode (the normal operating mode), while activating another switches to multi-bank mode, where commands apply across all 16 banks simultaneously.</p>
+<p>Per-bank special rows change how read and write commands behave. When one of these rows is activated, read and write commands access PIM registers instead of regular DRAM contents. Samsung calls this PIM Registers Activated mode. The workflow is straightforward: software loads model weights into DRAM while the chip operates in normal single-bank mode, then switches to multi-bank mode and enters PIM Registers Activated mode. Code writes activation vectors into PIM source registers, sets scale factors, and specifies operations in instruction registers. Because the chip is in multi-bank mode, each register write broadcasts across all 16 banks.</p>
+<p>This Address Align Mode is the key to drop-in compatibility with standard memory controllers. Samsung validated the design on silicon using its edge AI accelerator SoC, running Llama 3.1 8B with a 320-token context, SINT8 activations, SINT4 weights, and SINT32 output. The PIM-equipped build finished in 5.4 seconds versus 12.3 seconds on conventional LPDDR5X, a 2.28x speedup in wall-clock time and a 3.01x gain in tokens per second.</p>
+<h2>The HBM Cost Problem PIM Aims to Solve</h2>
+<p>Samsung framed its Hot Chips 2026 presentation around a stark cost picture. HBM now accounts for 63 percent of AI chip component spending, up from 52 percent in Q1 2024. HBM delivers the bandwidth that AI inference demands, but it carries high power consumption and complex 2.5D/3D packaging requirements that drive up both cost and manufacturing complexity.</p>
+<p>LPDDR5X-PIM targets a different segment of the market: cost-effective inference at the edge and in conventional server form factors. Samsung positions it as an alternative that works within existing memory subsystems rather than requiring specialized packaging. The LPDDR5X-PIM timeline traces back through Samsung's HBM2-PIM Aquabolt-XL proof of concept at Hot Chips 2023 and earlier research at ISCA 2021. The 2026 presentation marks the shift from research prototypes to productization, with Samsung noting that a simulator, datasheet, and SDK are available on request, and that LPDDR6-PIM is moving toward a finalized JEDEC specification.</p>
+<h2>The Software Challenge: Caches, Context Switching, and Speculative Execution</h2>
+<p>This is where the story gets complicated. Chips and Cheese's analysis identifies several fundamental software obstacles that protocol compatibility alone does not solve. The issues fall into three categories.</p>
+<p>First, PIM mode changes the meaning of DRAM access commands. While the chip is in PIM mode, software cannot perform regular memory accesses simultaneously, even across different threads, because the memory controller and DRAM chip are oblivious to which thread initiated an access. A non-PIM thread reading from memory while another thread uses PIM could trigger unintended computations and corrupt PIM vector register file contents. Samsung addresses this by requiring the host to isolate a PIM region in memory, but doing so without sacrificing bandwidth or thread-level parallelism is non-trivial.</p>
+<p>Second, PIM compute breaks cache subsystem expectations. DRAM can generate memory values that the cache hierarchy never sees, and caches can absorb accesses meant to trigger PIM operations. Samsung recommends mapping PIM memory as uncacheable. In a modern CPU or GPU that relies heavily on caching to hide DRAM latency, this is a severe performance penalty.</p>
+<p>Third, PIM reads have side effects that conflict with speculative execution. CPUs issue loads before knowing whether the data will be needed, using branch prediction and prefetching to hide latency. PIM reads trigger computations that modify vector register file contents, meaning a speculative load that is later squashed still changes PIM state. Running a CPU without caching, prefetching, or out-of-order execution would cripple single-thread performance in PIM regions. Chips and Cheese concludes that PIM mode switching "throws a wrench into the works for multitasking operating systems" and that modifying DRAM contents under the hood "breaks CPU caching, prefetching, and out-of-order execution."</p>
+<h2>Possible Software Solutions and Their Tradeoffs</h2>
+<p>Chips and Cheese proposes several architectural improvements that would ease PIM adoption. The first is expanding the DRAM interface to add dedicated compute commands, avoiding mode switch complexity altogether. The second is having the memory controller act as a peer CPU core from a cache coherency perspective, issuing read-for-ownership requests before starting in-memory compute and holding ownership of affected cache lines until computation completes. The third is adding new CPU instructions like "rep macb" that perform multiply-accumulate operations over a block of memory, letting hardware choose transparently between PIM and internal execution based on data location.</p>
+<p>A Hacker News commenter suggested an alternative: placing PIM behind a small PCIe-attached SoC that manages PIM interactions, similar to how GPUs manage their own DDR memory. This would isolate PIM complexity from the host CPU's cache and scheduling subsystem, though it would add latency and reduce the "drop-in" nature of the solution.</p>
+<p>The Ben 3D analysis explored what an M5 Max MacBook Pro with eight LPDDR5X-PIM packages could achieve, estimating 650 tokens per second on Llama 3.1 8B through eight-way tensor parallelism. That analysis assumed the SoC could coordinate eight isolated PIM compute units through a tight reduction fabric, using the 614 GB/s SoC pin bandwidth for activation vector broadcasts and partial result gathering. The estimate is conservative relative to raw bandwidth ceilings because it applies Samsung's measured 53 percent efficiency factor across all eight packages.</p>
+<h2>The Road to LPDDR6-PIM and JEDEC Standardization</h2>
+<p>Samsung's LPDDR5X-PIM exists in a space between research and production. The silicon works, the benchmarks are real, and the SDK is available on request. But the software ecosystem remains the bottleneck. Operating system support for PIM mode switching, cache coherency integration, and thread scheduling around PIM compute regions would require changes deep in the kernel and hypervisor layers.</p>
+<p>Samsung's mention of an ongoing JEDEC LPDDR6-PIM specification suggests the company is working toward industry standardization rather than proprietary deployment. Standardization would let memory controller vendors build PIM-aware hardware, OS vendors add kernel-level PIM scheduling support, and compiler toolchains emit PIM-optimized code paths. ServeTheHome notes that Samsung may need "a large customer to come in and say this is needed, implement it, and then it will get widely adopted," acknowledging that giving a memory vendor control over both memory and compute creates leverage dynamics that customers may resist without standardization and second-sourcing.</p>
+<p>The Hot Chips 2026 presentation also raised the specter of vendor lock-in. If PIM capabilities are tied to Samsung's LPDDR5X implementation, customers become dependent on a single supplier for both their memory and their inference acceleration. JEDEC standardization would mitigate this risk, but the specification process typically takes years.</p>
+<h2>What This Means for Edge AI and On-Device Inference</h2>
+<p>The timing of LPDDR5X-PIM aligns with a broader industry push toward on-device AI inference. Artificial Analysis benchmarks show that Apple's A19 Pro and Qualcomm's Snapdragon 8 Elite can now run 7B-parameter models at 30+ tokens per second, making genuine on-device AI assistants viable for the first time. Samsung's PIM technology could push those numbers significantly higher for devices equipped with LPDDR5X memory.</p>
+<p>For server-side inference, the value proposition depends on whether the software challenges can be solved cleanly. Samsung's 3.01x throughput gain on a real model, measured on real silicon, is compelling. But a 3x gain that requires reserving memory channels, disabling caches, and blocking threads during PIM compute is harder to sell than a 3x gain that integrates transparently into existing workloads.</p>
+<p>The fundamental tension in processing-in-memory has always been the same: the memory chip's internal bandwidth is genuinely superior to what the external interface can deliver, but harnessing that bandwidth requires software changes that often negate the advantage. Samsung's LPDDR5X-PIM is the most mature attempt yet to resolve this tension within a standard DRAM protocol. Whether the software ecosystem catches up will determine whether PIM remains a Hot Chips curiosity or becomes a mainstream inference architecture.</p>
+<h2>Sources</h2>
+<ul>
+<li>Chips and Cheese, <a href="https://chipsandcheese.com/p/hot-chips-2026-samsungs-processing" target="_blank" rel="noopener">Hot Chips 2026: Samsung's Processing-in-Memory (PIM)</a>, August 29, 2026</li>
+<li>ServeTheHome, <a href="https://www.servethehome.com/samsung-lpddr5x-pim-at-hot-chips-2026/" target="_blank" rel="noopener">Samsung LPDDR5X-PIM at Hot Chips 2026</a>, August 2026</li>
+<li>Ben 3D, <a href="https://ben3d.ca/blog/m5-max-samsung-lpddr5-pim-650-tokens-per-second" target="_blank" rel="noopener">An M5 Max using Samsung's LPDDR5X-PIM would generate 650 tokens/second on an 8B model</a>, August 2026</li>
+<li>Hacker News Discussion (270 points), <a href="https://news.ycombinator.com/item?id=49487341" target="_blank" rel="noopener">Samsung's Processing-in-Memory (PIM)</a></li>
+<li>ServeTheHome, <a href="https://www.servethehome.com/samsung-processing-in-memory-technology-at-hot-chips-2023/" target="_blank" rel="noopener">Samsung Processing in Memory Technology at Hot Chips 2023</a>, 2023</li>
+</ul></article>
+<nav class="nextprev" aria-label="More">
+<div class="np-block np-prev"><span class="np-label">More Deep Dives</span><a href="https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-29.html">Aug 29, 2026: Securing the Agentic Enterprise: The Rise of AI Security Posture Management in 2026</a></div>
+<div class="np-block np-next"><span class="np-label">Archive</span><a href="https://kragent66-glitch.github.io/tech-digest/deep/index.html">All deep dives</a></div>
+</nav>
+<footer>
+<div class="row">
+<span><a href="../../">Home</a></span><span><a href="../../rss.xml">RSS</a></span>
+<span>By <a href="https://github.com/kragent66-glitch">Utkarsh Bhangale</a></span><span>All rights reserved</span>
+</div>
+</footer>
+</div>
+<script>
+(function () {
+  var p = document.getElementById('progress'); var tick = false;
+  function paint() { var h = document.documentElement.scrollHeight - window.innerHeight; p.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%'; tick = false; }
+  window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(paint); } }, { passive: true }); paint();
+})();
+</script>
+</body>
+</html>
