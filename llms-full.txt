@@ -696,6 +696,82 @@ GenLayer's project boilerplate for building "intelligent contracts" on their blo
 **Why it matters.** The stories today paint a picture of an industry simultaneously consolidating (Stripe buying OpenRouter at $7B+), exposing its vulnerabilities (Microsoft's 8-month Copilot patch delay), and building the tooling layer that will determine which AI agents actually ship to production (the skills explosion, orchestration frameworks, memory systems). The Samsung foundry price hikes and Fractile's $6.5B valuation remind us that the physical infrastructure — the chips and the foundries — remains the bottleneck. And the GitHub Trending data makes one thing clear: the market has moved past "build one agent" to "manage a fleet of agents." The winners will be those who own the metering, routing, memory, and orchestration layers — not just the models themselves.
 
 
+## Continuous Diffusion Language Models Stage a Comeback Against Autoregressive Dominance
+Source: https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-31.html
+# Continuous Diffusion Language Models Stage a Comeback Against Autoregressive Dominance
+
+After years of discrete diffusion dominating language modeling research, continuous diffusion is making a significant comeback with new scaling laws, architectural breakthroughs, and hybrid models that challenge autoregressive LLMs on both perplexity and inference speed. This shift matters because continuous diffusion inherits the rich toolbox of sampling algorithms and uncertainty representation developed for image generation, potentially unlocking controllable generation and parallel decoding that autoregressive models struggle to match.
+
+## The Autoregressive Hegemony and Its Challengers
+
+Modern large language models are overwhelmingly autoregressive. They generate text one token at a time, a decomposition that enables parameter sharing across sequence positions and efficient parallel training via teacher forcing. This recipe proved extraordinarily scalable, producing GPT-3, LLaMA, and the current generation of frontier models. Yet autoregression has structural limitations: exposure bias from teacher forcing, difficulty with infilling and constrained generation, and a fundamental sequential bottleneck at inference time.
+
+Diffusion models offered an alternative paradigm. Instead of generating sequentially, diffusion reverses a corruption process that gradually destroys information. For images, Gaussian noise corruption works natively. For language, researchers faced a choice: adapt the corruption process to discrete tokens (discrete diffusion) or embed tokens in continuous space and apply Gaussian diffusion there (continuous diffusion). Both paths produced early successes in 2021 and 2022.
+
+## The 2023 Extinction Event for Continuous Diffusion
+
+In 2022, continuous diffusion for language flourished. Diffusion-LM, DiffuSeq, SSD-LM, Difformer, GENIE, LD4LG, and DeepMind's own Self-Conditioned Embedding Diffusion (SED) and Continuous Diffusion for Categorical Data (CDCD) all demonstrated the approach. These methods benefited from the rapid progress in continuous diffusion for images and video, reusing sampling algorithms, distillation techniques, and noise schedule research.
+
+Then came a stark reversal. After late 2023, virtually all new diffusion language modeling research switched to discrete methods. A 2025 survey by Li et al. (arXiv:2508.10875) visualizes this transition: continuous methods (marked in yellow) disappear from the publication timeline while discrete methods (green) dominate. DeepMind researcher Sander Dieleman, author of SED and CDCD, noted this "continuous extinction" in a widely discussed post from August 2026.
+
+Two factors likely drove this shift. First, the ChatGPT moment redirected the field toward raw performance at scale. Researchers felt closing the gap with autoregressive models would be easier with discrete methods, which are conceptually closer to autoregression. Second, early scaling measurements for continuous methods were discouraging. Gulrajani and Hashimoto (NeurIPS 2023, arXiv:2305.18619) quantified a 64x training efficiency gap for their likelihood-based continuous model Plaid-1B compared to autoregressive baselines. In the Chinchilla-optimality era, this gap made continuous diffusion difficult to justify.
+
+## Why Continuous Diffusion Has Structural Advantages
+
+Despite the 2023-2024 lull, continuous diffusion retains theoretical advantages that discrete methods cannot easily replicate. By operating in embedding space, continuous models represent uncertainty at the individual token level through the variance of the Gaussian distribution. This fine-grained uncertainty representation enables controllable generation, where specific attributes can be guided during the denoising process. Continuous diffusion also inherits the full sampling toolbox from image generation: ODE solvers, stochastic samplers, consistency distillation, and flow matching techniques.
+
+Discrete diffusion, by contrast, typically uses absorbing-state masking processes. While effective for likelihood-based training, these methods lack the rich continuous-time dynamics and geometric structure that make continuous diffusion so flexible for conditional and controlled generation. The extinction of continuous methods meant giving up these capabilities just as the field was discovering how to scale them.
+
+## The 2026 Comeback: Scaling Laws and Architectural Fixes
+
+Starting in early 2026, a wave of papers demonstrated that continuous diffusion's earlier scaling problems were largely architectural, not fundamental. Yang et al. (arXiv:2605.18530) introduced RePlaid, a redesigned version of the Plaid architecture aligned with modern discrete diffusion language models. RePlaid established the first competitive scaling law for continuous diffusion: a 20x compute gap versus autoregressive models (down from 64x), outperforming both the Duo discrete diffusion model and MDLM in the over-trained regime. On OpenWebText, RePlaid achieves a perplexity bound of 22.1, a new state-of-the-art among continuous diffusion language models.
+
+Chen et al. (arXiv:2604.11748) took a different approach with LangFlow, connecting embedding-space diffusion to Flow Matching via Bregman divergence. Three innovations drive LangFlow's results: an ODE-based negative log-likelihood bound for principled evaluation, an information-uniform noise schedule derived from a learnable Gumbel distribution, and revised training protocols incorporating self-conditioning. LangFlow reaches 30.0 perplexity on LM1B and 24.6 on OpenWebText, rivalling top discrete diffusion models and exceeding autoregressive baselines on 4 of 7 zero-shot transfer benchmarks.
+
+These results share a common theme: the earlier performance gap stemmed from suboptimal architectural choices (tokenization, noise schedules, training objectives) rather than an inherent limitation of continuous diffusion. When continuous models receive the same engineering attention that discrete diffusion benefited from (modern tokenizers, DiT architectures, low-discrepancy samplers), they become competitive.
+
+## Masked Discrete Diffusion Also Advances: MDLM and the Cornell Tutorial
+
+While continuous diffusion was dormant, discrete diffusion advanced rapidly. The Kuleshov Group at Cornell published "Simple and Effective Masked Diffusion Language Models" (MDLM, arXiv:2406.07524, NeurIPS 2024), achieving 23.0 perplexity on LM1B with 110M parameters trained on 327B tokens — approaching autoregressive performance (20.86) and setting a new diffusion state-of-the-art. MDLM's key insight is a Rao-Blackwellized objective that simplifies to a mixture of classical masked language modeling losses, enabling encoder-only models with efficient samplers that can generate arbitrary-length text semi-autoregressively.
+
+The same group published a comprehensive tutorial adapted from ICLR 2026 and MLSS 2026 workshop talks, covering masked diffusion, block diffusion for variable-length generation, iterative refinement with built-in error correction, and acceleration via distillation. The tutorial demonstrates how diffusion enables controllable generation — a capability autoregressive models struggle with — and provides working code via their GitHub repository and Hugging Face collection. MDLM now powers ByteDance's Seed Diffusion (the fastest industry-grade diffusion LLM) and NVIDIA's GenMol for molecular generation.
+
+## Hybrid Architectures: Unifying Autoregressive and Diffusion
+
+The most ambitious 2026 work goes beyond choosing between paradigms. NVIDIA's Nemotron-Labs-Diffusion (arXiv:2607.05722) introduces a tri-mode language model unifying autoregressive, diffusion, and self-speculation decoding in a single architecture. Trained with a joint AR-diffusion objective, the model switches modes to sustain high throughput across deployment settings. The study finds AR and diffusion objectives are complementary: diffusion improves lookahead planning while AR provides left-to-right linguistic priors. In self-speculation mode, diffusion drafts blocks of tokens while AR verifies, outperforming multi-token prediction methods in both acceptance rate and real-device efficiency. At 8B parameters, Nemotron-Labs-Diffusion decodes 6x more tokens per forward pass than Qwen3-8B with comparable accuracy, translating to 4x higher throughput on SPEED-Bench with SGLang on GB200 GPUs.
+
+Google's DiffusionGemma (arXiv:2608.00146) takes a compute-efficient fine-tuning approach. Starting from the mixture-of-experts Gemma 4 model (3.8B activated, 25.2B total parameters), a two-stage pipeline using under 10% of the original training budget converts the AR model to discrete diffusion. The first stage teaches bidirectional denoising via supervised fine-tuning; the second combines reinforcement learning with sampler distillation. DiffusionGemma generates ~20 tokens per forward pass and achieves roughly 1,500 output tokens per second on a single H100 GPU — substantially faster than AR models even with speculative decoding — while retaining the base model's thinking mode, multimodal inputs, and long-context capabilities.
+
+## Theoretical Convergence: Diffusion as Spectral Autoregression
+
+Dieleman's 2024 paper "Diffusion is Spectral Autoregression" (arXiv:2409.01395) provides a unifying theoretical lens. It shows that diffusion models can be viewed as autoregressive models in the spectral domain, where the "tokens" are frequency components rather than discrete symbols. This perspective explains why diffusion naturally captures bidirectional context (the spectral representation is global) and why continuous and discrete diffusion are more closely related than previously thought. The paper also connects diffusion to flow matching, consistency models, and the probability flow ODE, suggesting a deeper mathematical unity across generative modeling approaches.
+
+## Remaining Challenges and Open Questions
+
+Despite the 2026 breakthroughs, significant challenges remain. Long-sequence handling for continuous diffusion still lags behind autoregressive models with KV-caching and sliding-window attention. Infrastructure requirements differ: continuous diffusion benefits from GPU-friendly matrix operations during parallel denoising steps but requires more memory for the embedding-space representations. The evaluation landscape is also fragmented — perplexity, generative perplexity, MAUVE, and zero-shot transfer benchmarks can rank models differently, making comparisons difficult.
+
+The 2025 survey by Li et al. identifies efficiency, long-sequence handling, and infrastructure as the top three limitations. They also note that multimodal extensions (combining continuous diffusion for images with discrete or continuous diffusion for text) are an active frontier, with Transfusion (arXiv:2408.11039) and AURORA-LM (arXiv:2608.02602) exploring unified architectures.
+
+## What This Means for Practitioners
+
+For engineers and researchers, the 2026 diffusion landscape offers several actionable insights. First, continuous diffusion is no longer a dead end — RePlaid and LangFlow demonstrate competitive scaling with proper architecture. Second, discrete diffusion via MDLM provides a production-ready path with open code, tutorials, and industry adoption (Seed Diffusion, GenMol). Third, hybrid models like Nemotron-Labs-Diffusion and DiffusionGemma suggest the future may not be a binary choice: models that fluidly switch between AR and diffusion decoding can optimize for both quality and speed depending on the deployment context.
+
+The comeback of continuous diffusion illustrates a broader pattern in ML research: apparent dead ends often reflect insufficient engineering rather than fundamental limits. The 2023 extinction event was real, but it was also premature. As the field matures beyond the Chinchilla-optimality fixation and embraces inference-aware scaling, the unique advantages of continuous diffusion — uncertainty representation, controllable generation, and a mature sampling toolkit — are becoming decisive differentiators rather than theoretical curiosities.
+
+---
+
+**Sources:**
+- Sander Dieleman, "Continuous diffusion language models" (August 24, 2026) — https://sander.ai/2026/08/24/continuous-dlms.html
+- Sahoo et al., "Simple and Effective Masked Diffusion Language Models" (NeurIPS 2024) — arXiv:2406.07524
+- Yang et al., "Continuous Diffusion Scales Competitively with Discrete Diffusion for Language" (2026) — arXiv:2605.18530
+- Chen et al., "LangFlow: Continuous Diffusion Rivals Discrete in Language Modeling" (2026) — arXiv:2604.11748
+- Fu et al., "Nemotron-Labs-Diffusion: A Tri-Mode Language Model" (2026) — arXiv:2607.05722
+- DiffusionGemma team, "DiffusionGemma Technical Report" (2026) — arXiv:2608.00146
+- Li et al., "A Survey on Diffusion Language Models" (2025) — arXiv:2508.10875
+- Gulrajani & Hashimoto, "Likelihood-Based Diffusion Language Models" (NeurIPS 2023) — arXiv:2305.18619
+- Dieleman et al., "Continuous diffusion for categorical data" (2022) — arXiv:2211.15089
+- Kuleshov Group MDLM tutorial and code — https://github.com/kuleshov-group/mdlm
+
 ## Samsung LPDDR5X Processing-in-Memory: How Putting Compute Inside DRAM Could Reshape AI Inference
 Source: https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-08-30.html
 # Samsung LPDDR5X Processing-in-Memory: How Putting Compute Inside DRAM Could Reshape AI Inference
