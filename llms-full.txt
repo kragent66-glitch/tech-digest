@@ -1,5 +1,78 @@
 # Tech Digest - Full Text
 
+## OpenAI's $1B Ad Business, Nvidia's $12.9B Hugging Face Bid, and DeepSeek's Vision Model Go Open
+Source: https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-09-02.html
+# OpenAI's $1B Ad Business, Nvidia's $12.9B Hugging Face Bid, and DeepSeek's Vision Model Go Open
+
+The AI industry's business models and infrastructure stack are reshaping in real time. OpenAI hit a $1 billion annualized run rate from ChatGPT ads in under 200 days, Nvidia agreed to acquire Hugging Face for $12.9 billion to control the open-source model ecosystem, and DeepSeek open-sourced the first 305-billion-parameter vision-capable model under an MIT license. Meanwhile, the EU designated ChatGPT as a regulated search engine, OpenAI cut off Cursor after SpaceX's acquisition, and Tencent released a 770B open-source model under Apache 2.0. The message is clear: AI is no longer just a technology race — it's a platform war fought across ad revenue, model distribution, regulatory compliance, and developer tooling.
+
+## AI & ML News
+
+**OpenAI's ChatGPT Ads Hit $1 Billion Run Rate in Under 200 Days**
+
+OpenAI announced Monday that its ChatGPT advertising business has reached a $1 billion annualized revenue run rate — just 200 days after it started testing ads in the US in February 2026. The platform now serves tens of thousands of advertisers across 40+ countries, and today launched self-serve buying across India, Europe, the Middle East, and North Africa. Ads appear for both free users and Go subscribers among ChatGPT's 1 billion weekly active users. The milestone comes as OpenAI gears up for an expected IPO at a valuation north of $852 billion, with the company forecasting $2.5 billion in ad revenue this year and $100 billion by decade's end. Analysts, however, note the $1B figure is a run rate — annualizing current monthly revenue — not actual collected revenue, casting some doubt on whether OpenAI can hit its ambitious 2026 target.
+
+**Nvidia Agrees to Buy Hugging Face for $12.9 Billion**
+
+Nvidia has agreed to acquire Hugging Face, the world's most popular hub for open-source AI models, for $12.9 billion — a deal that would value the company at over $13 billion, nearly three times the $4.5 billion valuation from its 2023 funding round. The acquisition would give Nvidia control of a platform used by 13 million developers monthly, at a moment when OpenAI, Google, Amazon, and Anthropic are all building custom chips to reduce reliance on Nvidia GPUs. Hugging Face CEO Clem Delangue had previously rejected a $500 million Nvidia investment at a $7 billion valuation, saying he didn't want a dominant investor. But at $12.9 billion — for a company generating roughly $150 million in annual revenue — the math reportedly changed. The deal isn't signed yet and faces expected regulatory scrutiny over vertical integration concerns.
+
+**EU Designates ChatGPT as a "Very Large" Platform Under Strictest DSA Rules**
+
+The European Commission formally designated ChatGPT as a Very Large Online Search Engine (VLOSE) and both Reddit and Roblox as Very Large Online Platforms (VLOPs) under the Digital Services Act on August 31 — making ChatGPT the first AI chatbot to fall under the law's heaviest obligations. All three services reported at least 45 million average monthly EU users, clearing the designation threshold. The Commission described ChatGPT as a "hybrid service" that qualifies because it engages with user queries and searches the web. The trio now has four months — until January 2027 — to comply with DSA requirements around assessing and mitigating risks related to illegal content, harm to minors, electoral integrity, and fundamental rights.
+
+**OpenAI Cuts Off Cursor After SpaceX Acquires the AI Coding Tool**
+
+OpenAI announced August 28 that it is ending its contract with AI coding platform Cursor following SpaceX's acquisition of the company by Elon Musk. The proposed shutoff date is November 12, 2026, and OpenAI says it will not provide Cursor with future model releases — including its upcoming Astra model — during the transition. In a blog post, OpenAI cited "our experience with Elon Musk's companies violating contracts," referencing past violations by Twitter/X and xAI. Cursor CEO Michael Truell responded that OpenAI models account for just 5% of user traffic and that they're "speaking with the OpenAI team to resolve this." Meanwhile, Anthropic co-founder Tom Brown posted that "Cursor has been a trusted partner of Anthropic since Sonnet 3.5" and pledged to increase compute for Claude models in the platform.
+
+**DeepSeek Open-Sources V4-Flash-Vision: First 305B Multimodal MoE Under MIT**
+
+DeepSeek published open weights for V4-Flash-Vision-Exp on August 31, closing the vision gap in its V4 family. The 305-billion-parameter sparse Mixture-of-Experts model — 284B text backbone plus a 21B vision encoder — ships entirely under an MIT license, making it the first model in this class that developers can self-host, fine-tune, and deploy commercially outside China without a license fee. The model beats Anthropic's Opus 4.8 on three of eleven benchmarks (DeepSWE at 59.3 vs 58.0, Agents' Last Exam at 27.3 vs 25.7, ZeroBench Pass@5 at 35.0 vs 34.0) and stays within one point on several others. DeepSeek shipped it entirely in FP8 precision — compatible with both Blackwell and Hopper hardware — but community quantizations start at approximately 155 GB at 4-bit, meaning multi-GPU setups are mandatory. All benchmark figures are self-reported using DeepSeek's own harness, which hasn't been independently verified.
+
+## Big GitHub Releases
+
+**Agent Plugins 1.0 Ships Across VS Code, Copilot CLI, and Copilot App**
+
+GitHub announced that Agent Plugins 1.0 — the open, vendor-neutral packaging standard for AI agent skills and MCP servers — has reached general availability in VS Code, Copilot CLI, the Copilot SDK, and the GitHub Copilot app, on all Copilot plans. Published on August 6 by Vercel, Amazon, Anysphere, GitHub, Microsoft, and OpenAI (with Google joining as core maintainer the same day), the spec bundles a plugin.json manifest, a skills/ folder, and an mcp.json into a portable directory any compatible client can load. At launch, six clients support it: VS Code, Cursor, GitHub Copilot, ChatGPT, Codex, and Kiro. Existing Copilot plugins remain supported with no migration required.
+
+**Tencent Open-Sources Hy4-preview: 770B MoE With 1M Context Under Apache 2.0**
+
+Tencent's Hunyuan team released Hy4-preview on August 28 — the biggest open-weights release of the month at 770 billion total parameters with 49 billion active per token. The model features a 1M-token context window, 256 routed experts with top-8 activation, DeepSeek-style gated sparse attention, and a native MTP layer for speculative decoding. It scored 85.4 on Terminal Bench and 64.3 on DeepSWE, and in a blind eval by 163 internal engineers across 203 real tasks, it edged out GLM 5.3 (avg 2.99 vs 2.92) and Kimi K3 (2.99 vs 2.94). The Apache 2.0 license permits unrestricted commercial deployment. Full weights ship at 1.56TB in BF16 and FP8, with vLLM and SGLang Docker images available.
+
+**Google Ships Gemini 3.7 Flash — Coding Workhorse at Half the Price**
+
+Google released Gemini 3.7 Flash on August 13, just 23 days after Gemini 3.6 Flash, calling it its "most intelligent workhorse model yet for coding and agents." The model accepts text, image, video, audio, and PDF inputs with a 1M-token context window and 65K-token output limit. Introductory pricing at $0.75/$3.75 per million tokens is exactly half what the Flash tier cost before that day. On benchmarks, 3.7 Flash jumped from 49.0% to 65.3% on DeepSWE, improved GDP.pdf processing (34% vs 22%), and climbed 4 points on the Artificial Analysis Intelligence Index. Google says the gains came from algorithmic improvements rather than a bigger model.
+
+**a16z Closes $8.5B Growth Fund and $1.1B Machine Age Fund for AI Hardware**
+
+Andreessen Horowitz topped up its fifth Growth fund to $8.5 billion on August 31, adding $1.75 billion to the $6.75 billion vehicle launched in January 2026. The close landed just three days after the firm announced a $1.1 billion Machine Age Fund targeting AI hardware — chips, memory, networking, storage, data centers, and robotics. The combined $9.6 billion in fresh capital comes on top of the $15 billion in new funding a16z announced in January, when it had $90 billion under management.
+
+## Under-the-Radar Finds
+
+**DietrichGebert/ponytail — 118K stars (gaining 1,396 stars today)**
+
+The repo that makes your AI coding agent "think like the laziest senior dev in the room" has rocketed to 118,000 stars with another 1,396 added in the last 24 hours. Ponytail is a prompt-based skill that forces Claude Code, Cursor, Copilot, and other agents to ask four questions before writing a single line: Does this need to exist? Is it already in the codebase? Can the standard library do it? Only then write the minimum. Across 12 feature tickets on a real FastAPI project, it cut new code by an average of 54%, with one task dropping from 404 lines to 23.
+
+**xai-org/grok-build — 26K stars (SpaceXAI's Coding Agent Harness)**
+
+xAI's open-source coding agent harness and terminal UI has accumulated 26,349 stars, making it one of the fastest-growing dev tools of the summer. Grok Build provides a fullscreen, mouse-interactive, extensible interface for autonomous code generation — think Cursor's agent mode but as a standalone TUI that runs in any terminal. The project is notable as the first open-source coding harness from xAI, the company behind Grok.
+
+**TencentCloud/CubeSandbox — 11.6K stars (Instant Sandboxes for AI Agents)**
+
+Tencent Cloud's CubeSandbox has hit 11,591 stars for delivering "instant, concurrent, secure, and lightweight sandboxing for AI agents." The Go-based tool creates isolated execution environments on demand, solving one of the hardest problems in agentic AI: letting agents run arbitrary code without compromising host systems. It's designed for high-throughput scenarios where hundreds of concurrent agent sessions need isolated filesystem, network, and process spaces.
+
+**guillaumemeyer/watermarks-remover — 19.9K stars (Strip AI Watermarks, Privacy-First)**
+
+With nearly 20,000 stars, this privacy-first application strips AI-generated watermarks from content you own — addressing a growing pain as AI-generated images flood professional workflows. The tool processes images locally with no cloud calls, removing invisible watermarks embedded by generators like DALL-E, Midjourney, and Stable Diffusion.
+
+**anywhere-labs/dsh-desktop — 22.8K stars (DeepSeek Harness Desktop Client)**
+
+A modern desktop client for the DeepSeek Harness (DSH) plugin ecosystem has surged to 22,829 stars, riding the wave of DeepSeek V4's explosive adoption. The project wraps DSH's massive plugin ecosystem into a native desktop experience, giving developers a GUI for managing, configuring, and running the hundreds of community-built DSH extensions.
+
+**Why it matters.**
+
+The patterns emerging from this week's news tell a story bigger than any single release. OpenAI's $1B ad run rate proves that AI companies can monetize consumer attention at scale — a business model that didn't exist six months ago. Nvidia's $12.9B bid for Hugging Face signals that controlling the model distribution layer is now as strategically important as controlling the hardware. DeepSeek's MIT-licensed vision model and Tencent's Apache 2.0 770B release show that China's open-source AI labs are not slowing down — they're accelerating, and they're doing it under licenses that make Western restrictions increasingly moot. The EU's DSA designation of ChatGPT means regulatory compliance is now a first-class engineering constraint, not a policy afterthought. And OpenAI's decision to cut off Cursor reveals that platform politics — personal feuds, trust, and vendor lock-in — are reshaping developer tooling in ways that have nothing to do with technical merit. The AI industry is no longer just building better models. It's building empires, and the fight for the infrastructure layer is just beginning.
+
+
 ## Nvidia's $13B Hugging Face Bid, Stripe's $7.5B OpenRouter Deal, and Anthropic's $65B Revenue Mark a Week of AI Infrastructure Consolidation
 Source: https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-09-01.html
 # Nvidia's $13B Hugging Face Bid, Stripe's $7.5B OpenRouter Deal, and Anthropic's $65B Revenue Mark a Week of AI Infrastructure Consolidation
