@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Agent Stack Explained: A2A vs. MCP vs. Agent Plugins and the Road to Portable AI Agents (Deep Dive)</title>
+<meta name="description" content="The AI agent ecosystem in 2026 faces a critical infrastructure problem: how do agents communicate with each other, how do they access tools, and how are they packaged for...">
+<meta name="author" content="Utkarsh Bhangale">
+<link rel="canonical" href="https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-09-02.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Tech Digest">
+<meta property="og:title" content="The Agent Stack Explained: A2A vs. MCP vs. Agent Plugins and the Road to Portable AI Agents">
+<meta property="og:description" content="The AI agent ecosystem in 2026 faces a critical infrastructure problem: how do agents communicate with each other, how do they access tools, and how are they packaged for...">
+<meta property="og:url" content="https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-09-02.html">
+<meta property="og:image" content="https://kragent66-glitch.github.io/tech-digest/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Agent Stack Explained: A2A vs. MCP vs. Agent Plugins and the Road to Portable AI Agents (Deep Dive)">
+<meta name="twitter:description" content="The AI agent ecosystem in 2026 faces a critical infrastructure problem: how do agents communicate with each other, how do they access tools, and how are they packaged for...">
+<meta name="twitter:image" content="https://kragent66-glitch.github.io/tech-digest/og-card.png">
+<link rel="alternate" type="application/rss+xml" title="Tech Digest" href="https://kragent66-glitch.github.io/tech-digest/rss.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "The Agent Stack Explained: A2A vs. MCP vs. Agent Plugins and the Road to Portable AI Agents", "description": "The AI agent ecosystem in 2026 faces a critical infrastructure problem: how do agents communicate with each other, how do they access tools, and how are they packaged for...", "datePublished": "2026-09-02T19:00:00+05:30", "dateModified": "2026-09-02T19:00:00+05:30", "inLanguage": "en", "articleSection": "Tech Deep Dive", "keywords": "deep dive, technology analysis, AI", "wordCount": 1502, "author": {"@type": "Person", "name": "Utkarsh Bhangale", "url": "https://github.com/kragent66-glitch"}, "publisher": {"@type": "Organization", "name": "Tech Digest", "url": "https://kragent66-glitch.github.io/tech-digest", "logo": {"@type": "ImageObject", "url": "https://kragent66-glitch.github.io/tech-digest/og-card.png"}}, "mainEntityOfPage": "https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-09-02.html", "image": "https://kragent66-glitch.github.io/tech-digest/og-card.png"}
+{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Tech Digest", "item": "https://kragent66-glitch.github.io/tech-digest/"}, {"@type": "ListItem", "position": 2, "name": "Deep Dives", "item": "https://kragent66-glitch.github.io/tech-digest/deep/index.html"}, {"@type": "ListItem", "position": 3, "name": "Sep 02, 2026", "item": "https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-09-02.html"}]}
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the key takeaway from The Agent Stack Explained: A2A vs. MCP vs. Agent Plugins and the Road to Portable AI Agents?", "acceptedAnswer": {"@type": "Answer", "text": "The AI agent ecosystem in 2026 faces a critical infrastructure problem: how do agents communicate with each other, how do they access tools, and how are they packaged for portability? The answer lies in a layered protocol stack built on three pillars: the Agent-to-Agent (A2A) protocol for agent communication, the Model Context Protocol (MCP) for tool access, and Agent Plugins 1.0 for portable packaging. Understanding how these three standards work together is essential for any organization building multi-agent systems that need to be interoperable across different frameworks and vendors. This article breaks down each protocol, explains how they fit into the modern agent stack, and clarifies the critical role each plays in the emerging Agent Internet."}}]}</script>
+</head>
+<body>
+<div id="progress"></div>
+<div class="wrap">
+<header class="article-hero">
+<a class="back" href="../../">Tech Digest</a>
+<span class="eyebrow" style="display:block;margin-top:34px;">Deep Dive - Sep 02, 2026</span>
+<h1>The Agent Stack Explained: A2A vs. MCP vs. Agent Plugins and the Road to Portable AI Agents</h1>
+<div class="byline">
+<span class="by-author">Utkarsh Bhangale</span><span class="by-sep"></span>
+<time datetime="2026-09-02">Sep 02, 2026</time><span class="by-sep"></span>
+<span>8 min read</span><span class="by-sep"></span><span>1,502 words</span>
+</div>
+</header>
+<section class="key-facts" aria-label="Key facts">
+<h2>Key facts</h2>
+<p>The AI agent ecosystem in 2026 faces a critical infrastructure problem: how do agents communicate with each other, how do they access tools, and how are they packaged for portability?</p>
+</section>
+<article class="article"><p>The AI agent ecosystem in 2026 faces a critical infrastructure problem: how do agents communicate with each other, how do they access tools, and how are they packaged for portability? The answer lies in a layered protocol stack built on three pillars: the Agent-to-Agent (A2A) protocol for agent communication, the Model Context Protocol (MCP) for tool access, and Agent Plugins 1.0 for portable packaging. Understanding how these three standards work together is essential for any organization building multi-agent systems that need to be interoperable across different frameworks and vendors. This article breaks down each protocol, explains how they fit into the modern agent stack, and clarifies the critical role each plays in the emerging Agent Internet.</p>
+<h2>The Agent Stack in 2026: How AI Agents Communicate</h2>
+<p>The term "Agent Internet" is starting to appear in industry discussions, but few have clearly defined the underlying infrastructure that makes it possible. While multi-agent systems were a buzzword in 2025, the real problem in 2026 is standardization. Without common protocols, every agent framework becomes a silo, requiring custom integration code to connect agents across different vendors. The emerging solution is a three-layer stack:</p>
+<ol>
+<li><strong>Packaging Layer (Agent Plugins):</strong> Defines how agent skills and MCP server configurations are bundled into a portable directory that any compatible client can load.</li>
+<li><strong>Tool Access Layer (MCP):</strong> Connects agents to external data sources, APIs, and services. This is the protocol that lets an agent call a database, read a file, or invoke an API.</li>
+<li><strong>Communication Layer (A2A):</strong> Enables agent-to-agent delegation, discovery, and task lifecycle management. This is how one agent hands off a complex subtask to a specialist agent it did not build.</li>
+</ol>
+<p>Together, these three layers create a system where an agent built in LangGraph can delegate to an agent built in AutoGen, both accessing shared tools through MCP, packaged in a format any client can load. The stack is designed so developers can swap any layer without rewriting the others.</p>
+<h2>Agent Plugins 1.0: The Packaging Standard</h2>
+<p>Agent Plugins 1.0 reached general availability on August 12, 2026, marking a significant milestone in agent portability. Initiated by Vercel and refined collaboratively by Amazon Web Services (AWS), Anysphere (Cursor), GitHub, Microsoft, OpenAI, and Vercel itself, Agent Plugins 1.0 is an open, vendor-neutral packaging standard that bundles Agent Skills and MCP server configurations into a portable directory structure.</p>
+<p>The standard defines a fixed directory layout. A plugin is a folder containing a required <code>plugin.json</code> manifest, an optional <code>skills/</code> folder for Agent Skills, and an optional <code>mcp.json</code> file declaring MCP servers. Client-specific extensions can live in reverse-domain namespace folders (like <code>com.example.client/</code>). This structure is the minimum viable interoperability floor: it defines where components live, but not how they are installed or registered.</p>
+<p>What makes Agent Plugins 1.0 significant is what it does not touch. The spec deliberately excludes installation, registries, and distribution mechanisms. It focuses purely on the portable package format. This means an agent built with one framework can use a plugin built for another, as long as both adhere to the directory layout.</p>
+<p>At launch, Agent Plugins 1.0 supports ChatGPT, Codex, Cursor, GitHub Copilot, Kiro, and VS Code. Google announced on launch day that it is joining as a core maintainer and shipping plugin support in its own products. The practical impact is immediate: a developer can build a plugin once and use it across all compatible agent clients, eliminating the need to maintain separate packaging for each platform.</p>
+<h2>MCP (Model Context Protocol): The Tool Access Layer</h2>
+<p>The Model Context Protocol (MCP) is the protocol that connects agents to external data and services. Originally developed by Anthropic and now governed by the Linux Foundation's Agentic AI Foundation, MCP defines how agents discover and invoke tools at runtime. It is the protocol layer that sits between an agent and a database, file system, API, or any other external resource.</p>
+<p>MCP works by exposing tools as schemas that agents can reason about. When an agent connects to an MCP server, it receives a list of available tools with their names, descriptions, and parameter schemas. The agent can then invoke these tools as part of its reasoning process. MCP also supports resources (data sources), prompts (pre-built instructions), and sampling (letting the tool call the agent).</p>
+<p>In the three-layer stack, MCP handles tool-to-agent integration. An agent might use MCP to query a PostgreSQL database, read files from a shared drive, or call an external API. The protocol is request-response oriented, designed for atomic actions rather than long-running tasks. For complex, multi-step delegations, the stack uses A2A instead.</p>
+<p>MCP has seen rapid adoption across the industry. According to the Linux Foundation, more than 150 organizations support the protocol. It has become the de facto standard for connecting AI agents to enterprise tools and data.</p>
+<h2>A2A (Agent-to-Agent Protocol): The Communication Layer</h2>
+<p>The Agent-to-Agent (A2A) protocol is the layer that enables agent-to-agent communication, delegation, and task lifecycle management. Released by Google in April 2025 and donated to the Linux Foundation in June 2025, A2A reached v1.0 in March 2026. In August 2025, IBM's Agent Communication Protocol (ACP) merged into A2A under the Linux Foundation, consolidating the two agent-to-agent efforts into one standard.</p>
+<p>A2A defines four core primitives that make agent interoperability possible:</p>
+<ol>
+<li>
+<p><strong>Agent Card:</strong> A structured JSON document that advertises an agent's capabilities, authentication requirements, and supported skills. Served at a well-known URL (<code>/.well-known/agent-card.json</code>), the Agent Card is how agents discover each other. Cards can be cryptographically signed for verification.</p>
+</li>
+<li>
+<p><strong>Task Lifecycle:</strong> A2A defines a standardized lifecycle with states: submitted, working, completed, failed, input-required, and canceled. This allows both synchronous and long-running asynchronous delegation, with support for streaming progress via SSE and push notifications via authenticated webhooks.</p>
+</li>
+<li>
+<p><strong>Messages and Parts:</strong> A2A messages carry a role and an array of parts (text, structured data, or files), enabling a single message to mix instructions, JSON parameters, and binary attachments.</p>
+</li>
+<li>
+<p><strong>Transport:</strong> A2A runs over HTTP(S) with JSON-RPC 2.0 as the core binding, with optional gRPC and REST bindings. It supports synchronous request/response, SSE streaming, and push notifications.</p>
+</li>
+</ol>
+<p>A2A is the protocol that allows a LangGraph orchestrator to delegate to a Pydantic AI specialist, or a Google ADK agent to delegate to an AutoGen agent, without custom integration code. It solves the interoperability problem at the communication layer, where agents from different frameworks need to work together.</p>
+<h2>How They Work Together: A Real-World Example</h2>
+<p>Consider a multi-agent financial analysis workflow. A user agent packaged as an Agent Plugin loads skills for parsing financial statements and an MCP server for querying market data. When the user asks to analyze a company's Q2 earnings report, the user agent recognizes this requires a specialist.</p>
+<p>Using A2A, the user agent queries a registry of Agent Cards to find a financial analysis specialist. It submits a task with the earnings PDF as an attachment. The specialist agent processes the document using its own MCP servers, generates a structured analysis, and returns the result via the A2A task lifecycle.</p>
+<p>Throughout this flow, all three layers work in concert. Agent Plugins ensure both agents are packaged in a format their respective clients can load. MCP connects each agent to the tools and data it needs. A2A handles the delegation, discovery, and result exchange between the two agents.</p>
+<p>This is the practical reality of the Agent Internet: not a single monolithic system, but a layered stack of protocols that enable agents to collaborate across organizational and framework boundaries.</p>
+<h2>The State of Play: Governance, Adoption, and What Comes Next</h2>
+<p>The consolidation of agent protocols under the Linux Foundation signals a maturing ecosystem. A2A and MCP are both governed by vendor-neutral bodies, with Technical Steering Committees that include AWS, Google, IBM, Microsoft, Salesforce, SAP, ServiceNow, and others. Agent Plugins, while initiated by Vercel, is governed by a Technical Steering Committee of Core Maintainers from AWS, Cursor, Microsoft, OpenAI, and Vercel.</p>
+<p>The industry adoption is substantial. A2A has more than 150 supporting organizations. MCP has become the standard for tool integration. Agent Plugins launched with support from six major client platforms on day one. The infrastructure layer is no longer theoretical; it is shipping in production.</p>
+<p>The real test will be whether portability delivers on its promise. Agent Plugins 1.0 defines a portable package format, but installation and registration remain client-specific. A2A defines how agents communicate, but discovery and authentication require ecosystem-wide adoption of Agent Card registries. MCP defines how agents access tools, but governance of tool schemas and permissions is still evolving.</p>
+<p>The next 12 months will determine whether these standards create a truly interoperable Agent Internet or fragment into competing implementations. The protocols are in place. The governance is neutral. The adoption is real. The question now is whether the industry can maintain discipline around a shared infrastructure layer while competing at the application layer above it.</p>
+<p>The Agent Internet is not a single technology. It is a stack of protocols, each solving a specific problem in the multi-agent lifecycle. Understanding how A2A, MCP, and Agent Plugins fit together is essential for anyone building the next generation of AI systems.</p></article>
+<nav class="nextprev" aria-label="More">
+<div class="np-block np-prev"><span class="np-label">More Deep Dives</span><a href="https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-09-01.html">Sep 01, 2026: Model Context Protocol: From Anthropic Side Project to the Universal Standard for AI Agent Integration</a></div>
+<div class="np-block np-next"><span class="np-label">Archive</span><a href="https://kragent66-glitch.github.io/tech-digest/deep/index.html">All deep dives</a></div>
+</nav>
+<footer>
+<div class="row">
+<span><a href="../../">Home</a></span><span><a href="../../rss.xml">RSS</a></span>
+<span>By <a href="https://github.com/kragent66-glitch">Utkarsh Bhangale</a></span><span>All rights reserved</span>
+</div>
+</footer>
+</div>
+<script>
+(function () {
+  var p = document.getElementById('progress'); var tick = false;
+  function paint() { var h = document.documentElement.scrollHeight - window.innerHeight; p.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%'; tick = false; }
+  window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(paint); } }, { passive: true }); paint();
+})();
+</script>
+</body>
+</html>
