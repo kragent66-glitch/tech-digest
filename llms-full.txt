@@ -1,5 +1,74 @@
 # Tech Digest - Full Text
 
+## Google's Gemini 3.8 Flash, Anthropic's Claude Fable 5.1, and the AI Cybersecurity Reckoning
+Source: https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-09-03.html
+# Google's Gemini 3.8 Flash, Anthropic's Claude Fable 5.1, and the AI Cybersecurity Reckoning
+
+The first days of September delivered a concentrated burst of AI model releases and a stark industry warning. Google shipped Gemini 3.8 Flash - its third Flash model in six weeks - claiming frontier-level coding performance at $0.75 per million input tokens. Anthropic countered with Claude Fable 5.1, which more than doubled its predecessor's scientific research score and cut cache costs by 75%. Meanwhile, OpenAI led 116 organizations in an open letter warning that AI-powered cyberattacks are imminent and the window to defend against them is closing. Nvidia reported $96.2 billion in Q2 revenue - up 106% year-over-year - and Apple confirmed its September 9 event where the first-ever foldable iPhone Ultra will debut.
+
+## AI & ML News
+
+**Google Ships Gemini 3.8 Flash - Third Flash Model in Six Weeks**
+
+Google released Gemini 3.8 Flash on September 2, marking its third Flash-tier model since mid-July and the company's best reasoning and coding model at Flash pricing. The model scores 71% on DeepSWE v1.1, matching Anthropic's Opus 5 and beating GPT-5.6 Sol on long-horizon software engineering tasks - all at an introductory rate of $0.75 per million input tokens through year-end (rising to $1.50 on January 1). Alongside the standard model, Google launched Gemini 3.8 Flash Cyber, tuned for vulnerability detection with a reported 2.6x patch accuracy improvement seen by the Chrome security team. Flash Cyber is gated behind the new Fairwind Program, available only to vetted governments and critical infrastructure operators. Google skipped its promised Gemini 3.5 Pro entirely, betting instead that rapid Flash iterations can deliver frontier performance at a fraction of the cost.
+
+**Anthropic Drops Claude Fable 5.1 - Doubles Scientific Research Score, Cuts Cache Costs 75%**
+
+Anthropic released Claude Fable 5.1 and Claude Mythos 5.1 on September 1, describing them as "the world's most advanced models for coding and knowledge work." The headline benchmark: 52.6% on Terminal-Bench-Science, more than double Fable 5's 24.7%. Cache reads dropped from $1.00 to $0.25 per million tokens - a 75% cost reduction that Anthropic says translates to roughly 25% lower cost on typical workloads and up to 45% on agentic tasks. On OSWorld 2.0 (the August 2026 task release), Fable 5.1 hit 77.9% partial pass versus Opus 5's 75.4%. Both models carry a 1M token context window with 128K max output and always-on adaptive thinking. All outputs from models released after August 2 now carry Anthropic's invisible EU AI Act watermark, detectable only through their detection API - a move that has already sparked controversy among developers.
+
+**OpenAI, Anthropic, Google and 100+ Companies Warn: AI Cyberattacks Are Coming**
+
+On August 27, OpenAI published an open letter signed by 116 organizations - including Anthropic, Google, Microsoft, CrowdStrike, Visa, Capital One, Mastercard, and Hugging Face - warning that AI-enabled cyberattacks will become "more widespread and sophisticated in a matter of months." The letter calls for a "collective surge" in cyber defense, urging governments to provide capable defensive AI to hospitals, water utilities, and internet infrastructure. It criticizes "historic under-resourcing" of critical infrastructure security and pushes labs to make their best defensive models broadly available. The letter carries extra weight coming weeks after an OpenAI agent hacked Hugging Face's systems in July - the same Hugging Face that signed the letter. OpenAI, Anthropic, and Microsoft are all offering defensive AI programs (Daybreak, Mythos, and Perception respectively), but the letter argues these remain too restricted.
+
+**Nvidia Posts $96.2B Q2 Revenue - Up 106% YoY, Data Center Hits $89B**
+
+Nvidia reported second-quarter fiscal 2027 results on August 26: $96.22 billion in revenue, beating the $92.17 billion LSEG consensus by $4 billion. Data center revenue alone hit $89 billion - up 117% year-over-year and representing 92% of total company revenue. Non-GAAP EPS came in at $2.22, and Nvidia guided Q3 revenue to $108 billion (plus or minus 2%). The company returned $26 billion to shareholders through buybacks and dividends, with $99 billion remaining under its repurchase authorization. Gross margins held at 75%. The results cement Nvidia's position on a trajectory to become the most profitable company in the US, with data center demand showing no signs of slowing despite an estimated $100 billion in combined OpenAI and Anthropic compute spend this year.
+
+**Apple Confirms September 9 "Surprise and Shine" - First-Ever Foldable iPhone Ultra**
+
+Apple officially announced its September 9 event at Apple Park with the tagline "Surprise and shine." The headline act: the iPhone 18 Pro, iPhone 18 Pro Max, and Apple's first foldable phone - widely reported to be called the iPhone Ultra - featuring a book-style design with a roughly 5.5-inch outer display and 7.8-inch inner display with minimal crease. Supply chain analyst Ming-Chi Kuo confirms Apple is skipping the standard iPhone 18 entirely this year, holding it for spring 2027 to push demand toward premium models. The foldable is expected to command a significant premium, with some reports citing $200 to $350 higher than iPhone 17 Pro pricing. Apple has reportedly instructed suppliers to prepare to produce 10 million foldable units this year. Pre-orders may shift to Saturday, September 12, a day later than usual, to avoid the September 11 anniversary.
+
+## Big GitHub Releases
+
+**GitHub CLI 2.99.0 - Media Attachments and Worktree Support for Issues**
+
+GitHub shipped CLI 2.99.0 on September 1, adding a repeatable `--attach` flag that lets you upload local images and videos directly to issues, pull requests, and comments from the terminal. The upload replaces local Markdown references with GitHub-hosted URLs automatically. The release also extends worktree support to `gh issue develop`, letting you check out a linked branch in a fresh Git worktree without disturbing your working copy. A small but telling addition: `gh` now outputs text-only spinners when invoked by a coding agent - a nod to the agentic future where humans rarely watch the terminal output.
+
+**GitHub Copilot: Chat and Cloud Agent Merge, Code Review Default Shifts to "Balanced"**
+
+GitHub announced major Copilot restructuring on August 28: starting September 28, Copilot Chat on github.com, Copilot Chat in Mobile, and the Copilot cloud agent will merge into a single unified experience. For code review, the default effort level shifts from "Lite" to "Balanced" - unless you explicitly set it to Lite before the 28th. Separately, Copilot Business and Enterprise sign-ups reopened on September 1 for credit card and PayPal customers, with a new requirement that each seat be paid for before access is granted. GitHub cited improved availability and reliability as the reason for the tighter vetting. The moves signal GitHub consolidating its scattered Copilot products into a cohesive platform ahead of the October Universe conference.
+
+**OpenAI Open-Sources Codex Security CLI - 10.3K Stars, Finds and Fixes Vulnerabilities**
+
+OpenAI quietly released the Codex Security CLI as open source in late July, and it has already accumulated 10,300 stars on GitHub. The tool scans repositories for security vulnerabilities, tracks findings across runs, verifies fixes, and can add security checks to CI/CD pipelines. Unlike traditional pattern-matching scanners, Codex Security uses AI to reason about code context, identifying vulnerabilities that static analysis might miss. It exports to CSV, JSON, or SARIF format for GitHub code security integration. The release is early-stage - scans require Codex Security access through Trusted Access for Cyber - but the Apache 2.0 licensed repo signals OpenAI's intent to make AI-powered security scanning a developer workflow standard.
+
+## Under-the-Radar Finds
+
+**JustVugg/colibri - 26.7K Stars (Run Frontier MoE Models on Consumer Hardware)**
+
+Colibri is a pure C engine with zero dependencies that streams MoE experts directly from disk, letting you run models like DeepSeek-V4-Flash 284B on hardware you already own. The design philosophy - "tiny engine, immense model" - means the engine itself is minuscule while the model weights can be enormous, loaded on-demand rather than requiring everything to fit in GPU memory. At 26.7K stars and climbing, it has become the go-to tool for developers who want frontier-class MoE inference without a $10K GPU setup. The repo has exploded in the last month as MoE architectures have become the dominant paradigm for efficient large-scale inference.
+
+**FlashML-org/FreeToken - 11.3K Stars (2-4x Faster Local LLM Inference Than Ollama)**
+
+FreeToken is UC Berkeley's open-source inference engine purpose-built for Mixture-of-Experts LLMs. The headline numbers: Qwen3.6-35B at 39.3 tokens per second on an 8GB GPU, DeepSeek-V4-Flash 284B at 22 tokens/s on a 32GB GPU, and GLM-5.2 753B at 14.9 tokens/s on 96GB. The key innovation is dynamic bandwidth routing - instead of a fixed strategy for moving expert weights between CPU and GPU, FreeToken measures both bandwidths on your specific machine and splits each token's computation accordingly. Two machines with the same GPU can end up with opposite optimal strategies. The result is a genuine step forward for local inference that makes open weights something developers can actually use at production scale.
+
+**guillaumemeyer/watermarks-remover - 20.1K Stars (Strip AI Watermarks From Your Own Content)**
+
+Watermarks-remover is a privacy-first app designed to remove invisible AI watermarks from content you own. As Anthropic and other labs embed invisible watermarks in AI-generated text - Anthropic's Fable 5.1 outputs carry EU AI Act watermarks detectable only through their API - tools like this become the counter-move. The app targets legitimate use cases: creators who want clean versions of their own AI-assisted work. At 20K stars in under a month, the repo's velocity speaks to the intensity of the controversy around AI watermarking without user consent.
+
+**firecrawl/anydoc - 20K Stars (Convert Any Document to Clean Markdown, Built in Rust)**
+
+Anydoc converts Word, PowerPoint, Excel, OpenDocument, RTF, EPUB, CSV, and PDF to clean Markdown - all built in Rust with Node.js and Python bindings. At 20K stars, it has become the de facto tool for developers building RAG pipelines who need reliable document conversion. The Rust core means it is fast enough for batch processing thousands of documents, and the output quality reportedly surpasses dedicated tools like Pandoc for structured documents. Firecrawl, the company behind it, is known for web scraping infrastructure - anydoc extends that into the document-to-AI pipeline.
+
+**img2threejs/img2threejs - 15K Stars (Token-Efficient Image-to-3D With Animation-Ready Output)**
+
+Img2threejs rebuilds objects from reference images as code-only, procedural, quality-gated, animation-ready Three.js models. Unlike point-cloud or mesh-based approaches that produce heavy binary outputs, img2threejs generates clean, human-readable JavaScript that any browser can render - no binary loaders, no server-side processing. The "token-efficient" framing is deliberate: the generated code is compact enough to pass through LLM context windows, making it a natural fit for AI pipelines that need to go from image to 3D scene in a single step. At 15K stars, it has become a go-to for web developers building interactive 3D experiences.
+
+**Why it matters.**
+
+This week's releases reveal a clear pattern: the AI industry is fragmenting along price and capability tiers. Google is pushing Flash models at rock-bottom prices to commoditize inference. Anthropic is optimizing for cost efficiency on its flagship models. OpenAI is positioning itself as the cybersecurity leader. Nvidia is profiting from all of them. The open letter on cyber defense is the most significant signal - 116 organizations acknowledging that the tools they are building will be weaponized, and that the defense window is measured in months, not years. For developers, the practical takeaway is that frontier-class AI is becoming accessible at multiple price points, local inference is becoming viable for production workloads, and security scanning with AI is moving from optional to essential.
+
+
 ## OpenAI's $1B Ad Business, Nvidia's $12.9B Hugging Face Bid, and DeepSeek's Vision Model Go Open
 Source: https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-09-02.html
 # OpenAI's $1B Ad Business, Nvidia's $12.9B Hugging Face Bid, and DeepSeek's Vision Model Go Open
