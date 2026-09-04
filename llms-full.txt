@@ -1,5 +1,74 @@
 # Tech Digest - Full Text
 
+## Uber Cuts 3,300 Jobs as AI Reshapes Tech: The Week's Biggest Stories in AI, GitHub, and Open Source
+Source: https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-09-04.html
+# Uber Cuts 3,300 Jobs as AI Reshapes Tech: The Week's Biggest Stories in AI, GitHub, and Open Source
+
+The first week of September 2026 delivered a concentrated burst of AI industry upheaval. Uber announced its largest layoffs since the pandemic — 3,300 jobs representing 10% of its global workforce — to fund its robotaxi push. Texas froze data center grid connections after developers filed speculative power requests totaling 474 gigawatts. Meta permanently bricked cameras on thousands of smart glasses. Nvidia invested $125 million in a Spanish photonics startup. And on GitHub, a skill that teaches AI agents to write 54% less code became the platform's hottest repository.
+
+Here's what happened, why it matters, and what the open source ecosystem built in response.
+
+## AI & ML News
+
+**Uber Cuts 3,300 Jobs — 10% of Workforce — to Fund Robotaxi Push**
+
+Uber announced its largest layoffs since the pandemic on September 2, trimming 3,300 employees — roughly 10% of its global headcount — as CEO Dara Khosrowshahi restructures to flatten management layers and redirect cash toward autonomous vehicle development. The company's 2026 AI budget was reportedly exhausted within the first four months of the year. Revenue hit $14.2 billion in Q2 2026 (up 12% YoY) on a $52 billion annual run rate, making this a restructuring play rather than a distress cut. Khosrowshahi's internal memo cited "more layers, more coordination, more fragmented ownership" as the rationale, with the manager layer shrinking by 20%. Uber also ceased operations in Nigeria and Uganda as part of the consolidation.
+
+**Nvidia Backs Spanish Photonics Startup iPronics in $125M Round**
+
+iPronics, a Valencia-based silicon photonics startup, raised $125 million in Series B funding co-led by Maverick Silicon and Light Street Capital, with Nvidia joining the round alongside Bosch Ventures and the European Innovation Council. The company's flagship iPronics ONE platform uses programmable optical circuit switching to replace fixed-wire data center interconnects, enabling real-time reconfiguration of GPU clusters. Total funding now stands at $177 million. The investment signals that the AI infrastructure bottleneck has shifted from GPU supply to networking bandwidth — as clusters scale to hundreds of thousands of accelerators, photonic interconnects become critical to utilization.
+
+**Meta Permanently Bricks Cameras on Thousands of Smart Glasses**
+
+Meta has permanently disabled cameras on thousands of Ray-Ban Meta smart glasses after detecting that users had physically altered or destroyed the capture LED — the white indicator light that flashes during photo/video capture. With 7 million units sold in 2025 alone, fewer than 0.1% were affected, but that still amounts to thousands of devices now functioning only as Bluetooth headphones. Users who merely covered the LED with tape can regain camera access, but anyone who drilled out or removed the light permanently loses the feature. VP of wearables Alex Himel called it "a cat and mouse game" that will never be fully solved.
+
+**Texas Freezes Data Center Grid Connections After 474 GW of "Ghost Demand"**
+
+Texas has halted new data center power hookups after developers submitted interconnection requests totaling 474 gigawatts — more than five times the state's record peak demand of roughly 85 GW. Grid operator ERCOT determined that much of the queue is "ghost demand": speculative filings from developers who hold queue positions without signed tenants, financing commitments, or even fully contracted sites. The queue has ballooned from 48 GW in 2023 to 474 GW today. Chicago Fed president Austan Goolsbee noted that data center construction is "very hot, but largely shoving other parts of the economy down."
+
+**Google Overhauls Gemini Enterprise Pricing**
+
+Google's Gemini Enterprise Agent Platform introduced pay-as-you-go pricing, token discounts of up to 20% for multi-year commitments, monthly caps on agent spending, and a zero-dollar base subscription option — directly targeting Microsoft and Anthropic's recurring seat-fee models. The move comes as Google wraps up its longest monthly losing streak on Wall Street in over a decade, but AI momentum is building: Gemini Flash models are approaching frontier performance at a fraction of the cost.
+
+## Big GitHub Releases
+
+**DietrichGebert/ponytail — 1,396 Stars Today, 115K Total**
+
+Ponytail, an open-source agent skill that teaches AI coding assistants to think like the laziest senior developer in the room, is the #1 trending repo on GitHub with 1,396 new stars in a single day and 115,872 total. The skill runs a 7-step decision ladder — "Does this need to exist? → stdlib does it? → native feature? → one line?" — and on real coding sessions it cuts new code by 54% on average while keeping all safety checks. Compatible with 20+ agents including Claude Code, Cursor, Copilot, and Gemini CLI, it's become the default minimalism guardrail for teams tired of over-engineered AI output.
+
+**rohitg00/ai-engineering-from-scratch — 50,772 Stars, 703 Today**
+
+Rohit Ghumare's "AI Engineering from Scratch" crossed 50,000 stars this week — gaining 703 alone today — becoming one of the most-starred AI education repos on GitHub. The curriculum spans 435 lessons across 20 phases, covering everything from linear algebra and CNNs to transformers, LLM engineering, agent harnesses, and production systems. Every algorithm is built from raw math before any framework is imported, and the project includes SKILL.md files that plug directly into Claude Code, Cursor, and Codex.
+
+**GitHub Copilot CLI 1.0.83 — Smarter MCP Workflows**
+
+GitHub shipped Copilot CLI v1.0.83-1 on September 1 with quality-of-life improvements: MCP config forms now open in the plugins dashboard, plugin list commands show bundled built-in plugins by name, and file path autocomplete stays fast in large repositories. The update also improves sandboxed Bazel and Bazelisk runs on macOS.
+
+## Under-the-Radar Finds
+
+**yc-software/qm — 14.5K Stars: Y Combinator's Multiplayer Agent Harness**
+
+qm is Y Combinator's own multiplayer agent harness — a framework for building AI agent systems where multiple agents collaborate on tasks in parallel, sharing state and context. Created July 29, 2026, it's already amassed 14,543 stars. The "multiplayer" framing is deliberate: instead of a single agent grinding through a task queue, qm lets teams of agents work on different parts of a problem simultaneously, with built-in coordination primitives.
+
+**andrewyng/openworker — 17.3K Stars: Andrew Ng's Agent Workforce Framework**
+
+Andrew Ng's latest open-source project launched July 20 and has attracted 17,314 stars. OpenWorker is an agent workforce framework designed to manage fleets of AI workers that can be assigned tasks, monitored for progress, and scaled up or down based on demand. The project reflects Ng's long-standing thesis that the future of AI isn't one giant model but armies of smaller, specialized agents working in coordination.
+
+**trycompai/crm — 9.7K Stars: The Open-Source CRM Built for AI Agents**
+
+Comp AI CRM is the first open-source CRM designed specifically for AI agents rather than human sales reps. Created July 31, 2026, it's at 9,660 stars. The fundamental premise: traditional CRMs are UI-first tools that humans interact with through dashboards and forms. Comp flips this — agents interact with the CRM through APIs, creating contacts, logging interactions, and managing pipelines autonomously without a human in the loop.
+
+**oso95/scroll-world — 9K Stars: Turn Any Brand into a Scrollable 3D World**
+
+Scroll-world is an agent skill that takes a brand name and generates a fully interactive, scrollable 3D world as a landing page — complete with procedural geometry, lighting, and navigation. Created July 6, 2026, it's hit 8,967 stars. The skill works inside Claude Code and Codex, turning a text prompt into a browser-renderable Three.js scene.
+
+**img2threejs/img2threejs — 15.1K Stars: Photo-to-Procedural-3D**
+
+img2threejs takes a single reference image of any object and reconstructs it as a code-only, procedural Three.js model — no mesh extraction, no photogrammetry. Created July 15, 2026, it's at 15,134 stars. The output is animation-ready, quality-gated, and deliberately token-efficient: the generated model is pure JavaScript code, not a binary blob.
+
+**Why it matters.** The AI industry's infrastructure layer is fracturing under its own weight — not from a lack of GPUs, but from speculative grid filings, networking bottlenecks, and organizational bloat. Meanwhile, the open source ecosystem is building the tooling layer that makes agents actually useful: skills that teach restraint, frameworks for multi-agent coordination, and CRMs designed for machines rather than humans. The gap between "AI can do anything" and "AI can do this reliably and affordably" is where the real work is happening.
+
+
 ## Google's Gemini 3.8 Flash, Anthropic's Claude Fable 5.1, and the AI Cybersecurity Reckoning
 Source: https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-09-03.html
 # Google's Gemini 3.8 Flash, Anthropic's Claude Fable 5.1, and the AI Cybersecurity Reckoning
