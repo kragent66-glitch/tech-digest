@@ -7,6 +7,13 @@
 <description>A daily technology news digest plus one in-depth deep dive, every day.</description>
 <language>en</language>
 <item>
+<title>OpenAI GPT-6 Astra Ships With 97.6% FrontierMath Score, $30B Crusoe Valuation, and Tesla&#x27;s Cybercab Goes Live</title>
+<link>https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-09-06.html</link>
+<guid>https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-09-06.html</guid>
+<pubDate>2026-09-06 07:00:00 +0530</pubDate>
+<description>OpenAI&#x27;s GPT-6 Astra rolled out on September 3 with benchmark numbers that redefine what frontier models can do - 97.6% on FrontierMath Tier 4, 99.9% on ARC-AGI-3, and th...</description>
+</item>
+<item>
 <title>Nvidia Acquires Hugging Face for $12.9B, OpenAI&#x27;s Astra Hides Its Reasoning, and Google Kills Google Assistant</title>
 <link>https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-09-05.html</link>
 <guid>https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-09-05.html</guid>
@@ -130,7 +137,7 @@
 <link>https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-09-05.html</link>
 <guid>https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-09-05.html</guid>
 <pubDate>2026-09-05 07:00:00 +0530</pubDate>
-<description>The AI industry is confronting a difficult trade-off between architectural efficiency and safety oversight. OpenAI&#x27;s forthcoming frontier model, Astra, has achieved a &quot;Cr...</description>
+<description>The AI industry is confronting a structural trade-off between architectural efficiency and safety oversight that may redefine the limits of governable intelligence. OpenA...</description>
 </item>
 <item>
 <title>AI Agent Orchestration in 2026: How Multi-Agent Frameworks Went From Demos to Enterprise Production</title>
