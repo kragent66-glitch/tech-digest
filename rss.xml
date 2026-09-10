@@ -7,6 +7,13 @@
 <description>A daily technology news digest plus one in-depth deep dive, every day.</description>
 <language>en</language>
 <item>
+<title>AI Solves a Millennium Prize Problem, Meta Launches a Personal Agent, Apple Unveils Its First Foldable</title>
+<link>https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-09-10.html</link>
+<guid>https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-09-10.html</guid>
+<pubDate>2026-09-10 07:00:00 +0530</pubDate>
+<description>The week of September 8-10, 2026 may be remembered as the moment AI crossed from assistive tool to autonomous scientific researcher - and simultaneously became something ...</description>
+</item>
+<item>
 <title>OpenAI GPT-6 Astra Ships With 97.6% FrontierMath Score, $30B Crusoe Valuation, and Tesla&#x27;s Cybercab Goes Live</title>
 <link>https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-09-06.html</link>
 <guid>https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-09-06.html</guid>
@@ -131,6 +138,13 @@
 <guid>https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-08-20.html</guid>
 <pubDate>2026-08-20 07:00:00 +0530</pubDate>
 <description>Today&#x27;s tech landscape is defined by three converging forces: AI infrastructure consolidation (Stripe buying OpenRouter for $7B+), the growing vulnerability surface of AI...</description>
+</item>
+<item>
+<title>The Rise of the AI Software Team: How Multi-Agent Orchestration Changes Development</title>
+<link>https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-09-09.html</link>
+<guid>https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-09-09.html</guid>
+<pubDate>2026-09-09 07:00:00 +0530</pubDate>
+<description>In September 2026, the software engineering landscape underwent a fundamental transformation. The industry has shifted from treating AI as a productivity tool for code co...</description>
 </item>
 <item>
 <title>Qwen3.8-27B: Apache 2.0 Dense Vision-Language Model Beats Claude Opus 4.6 on 15 of 19 Benchmarks</title>

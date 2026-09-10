@@ -1,5 +1,46 @@
 # Tech Digest - Full Text
 
+## AI Solves a Millennium Prize Problem, Meta Launches a Personal Agent, Apple Unveils Its First Foldable
+Source: https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-09-10.html
+# AI Solves a Millennium Prize Problem, Meta Launches a Personal Agent, Apple Unveils Its First Foldable
+
+The week of September 8-10, 2026 may be remembered as the moment AI crossed from assistive tool to autonomous scientific researcher — and simultaneously became something you might trust with your email, calendar, and credit card.
+
+## AI & ML News
+
+### OpenAI Claims AI Solved the 90-Year-Old Navier–Stokes Millennium Prize Problem
+OpenAI announced on September 8 that an internal AI system produced an analytical proof showing the Navier–Stokes equations for three-dimensional fluid motion can develop a singularity in finite time — one of the seven Clay Millennium Prize Problems, each carrying a $1 million reward. The system deployed nearly 10,000 coordinating agents running for 88 hours on a model described as "significantly more capable than GPT-6 Astra." The proof, formalized in Lean and open-sourced on GitHub, describes a vortex spiraling inward while keeping energy finite. The announcement sparked an immediate credit dispute with NYU mathematician Tristan Buckmaster and Anthropic researcher Levent Alpöge, who had been pursuing related work. Independent verification is now underway.
+
+### Meta Launches Muse — A Personal AI Agent on Its Own Secure Computer
+Meta rolled out Muse to U.S. adults on September 9 — a personal AI agent that runs inside a dedicated Secure Virtual Machine with its own browser. A separate Sentinel agent acts as a gatekeeper, preventing any action from reaching the internet without explicit approval. Muse connects to Google Workspace, Ticketmaster, OpenTable, Spotify, and Apple Health, with purchases via Stripe Link (one-time card numbers, purchase protections included). Pricing ranges from free to $100/month. The launch represents Meta's most ambitious consumer AI product, arriving less than two weeks after the company's $18 billion social-media settlement.
+
+### Apple Unveils the iPhone Duo — Its First Foldable — Starting at $1,999
+At Apple's "Surprise and Shine" event, new CEO John Ternus unveiled the iPhone Duo, a landscape-style foldable with a 7.7-inch display, titanium frame, A20 Pro chip, and 31 hours of battery life. The Duo supports Apple Pencil Pro and runs iPad-style apps that adapt when the screen folds. The event also brought the iPhone 18 Pro with the first variable aperture camera on an iPhone, and the Apple Watch Series 12 with real-time conversation transcription.
+
+### Cognition AI Hits $48B Valuation on $2B Raise
+Cognition, maker of the autonomous software engineer Devin, nearly doubled its valuation from $26 billion to $48 billion in four months. Annualized revenue climbed to nearly $900 million, with Cognition expecting $4-5 billion by year-end. The round was led by a16z, Accel, Founders Fund, General Catalyst, and Avenir.
+
+### Harvey Raises $550M at $15.6B — Legal AI Gets Serious
+Legal AI startup Harvey raised $550 million at $15.6 billion, with ARR past $400 million and 3,000+ customers including 80% of the Am Law 100. The company also acquired Guardrails AI for agent security and plans to build its own models. At ~39x revenue, the round confirms legal work as one of the first white-collar markets where AI startups are posting real revenue.
+
+## Big GitHub Releases
+
+### openai/NavierStokesAndEuler — Lean Formalization of the Millennium Prize Proofs
+OpenAI open-sourced the machine-checked proofs for both the Navier–Stokes and Euler singularity results in Lean 4, hitting 1,600 stars in 48 hours. Each proof includes Jupyter notebook explanations. This represents a new kind of scientific artifact: produced by AI agents, verified by a formal proof assistant, and published as a repository.
+
+### affaan-m/ECC — Agent Harness Optimization System
+ECC hit 250K stars, bundling skills, instincts, memory, and security practices for Claude Code, Codex, OpenCode, and Cursor into a single optimization framework. The system encodes engineering discipline as agent-level configuration.
+
+### humanlayer/skills — Human-in-the-Loop Agent Skills
+HumanLayer's skills framework requires explicit human sign-off before every action execution. At 2.8K stars and growing fast, it addresses the core trust question in agent design: how to give AI real-world authority while maintaining control.
+
+## Under-the-Radar Finds
+
+**lnkiai/m3e-canvas** (5.6K stars) bridges design and code: sketch Material 3 screens in the browser, export as structured prompts for AI coding agents. **BraveOPotato/FckSignups** (3K stars) is a curated list of open-source, in-browser tools that require zero signups. **WorldFlowAI/everything-claude-code** (2.5K stars) bundles the entire Claude Code best-practices toolkit into one installable set. **sandblaze-ucb/ExploitGym** from UC Berkeley benchmarks AI agents on real software exploitation tasks.
+
+**Why it matters.** This week compressed three distinct AI narratives into 72 hours: AI can now tackle problems at the frontier of mathematics (Navier–Stokes), operate as trusted personal assistants with real-world authority (Muse), and become first-class citizens in product ecosystems (Cognition at $48B, Harvey at $15.6B). The question is no longer whether AI agents can do these things, but whether humans and institutions are ready for the consequences.
+
+
 ## OpenAI GPT-6 Astra Ships With 97.6% FrontierMath Score, $30B Crusoe Valuation, and Tesla's Cybercab Goes Live
 Source: https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-09-06.html
 # OpenAI GPT-6 Astra Ships With 97.6% FrontierMath Score, $30B Crusoe Valuation, and Tesla's Cybercab Goes Live
@@ -1116,6 +1157,51 @@ Ruby on Rails creator DHH's new project provides long-term memory for agent codi
 GenLayer's project boilerplate for building "intelligent contracts" on their blockchain-based AI agent platform has accumulated 16,273 stars with 430 added today. GenLayer combines smart contracts with AI agents, enabling contracts that can reason, make decisions, and interact with external data — a novel intersection of blockchain and AI.
 
 **Why it matters.** The stories today paint a picture of an industry simultaneously consolidating (Stripe buying OpenRouter at $7B+), exposing its vulnerabilities (Microsoft's 8-month Copilot patch delay), and building the tooling layer that will determine which AI agents actually ship to production (the skills explosion, orchestration frameworks, memory systems). The Samsung foundry price hikes and Fractile's $6.5B valuation remind us that the physical infrastructure — the chips and the foundries — remains the bottleneck. And the GitHub Trending data makes one thing clear: the market has moved past "build one agent" to "manage a fleet of agents." The winners will be those who own the metering, routing, memory, and orchestration layers — not just the models themselves.
+
+
+## The Rise of the AI Software Team: How Multi-Agent Orchestration Changes Development
+Source: https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-09-09.html
+# The Rise of the AI Software Team: How Multi-Agent Orchestration Changes Development
+
+In September 2026, the software engineering landscape underwent a fundamental transformation. The industry has shifted from treating AI as a productivity tool for code completion to viewing AI as a foundational component of a unified development pipeline. This evolution, marked by the simultaneous breakthroughs in models like OpenAI's GPT-6 Astra, Google's Lyra 3.5 API, and GitHub's Hydrofusion architecture, signals the transition from individual AI assistants to collaborative, multi-agent software teams. Understanding this shift is critical for developers and engineering managers, as it redefines productivity, role responsibilities, and project management methodologies.
+
+## The End of Autocomplete
+
+For years, AI coding assistants functioned primarily as sophisticated autocomplete engines. They predicted the next few tokens, suggested snippets based on context, and helped accelerate routine syntax generation. This was a significant boost, but it remained firmly within the realm of assisting the human programmer. The programmer was the architect, the decision-maker, and the auditor, with the AI acting as a faster version of traditional IDE intelligence.
+
+This model is now hitting a ceiling. As codebases grow and architectural requirements become more nuanced, the limitations of token-prediction assistants have become apparent. They lack the long-term context, planning capabilities, and ability to handle multi-file refactoring that complex systems require. The transition we are seeing now is the move toward agency. Instead of simply predicting what comes next, these systems are tasked with understanding a goal, planning a series of actions, executing them, evaluating the results, and iterating until the task is complete.
+
+## The Multi-Agent Paradigm
+
+The key to this new era is multi-agent orchestration. Rather than relying on a single, general-purpose model for every task, modern development environments are increasingly composed of specialized models. This mirrors traditional software engineering teams: you have specialists in architecture, coding, testing, security, and documentation.
+
+In an AI-orchestrated environment, these roles are mapped to specialized agents. One agent may focus on understanding architectural constraints, another on generating code based on those constraints, a third on writing and executing unit tests, and a fourth on auditing the output for security vulnerabilities or performance bottlenecks. This division of labor allows for deeper specialization, higher efficiency, and better error mitigation. The "orchestrator" agent ensures that these sub-agents interact correctly, manage dependencies, and adhere to project goals.
+
+## The 2026 Unified Stack
+
+The events of September 2026 highlighted this convergence. The release of interconnected tools—such as GPT-6 Astra for complex reasoning and planning, Google's Lyra 3.5 for API-driven logic, and GitHub's Hydrofusion for integrated workflow management—creates a unified stack. This stack enables a cohesive pipeline where the boundaries between designing, coding, testing, and deploying become porous.
+
+This convergence means AI can increasingly participate in the complete software development lifecycle, from translating requirements into technical specifications to verifying deployed solutions. The impact is a dramatic reduction in the time-to-market for complex features, but it also shifts the focus of human engineers. The task of "writing code" is increasingly secondary to the task of "directing and verifying the output of AI agents."
+
+## Managing Agentic Complexity
+
+With the shift toward autonomous agents comes the necessity for robust oversight. The danger of a poorly constrained agentic system is real. If an agent has the ability to interact with a repository, execute terminal commands, and deploy code, the potential for errors is magnified.
+
+The current industry trend is to implement "human-in-the-loop" (HITL) checkpoints. These checkpoints act as guardrails. An agent might propose a multi-file refactoring plan based on a Jira ticket or GitHub issue. The human developer reviews this plan, identifies potential pitfalls, and approves the next steps. Once approved, the agent executes the plan, but only within the designated scope. This workflow preserves developer control while leveraging the speed and efficiency of autonomous agents.
+
+Furthermore, monitoring and observability for AI agents are becoming as critical as application monitoring. We need tools to log agent decisions, audit their actions, and detect when they deviate from intended patterns. This is an emerging field that borrows heavily from existing DevOps practices but adapts them to the non-deterministic nature of AI behavior.
+
+## The Impact on Engineering Roles
+
+As AI agents assume more responsibility, the role of the software engineer is evolving into that of a systems orchestrator. The value a senior engineer brings to a project is shifting away from pure syntax proficiency toward deeper architectural understanding, complex problem decomposition, and critical evaluation of AI-generated solutions.
+
+Junior engineers, conversely, are finding that the "apprenticeship" model of software development is changing. They may spend less time writing boilerplate code and more time learning to interact with agents, understanding the underlying principles of the systems these agents are building, and gaining experience in reviewing and debugging complex automated outputs. This requires a strong foundation in core engineering principles, as relying solely on AI without the ability to verify its work is a recipe for technical debt and security risks.
+
+## Looking Ahead
+
+We are in the early stages of this agentic transformation. The current tools are powerful but still maturing. Challenges remain in context management for very large projects, reducing hallucination in complex reasoning, and ensuring that agent-generated code adheres to strict security standards.
+
+However, the trajectory is clear. The focus is shifting from "how can I code this faster" to "how can I design a workflow where AI agents do the heavy lifting while I maintain ultimate control." This is not the end of software engineering, but it is the beginning of a significantly more collaborative and productive era. The developers who thrive in this environment will be those who embrace the orchestrator role, master the art of directing AI agents, and double down on the critical thinking skills that AI cannot replicate.
 
 
 ## Qwen3.8-27B: Apache 2.0 Dense Vision-Language Model Beats Claude Opus 4.6 on 15 of 19 Benchmarks
