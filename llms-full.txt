@@ -1239,6 +1239,97 @@ GenLayer's project boilerplate for building "intelligent contracts" on their blo
 **Why it matters.** The stories today paint a picture of an industry simultaneously consolidating (Stripe buying OpenRouter at $7B+), exposing its vulnerabilities (Microsoft's 8-month Copilot patch delay), and building the tooling layer that will determine which AI agents actually ship to production (the skills explosion, orchestration frameworks, memory systems). The Samsung foundry price hikes and Fractile's $6.5B valuation remind us that the physical infrastructure — the chips and the foundries — remains the bottleneck. And the GitHub Trending data makes one thing clear: the market has moved past "build one agent" to "manage a fleet of agents." The winners will be those who own the metering, routing, memory, and orchestration layers — not just the models themselves.
 
 
+## Claude Opus 5.5: Anthropic's New Flagship Model That Gets Faster, Smarter, and Cheaper
+Source: https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-09-24.html
+# Claude Opus 5.5: Anthropic's New Flagship Model That Gets Faster, Smarter, and Cheaper
+
+Claude Opus 5.5 landed on September 22, 2026, and it broke the usual frontier-model playbook. Instead of forcing teams to choose between capability and cost, Anthropic shipped a model that is both more powerful and cheaper than its predecessor. API pricing dropped to $4 per million input tokens and $20 per million output (down from $5 and $25 on Opus 5), output generation is over 30% faster, and Anthropic claims roughly 40% lower total cost on typical workloads at default settings. For the first time, a flagship Opus-tier model is cheaper to run than the one it replaces. The implications reach every team that pays for inference at scale.
+
+## Pricing: The Numbers That Matter
+
+The rate card for Opus 5.5 tells the story immediately. Where Opus 5 charged $5 per million input tokens and $25 per million output, Opus 5.5 brings that down to $4 and $20 respectively. Cache reads, which dominate the cost of agentic and coding workloads, dropped from $0.50 to $0.20 per million tokens, a 60% reduction. Cache writes fell from $6.25 to $5.
+
+For context, here is the full Anthropic lineup as of September 2026:
+
+| Model | Input/MTok | Output/MTok | Cache Read/MTok |
+|---|---|---|---|
+| Claude Opus 5.5 | $4 | $20 | $0.20 |
+| Claude Opus 5 (now legacy) | $5 | $25 | $0.50 |
+| Claude Sonnet 5 | $2 | $10 | $0.20 |
+| Claude Haiku 4.5 | $1 | $5 | $0.10 |
+| Claude Fable 5.1 | $10 | $50 | $1.00 |
+
+The batch API cuts those rates in half, bringing Opus 5.5 to $2/$10. Fast mode doubles the standard rates to $8/$40 but delivers up to 2.5x the output speed. Even at fast-mode pricing, Opus 5.5 still undercuts GPT-6 Astra's base rate of $10/$50 per million tokens.
+
+The math on a realistic monthly workload, say 10 million input tokens and 2 million output, shows Opus 5.5 costing around $80 versus $100 for Opus 5. Add heavy prompt caching and the gap widens further, because those cache reads are 60% cheaper. Anthropic's own estimate of 40% total savings at default effort levels accounts for both the lower per-token rates and the model using fewer tokens per task.
+
+## Benchmark Performance: Where Opus 5.5 Leads
+
+Anthropic published benchmark results across eight categories, and Opus 5.5 leads on every single one compared to Opus 5. The widest margins appear in agentic and terminal coding benchmarks, which is where most production teams will see the most impact.
+
+**Agentic coding** is the headline category. On Terminal-Bench 4.0, Opus 5.5 scored 66.4%, beating GPT-6 Astra's 57.9% and crushing Opus 5's 52.3%. On FrontierCode v1.1, it posted 54.4% against Fable 5.1's 50.3%. On CursorBench 4.0, it hit 57.8%, up from 46.6% on Opus 5.
+
+**Knowledge work** benchmarks also moved significantly. GDPval-AA v2.1, which evaluates 44 occupations, placed Opus 5.5 at Elo 1846, ahead of Fable 5.1's 1735 and Opus 5's 1708.
+
+**Business workflows** showed a strong gain: 40.0% on AutomationBench versus 31.4% for Fable 5.1 and 26.9% for Opus 5. The only model that edges out Opus 5.5 here is GPT-6 Astra at 41.4%, a margin of just 1.4 percentage points.
+
+**Multidisciplinary reasoning** on Humanity's Last Exam (with tools) put Opus 5.5 at 67.7%, ahead of Fable 5.1's 65.6% and Opus 5's 63.6%.
+
+**Computer use** on OSWorld 2.0 showed 81.8% partial credit for Opus 5.5, up from 80.7% for Fable 5.1 and 74.0% for Opus 5.
+
+The single largest jump in the table is Terminal-Bench-Science 0.1, which went from 29.0% on Opus 5 to 58.7% on Opus 5.5. That 29.7-point improvement in scientific coding tasks represents a capability leap, not an incremental refinement.
+
+It is worth noting what Anthropic said explicitly: benchmark margins have become a less reliable guide to real-world differences at these capability levels. The gap between Opus 5.5 and Fable 5.1 is narrower in practice than the scores suggest. That kind of vendor candor is unusual and worth taking seriously.
+
+## Real-World Testing: What Early Users Found
+
+The benchmark numbers gain weight when matched against what actual testers reported. GitHub's Chief Product Officer, Mario Rodriguez, said: "Claude Opus 5.5 used among the fewest tokens and steps we measured. In VS Code, it solved more terminal tasks than Opus 5 in less than half the steps."
+
+Clio's staff developer Sean Heintz handed Opus 5.5 a large engineering task across six repositories and let it run overnight unattended. "It stayed on task for over 18 hours defining how our services talk to each other. Compared with Opus 5, it hit milestones faster and required minimal reworking."
+
+Quantium's Harley Barnes shared the most concrete before-and-after metric: "A complex coding task that previously took 38 prompts over four days came in at 11 prompts over three hours, with more production-ready outputs and less rework."
+
+Spotify's Aleksandar Mitic confirmed token efficiency improvements in internal evaluations, and Lovable's CTO Fabian Hedin said the model "finishes in a third to half fewer steps and uses significantly fewer tokens along the way."
+
+One early tester completed a 680,000-line code migration in less than a day, work that Anthropic says would have taken an engineering team weeks. On a separate test asking the model to cut load times across every page of a web app, Opus 5.5 succeeded 39 of 40 times, while Opus 5 made smaller improvements that also altered the app's behavior.
+
+## Safety and the Preserved Thinking Safeguard
+
+Opus 5.5 ships with what Anthropic describes as the best scores of any model on their automated behavioral audit, a comprehensive alignment test across thousands of simulated scenarios. The model is described as much less likely than recent predecessors to take hard-to-reverse actions or act outside its boundaries, and it is more resistant to prompt injection than Opus 5.
+
+Two capabilities require special governance. Because Opus 5.5 is comparable to Claude Mythos 5.1 in biology and cybersecurity, it launches with the same safeguard architecture as Fable 5.1. Cybersecurity tasks that exceed the standard safety threshold get rerouted to Opus 4.8. Biologically sensitive work is gated behind Anthropic's Life Sciences Verification Program.
+
+The anti-distillation safeguard called preserved thinking also ships with Opus 5.5. This feature, introduced with Fable 5.1, prevents API users from editing Claude's prior context to extract reasoning traces. Anthropic's September 2026 threat intelligence report documented multiple state-aligned actors using thousands of accounts to distill Claude's capabilities at industrial scale. Preserved thinking encrypts the reasoning and returns a signature token instead of raw thinking traces, making stolen transcripts far less useful for training rival models.
+
+Extended thinking cannot be disabled on Opus 5.5. This matters for production teams because thinking tokens count as output and affect both latency and billing. Anthropic recommends measuring billed tokens on your own workload before assuming the full 20% price reduction over Opus 5.
+
+## The Competitive Landscape: Opus 5.5 vs GPT-6 Astra
+
+The most natural comparison is with OpenAI's GPT-6 Astra, which shipped on September 3, 2026, at $10 input and $50 output per million tokens. The split verdict from independent analysts like AlphaCorp AI is clear: Opus 5.5 is the better buy for coding agents and high-volume knowledge work, while Astra holds the lead in frontier math, science, and abstract reasoning.
+
+The agentic coding gap is wide, with Opus 5.5 at 66.4% versus Astra's 57.9% on Terminal-Bench 4.0, at roughly 40% of the cost. But Astra's advantage on FrontierMath Tier 4 v2, at 97.6% versus Opus 5's 73.2%, and its independently verified 62.71% on ARC-AGI-3 (versus 30.16% for Opus 5) represent a different kind of intelligence that matters for research workloads.
+
+The pricing gap makes Opus 5.5 particularly compelling for teams that do not need frontier-level math or science. At $4/$20, Opus 5.5 costs 60% less per token than Astra. Its fast mode at $8/$40 still comes in below Astra's base rate. For teams that can route math-heavy tasks to Astra and everything else to Opus 5.5, the combined bill is substantially lower than either model alone.
+
+## What Comes Next
+
+Anthropic confirmed that Claude Sonnet 5.5 and Claude Haiku 5.5 will follow in the coming weeks, carrying many of the same efficiency and safety improvements. If the pattern holds, Sonnet 5.5 should offer near-Opus performance at Sonnet pricing, which would reshape the cost equation again.
+
+Opus 5 is now classified as a legacy model. It still runs at its original rates, and Anthropic has not announced a shutdown date, but the roadmap signal is clear. Teams still running Opus 5 in production should plan a migration to claude-opus-5-5. The change is a one-line model string update, but the always-on thinking feature means output token budgets, latency assumptions, and prompt tuning all need revisiting.
+
+The broader pattern this release confirms is that frontier AI costs are falling faster than anyone projected a year ago. Opus 5.5 is not a budget model, but it delivers what Anthropic calls Fable 5.1-level performance at a price point that would have been considered mid-tier six months ago. When your flagship model gets cheaper and better in the same release, the old playbook of "pay more for more intelligence" stops applying.
+
+## Sources
+
+- [Introducing Claude Opus 5.5 - Anthropic](https://www.anthropic.com/claude-opus-5-5)
+- [Claude Opus 5.5 System Card (PDF)](https://www-cdn.anthropic.com/fc1b44717c85dc068bc6ba5024219938094694bd/Claude%20Opus%205.5%20System%20Card.pdf)
+- [Claude Opus 5.5 Benchmarks, Pricing & Context Window - LLM Stats](https://llm-stats.com/models/claude-opus-5-5)
+- [Claude Opus 5.5 vs Opus 5: Benchmarks and Cost - Cosmic JS](https://www.cosmicjs.com/blog/claude-opus-5-5-vs-opus-5)
+- [Claude Opus 5.5 vs GPT-6 Astra - AlphaCorp AI](https://alphacorp.ai/blog/claude-opus-5-5-vs-gpt-6-astra-benchmarks-pricing-and-which-is-better)
+- [Introducing Claude Opus 5.5 - Anthropic](https://www.anthropic.com/claude-opus-5-5)
+- [Amazon Bedrock Model Card](https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-anthropic-claude-opus-5-5.html)
+
+
 ## OpenAI, Anthropic, and Google DeepMind Form Unprecedented AI Safety Alliance
 Source: https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-09-22.html
 # OpenAI, Anthropic, and Google DeepMind Form Unprecedented AI Safety Alliance
