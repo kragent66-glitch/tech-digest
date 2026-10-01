@@ -1259,7 +1259,7 @@ The pitch for orbital data centers rests on three physics advantages that terres
 
 That last point is driving urgency. Hyperscalers plan to spend roughly $400 billion on terrestrial data centers in 2026, and interconnection queues in key markets such as Northern Virginia, California, and Germany stretch 7 to 12 years. U.S. data centers are projected to add about 240 terawatt-hours of demand by 2030, a 130 percent increase over 2024 levels, and the sector tracks toward consuming 8 to 10 percent of global electricity by 2030. For companies that cannot buy power fast enough on the ground, orbit looks less like science fiction and more like a pressure valve.
 
-Google's own research blog makes the case plainly: the Sun emits more power than 100 trillion times humanity's total electricity production, and in the right orbit a solar panel can be up to eight times more productive than on Earth. Working backward from that, Google argues space may eventually be the best place to scale AI compute.
+Google's own research blog frames the end goal bluntly: the Sun emits more power than 100 trillion times humanity's total electricity production, which is why the company argues space may eventually be the best place to scale AI compute.
 
 ## The three problems Google must solve
 
