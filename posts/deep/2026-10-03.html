@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Post-Quantum Cryptography in 2026: Why the Harvest-Now-Decrypt-Later Deadline Just Moved to 2031 (Deep Dive)</title>
+<meta name="description" content="Post-quantum cryptography (PQC) stopped being a &quot;someday&quot; project in 2026. In June, the White House signed an executive order titled &quot;Securing the Nation Against Advanced...">
+<meta name="author" content="Utkarsh Bhangale">
+<link rel="canonical" href="https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-10-03.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Tech Digest">
+<meta property="og:title" content="Post-Quantum Cryptography in 2026: Why the Harvest-Now-Decrypt-Later Deadline Just Moved to 2031">
+<meta property="og:description" content="Post-quantum cryptography (PQC) stopped being a &quot;someday&quot; project in 2026. In June, the White House signed an executive order titled &quot;Securing the Nation Against Advanced...">
+<meta property="og:url" content="https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-10-03.html">
+<meta property="og:image" content="https://kragent66-glitch.github.io/tech-digest/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Post-Quantum Cryptography in 2026: Why the Harvest-Now-Decrypt-Later Deadline Just Moved to 2031 (Deep Dive)">
+<meta name="twitter:description" content="Post-quantum cryptography (PQC) stopped being a &quot;someday&quot; project in 2026. In June, the White House signed an executive order titled &quot;Securing the Nation Against Advanced...">
+<meta name="twitter:image" content="https://kragent66-glitch.github.io/tech-digest/og-card.png">
+<link rel="alternate" type="application/rss+xml" title="Tech Digest" href="https://kragent66-glitch.github.io/tech-digest/rss.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Post-Quantum Cryptography in 2026: Why the Harvest-Now-Decrypt-Later Deadline Just Moved to 2031", "description": "Post-quantum cryptography (PQC) stopped being a \"someday\" project in 2026. In June, the White House signed an executive order titled \"Securing the Nation Against Advanced...", "datePublished": "2026-10-03T19:00:00+05:30", "dateModified": "2026-10-03T19:00:00+05:30", "inLanguage": "en", "articleSection": "Tech Deep Dive", "keywords": "deep dive, technology analysis, AI", "wordCount": 1668, "author": {"@type": "Person", "name": "Utkarsh Bhangale", "url": "https://github.com/kragent66-glitch"}, "publisher": {"@type": "Organization", "name": "Tech Digest", "url": "https://kragent66-glitch.github.io/tech-digest", "logo": {"@type": "ImageObject", "url": "https://kragent66-glitch.github.io/tech-digest/og-card.png"}}, "mainEntityOfPage": "https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-10-03.html", "image": "https://kragent66-glitch.github.io/tech-digest/og-card.png"}
+{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Tech Digest", "item": "https://kragent66-glitch.github.io/tech-digest/"}, {"@type": "ListItem", "position": 2, "name": "Deep Dives", "item": "https://kragent66-glitch.github.io/tech-digest/deep/index.html"}, {"@type": "ListItem", "position": 3, "name": "Oct 03, 2026", "item": "https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-10-03.html"}]}
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the key takeaway from Post-Quantum Cryptography in 2026: Why the Harvest-Now-Decrypt-Later Deadline Just Moved to 2031?", "acceptedAnswer": {"@type": "Answer", "text": "Post-quantum cryptography (PQC) stopped being a \"someday\" project in 2026. In June, the White House signed an executive order titled \"Securing the Nation Against Advanced Cryptographic Attacks,\" moving the federal deadline for quantum-safe encryption from 2035 to 2031 and attaching enforceable procurement rules to it. Meanwhile, IBM, Microsoft, Google, and Quantinuum all posted quantum hardware milestones that narrow the projected gap between today's computers and a cryptographically relevant quantum computer (CRQC), the machine that would break RSA and elliptic-curve cryptography. The result: the migration timelines that enterprises and governments published as long-range planning exercises are now near-term engineering workstreams. This article explains what changed, why \"harvest now, decrypt later\" is the concrete risk driving the urgency, and what the realistic migration looks like."}}]}</script>
+</head>
+<body>
+<div id="progress"></div>
+<div class="wrap">
+<header class="article-hero">
+<a class="back" href="../../">Tech Digest</a>
+<span class="eyebrow" style="display:block;margin-top:34px;">Deep Dive - Oct 03, 2026</span>
+<h1>Post-Quantum Cryptography in 2026: Why the Harvest-Now-Decrypt-Later Deadline Just Moved to 2031</h1>
+<div class="byline">
+<span class="by-author">Utkarsh Bhangale</span><span class="by-sep"></span>
+<time datetime="2026-10-03">Oct 03, 2026</time><span class="by-sep"></span>
+<span>8 min read</span><span class="by-sep"></span><span>1,668 words</span>
+</div>
+</header>
+<section class="key-facts" aria-label="Key facts">
+<h2>Key facts</h2>
+<p>Post-quantum cryptography (PQC) stopped being a &quot;someday&quot; project in 2026.</p>
+</section>
+<article class="article"><p>Post-quantum cryptography (PQC) stopped being a "someday" project in 2026. In June, the White House signed an executive order titled "Securing the Nation Against Advanced Cryptographic Attacks," moving the federal deadline for quantum-safe encryption from 2035 to 2031 and attaching enforceable procurement rules to it. Meanwhile, IBM, Microsoft, Google, and Quantinuum all posted quantum hardware milestones that narrow the projected gap between today's computers and a cryptographically relevant quantum computer (CRQC), the machine that would break RSA and elliptic-curve cryptography. The result: the migration timelines that enterprises and governments published as long-range planning exercises are now near-term engineering workstreams. This article explains what changed, why "harvest now, decrypt later" is the concrete risk driving the urgency, and what the realistic migration looks like.</p>
+<h2>What the June 2026 executive order actually requires</h2>
+<p>On June 22, 2026, the White House signed "Securing the Nation Against Advanced Cryptographic Attacks," and on June 24 the Office of Management and Budget followed with Memorandum M-26-15, "Execution of the Migration to Post-Quantum Cryptography" (<a href="https://www.whitehouse.gov/wp-content/uploads/2026/06/M-26-15-Execution-of-the-Migration-to-Post-Quantum-Cryptography.pdf" target="_blank" rel="noopener">whitehouse.gov</a>). The order sets two hard deadlines for high-value assets and high-impact systems:</p>
+<ul>
+<li>PQC for key establishment by December 31, 2030.</li>
+<li>PQC for digital signatures by December 31, 2031.</li>
+</ul>
+<p>The sequencing is deliberate. Key establishment comes first because the confidentiality threat is already underway, while a forged signature is a real-time attack you cannot retrofit. The order does not invent new algorithms. It codifies the NIST standards finalized in August 2024 and links compliance to federal procurement, with the Federal Acquisition Regulatory Council expected to drive contractor requirements (<a href="https://pqshield.com/the-quantum-countdown-what-the-new-white-house-eo-14409-means-for-pqc" target="_blank" rel="noopener">PQShield</a>).</p>
+<p>The operational load is specific. Agencies must appoint a PQC migration lead reporting to the CIO within 30 days, and OMB must require critical-system inventories and formal migration plans within 90 days. Each agency must submit a PQC Migration Plan to OMB and the Office of the National Cyber Director no later than 120 days from the memorandum, which lands on October 22, 2026. NIST is to complete a pilot migration by the end of 2027 to serve as a blueprint, and NIST and CISA must publish minimum requirements for a Cryptographic Bill of Materials (CBOM) by March 2027 (<a href="https://www.wiz.io/blog/white-house-post-quantum-cryptography-executive-order" target="_blank" rel="noopener">Wiz</a>).</p>
+<p>The dates are the easy part. The hard part is that a migration cannot start until an organization knows what cryptography it is actually running, and most do not.</p>
+<h2>The quantum hardware milestones that forced the move</h2>
+<p>Policy did not accelerate on its own. The shift reflects three things: standards are final, migration timelines are long, and sensitive data already outlives the cryptography protecting it. Hardware progress supplied the catalyst.</p>
+<p>IBM has been the loudest on timelines. At its November 2025 Quantum Developer Conference it unveiled the Nighthawk and Loon processors and reaffirmed goals of quantum advantage by the end of 2026 and a large-scale, fault-tolerant machine by 2029 (<a href="https://newsroom.ibm.com/2025-11-12-ibm-delivers-new-quantum-processors,-software,-and-algorithm-breakthroughs-on-path-to-advantage-and-fault-tolerance" target="_blank" rel="noopener">IBM Newsroom</a>). In June 2026, IBM committed more than $10 billion to quantum over five years. Then on July 30, 2026, IBM and Algorithmiq published a demonstration of quantum advantage on the simulation of a heterogeneous quantum material, run on an IBM Heron processor, using a noise-manipulation framework to establish trust in results where classical verification was unavailable (<a href="https://newsroom.ibm.com/2026-07-30-ibm-and-algorithmiq-demonstrate-quantum-advantage,-establishing-a-framework-for-trusted-quantum-computation-beyond-classical-verification" target="_blank" rel="noopener">IBM Newsroom</a>). IBM reported that eight months after the problem and results were first released on its Quantum Advantage Tracker, no classical method had reliably reproduced them across the full problem regime studied.</p>
+<p>Microsoft took a different architectural path. At Build 2026 it announced Majorana 2, claiming qubits roughly 1,000 times more reliable than those in Majorana 1, with parity lifetimes of at least 20 seconds per qubit and some lasting as long as a minute. Microsoft said it is now targeting a scalable quantum computer as early as 2029, halving its earlier timeline, and that its agentic AI research platform, Microsoft Discovery, helped automate measurements and fabrication analysis during design (<a href="https://siliconangle.com/2026/06/02/microsofts-new-majorana-2-quantum-chip-claims-dramatic-breakthrough-qubit-stability" target="_blank" rel="noopener">SiliconANGLE</a>).</p>
+<p>On the error-correction front, Quantinuum reported in March 2026 a demonstration of 94 error-protected logical qubits performing beyond-break-even computations, and Google's Willow processor progressed from a 3x3 surface-code demonstration to a 7x7 code in early 2026, with each increase in code distance suppressing the logical error rate by roughly 2x as surface-code theory predicts (<a href="https://presenc.ai/research/quantum-computing-milestones-2026" target="_blank" rel="noopener">Presenc AI</a>). None of these is a CRQC. Together they are why no major institution still holds a "wait and see" position.</p>
+<h2>Harvest now, decrypt later: the threat that is already running</h2>
+<p>The reason PQC migration cannot wait for a CRQC is the harvest-now, decrypt-later (HNDL) attack. An adversary captures and stores encrypted traffic today, then decrypts it once a sufficiently powerful quantum computer exists. Any data with a long confidentiality shelf life, from medical records to state secrets to long-lived intellectual property, is already exposed the moment it is transmitted under quantum-vulnerable cryptography.</p>
+<p>NIST framed this plainly in its transition framework: organizations must begin migrating today because sensitive data often retains value for many years, so the encrypted data is at risk now even though the machine that will break it does not yet exist (<a href="https://csrc.nist.gov/pubs/ir/8547/ipd" target="_blank" rel="noopener">NIST IR 8547</a>). The Cloud Security Alliance has extended the analysis to AI infrastructure, noting the regulatory response has advanced materially since NIST published FIPS 203, 204, and 205 in August 2024 and established a formal deprecation timeline for RSA and elliptic-curve cryptography (<a href="https://labs.cloudsecurityalliance.org/wp-content/uploads/2026/05/ai-infrastructure-post-quantum-harvest-now-decrypt-later-v1-csa-styled.pdf" target="_blank" rel="noopener">Cloud Security Alliance</a>).</p>
+<p>The practical consequence is a distinction most security teams have not internalized: encryption in transit today is protecting data whose confidentiality requirement may extend a decade or more. If that traffic is being recorded, the migration clock started when the data was sent, not when the quantum computer arrives.</p>
+<h2>The migration stack: ML-KEM, ML-DSA, and SLH-DSA</h2>
+<p>The algorithm foundation is settled. NIST's first three post-quantum standards are:</p>
+<ul>
+<li>FIPS 203, ML-KEM, for key establishment, derived from the CRYSTALS-Kyber design.</li>
+<li>FIPS 204, ML-DSA, for digital signatures, derived from CRYSTALS-Dilithium.</li>
+<li>FIPS 205, SLH-DSA, a stateless hash-based signature scheme derived from SPHINCS+.</li>
+</ul>
+<p>NIST Internal Report 8547 lays out the transition: RSA-2048 and ECC P-256, the most widely deployed public-key algorithms, are designated for deprecation by 2030, and all quantum-vulnerable public-key algorithms are disallowed after 2035 regardless of key length. NIST also anticipates hybrid deployments, where a classical and a post-quantum algorithm are combined so the result stays secure if at least one component holds. That hybrid model is how most early production rollouts, including TLS key exchange and Apple's iMessage PQ3 protocol, have shipped.</p>
+<h2>Who is moving fastest</h2>
+<p>Governments set the floor, and technology companies are sprinting ahead of it. Google announced a 2029 deadline for completing its PQC migration, citing faster-than-expected progress in quantum hardware and error correction as the reason it accelerated from earlier assumptions. Cloudflare matched Google's 2029 target, including post-quantum authentication, and reported that as of April 2026 more than 65% of human-generated traffic on its network was already protected with post-quantum encryption (<a href="https://thequantuminsider.com/2026/08/07/post-quantum-cryptography-timelines" target="_blank" rel="noopener">The Quantum Insider</a>). Microsoft's Quantum Safe Program targets full transition by 2033, two years ahead of the NIST government deadline.</p>
+<p>The regulatory spread is wide. NSA's CNSA 2.0 requires new acquisitions into National Security Systems to support quantum-resistant cryptography from January 1, 2027. The EU's NIS Cooperation Group framework calls for national PQC strategies and cryptographic inventories by the end of 2026, high-risk critical-infrastructure migration by 2030, and medium-risk migration by 2035. The G7 Cyber Expert Group issued a financial-sector roadmap in January 2026, sequencing awareness in 2026 to 2027, discovery in 2027 to 2028, and migration execution for critical systems from 2030 to 2032. In the payments world, SWIFT is expected to make SwiftNet 8.0 PQC-enabled by 2027, with a 15-month migration window for participating institutions.</p>
+<p>Hardware builders are also consolidating supply. IonQ finalized its acquisition of SkyWater Technology on July 31, 2026, making it one of the few quantum companies to directly own a semiconductor foundry and securing a U.S.-based supply chain for its quantum chips (<a href="https://quantumzeitgeist.com/quantum-chip-supply-ionqs-skywater" target="_blank" rel="noopener">Quantum Zeitgeist</a>).</p>
+<h2>The real deliverables: crypto agility and CBOMs</h2>
+<p>The recurring lesson across every timeline is that the blocker is not choosing algorithms. It is knowing where vulnerable cryptography lives. The 2026 migration cannot be executed by hand, because federal and enterprise estates contain decades of embedded cryptography in firmware, TLS terminators, VPN concentrators, API gateways, identity systems, and code-signing pipelines.</p>
+<p>Two capabilities determine who makes the deadlines. The first is crypto agility: the architectural ability to swap algorithms without rewriting systems, so a future NIST update or a broken parameter set does not trigger another multi-year project. The second is the Cryptographic Bill of Materials, the cryptographic analog of a software bill of materials. The executive order tasks NIST and CISA with publishing minimum CBOM elements by March 2027, which signals that CBOMs are heading toward being an expected deliverable alongside software, the way SBOMs became after earlier supply-chain attacks.</p>
+<p>For the many organizations downstream of federal contracts and regulated sectors, the practical implication is that 2031 is a planning horizon, not a finish line. Contractors, cloud providers, and vendors selling into government will inherit PQC requirements through procurement long before their own internal deadlines arrive.</p>
+<h2>What to do now</h2>
+<p>The consensus playbook from the standards bodies is short and unglamorous. Build a cryptographic inventory first, because you cannot migrate what you cannot see. Prioritize key establishment over signatures, since that is where HNDL risk concentrates. Identify systems holding long-lived sensitive data, and treat 2031 as near-term. Ask vendors for crypto-agile roadmaps and CBOMs now rather than at renewal. Finally, bake PQC into planned cloud migrations, hardware refreshes, and development lifecycles so migration cost is absorbed into work already scheduled.</p>
+<p>The honest framing is that 2026 did not reveal a sudden quantum breakthrough. It revealed that the standards, the hardware roadmaps, and the policy deadlines finally agree with each other, and that the data being encrypted today is what the clock is really running on. Organizations that treat the deadline as a cryptography team's problem will miss it. The ones that treat it as an asset-management and architecture problem, started now, will not.</p></article>
+<nav class="nextprev" aria-label="More">
+<div class="np-block np-prev"><span class="np-label">More Deep Dives</span><a href="https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-10-02.html">Oct 02, 2026: Knowledge Collapse: Why AI Chatbots Give You a Narrower Slice of Knowledge Than Google Search</a></div>
+<div class="np-block np-next"><span class="np-label">Archive</span><a href="https://kragent66-glitch.github.io/tech-digest/deep/index.html">All deep dives</a></div>
+</nav>
+<footer>
+<div class="row">
+<span><a href="../../">Home</a></span><span><a href="../../rss.xml">RSS</a></span>
+<span>By <a href="https://github.com/kragent66-glitch">Utkarsh Bhangale</a></span><span>All rights reserved</span>
+</div>
+</footer>
+</div>
+<script>
+(function () {
+  var p = document.getElementById('progress'); var tick = false;
+  function paint() { var h = document.documentElement.scrollHeight - window.innerHeight; p.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%'; tick = false; }
+  window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(paint); } }, { passive: true }); paint();
+})();
+</script>
+</body>
+</html>
