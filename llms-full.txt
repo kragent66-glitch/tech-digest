@@ -1239,6 +1239,65 @@ GenLayer's project boilerplate for building "intelligent contracts" on their blo
 **Why it matters.** The stories today paint a picture of an industry simultaneously consolidating (Stripe buying OpenRouter at $7B+), exposing its vulnerabilities (Microsoft's 8-month Copilot patch delay), and building the tooling layer that will determine which AI agents actually ship to production (the skills explosion, orchestration frameworks, memory systems). The Samsung foundry price hikes and Fractile's $6.5B valuation remind us that the physical infrastructure — the chips and the foundries — remains the bottleneck. And the GitHub Trending data makes one thing clear: the market has moved past "build one agent" to "manage a fleet of agents." The winners will be those who own the metering, routing, memory, and orchestration layers — not just the models themselves.
 
 
+## The Harness Era: Why ARC-AGI-3 Scores Jumped From 7% to 56% Without a New Model
+Source: https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-10-05.html
+# The Harness Era: Why ARC-AGI-3 Scores Jumped From 7% to 56% Without a New Model
+
+In the space of about 30 days, the top score on the ARC-AGI-3 Kaggle leaderboard climbed from roughly 7% to about 56%, and the jump came almost entirely from harness and scaffolding work rather than any new base model. That single data point reframes how the industry should read agent benchmarks in 2026. ARC-AGI-3, the first interactive reasoning benchmark from the ARC Prize Foundation, launched in March 2026 with frontier models scoring below 1% against humans at 100%. Six months later the same frontier models are being lifted from single digits to near-human efficiency by changing the loop around them: how their reasoning is retained, how their context is managed, and how tools are scoped. The model is not the whole product anymore. The harness is.
+
+## ARC-AGI-3 is a test of learning, not recall
+
+ARC-AGI-3 is described by its authors as an interactive benchmark in which agents explore novel, turn-based environments, infer the goals, build internal models of how the world works, and plan action sequences, all without explicit instructions. Each environment is a series of levels rendered as a 64x64 grid of 16 colors. The agent gets a frame or a short frame sequence per turn and must take one of a small set of actions. The benchmark intentionally keeps controls simple so that the difficulty sits in the logic, not the interface.
+
+The headline framing from the [ARC Prize Foundation](https://arcprize.org/arc-agi/3) was blunt: humans solve 100% of the environments, while as of March 2026 frontier AI systems scored below 1%. In the [technical report](https://arxiv.org/html/2603.24621v1), the authors place ARC-AGI-3 across four functional components of agentic intelligence: exploration, modeling, goal-setting, and planning and execution. The hardest part is that the agent is never told the objective. It has to infer the win condition of each new environment on its own.
+
+Scoring is not pass or fail. ARC-AGI-3 uses action efficiency, reported as RHAE, which compares the number of turns an agent needs to solve a new environment against a human baseline. Brute-forcing is penalized by design: a system that tries everything is scored as less intelligent than one that forms a model and plans. Based on official gameplay logs, OpenAI estimates the average human tester scored about 48%.
+
+## The 30-day jump from 7% to 56%
+
+The number that made the rounds on October 5 is the community leaderboard. [AI Weekly's daily index](https://aiweekly.co/ai-news-today) flagged a r/MachineLearning analysis reporting that top ARC-AGI-3 Kaggle scores climbed from roughly 7% to about 56% in about 30 days, with Tufa Labs leading at 55.89 and Yi-Chia Chen at 48.59. The critical detail in that thread: the gains came from harness and scaffolding advances, not from new base-model releases, and the solutions had to run on Kaggle-permitted compute.
+
+That last constraint matters. These were not labs throwing a thousand GPUs at a frontier model. The winning [Milestone #1](https://arcprize.org/blog/arc-prize-2026-milestone-1) entry, Tufa Labs' "The Duck," runs Qwen 3.6 27B FP8 locally and plays each game by writing and running Python in a live REPL, treating the environment like an interactive coding problem. The 2026 competition carries $850,000 for the ARC-AGI-3 track, including a $700,000 grand prize that only unlocks at 100%, and it closes for submissions on November 2, 2026, with results announced December 4, 2026, per the [competition page](https://arcprize.org/competitions/2026/arc-agi-3).
+
+## Two settings tripled the score
+
+The cleanest evidence that the harness, not the model, was the bottleneck came from OpenAI. In July 2026, the company published [How enabling two settings tripled our scores on the ARC-AGI-3 benchmark](https://openai.com/index/how-two-settings-tripled-our-arc-agi-3-scores). GPT-5.6 Sol had solved hard mathematics problems and beaten Pokemon FireRed, yet on ARC-AGI-3 it scored just 7.8%, and its predecessor GPT-5.5 managed 0.4%.
+
+OpenAI's diagnosis was that ARC's generic evaluation harness was discarding the model's private reasoning after every action and truncating history with a rolling window. With the official harness, GPT-5.6 Sol scored 13.3% on the public set. When OpenAI switched it to its production-style Responses API harness, enabling two settings it uses in ChatGPT and Codex, retained reasoning and compaction, the score rose to 38.3%, tripling performance while cutting output tokens by six times. The rolling truncation threshold in the official harness discards the oldest messages once the conversation passes 175,000 characters. Compaction summarizes instead of discarding, which lets the model carry what it learned about a game across a long run.
+
+The takeaway OpenAI states explicitly is that benchmarks rarely measure a model in isolation. They also measure API settings, harness design, and prompting. The company recommended that developers retain reasoning and use compaction precisely because those settings best match how the models are deployed in real products.
+
+## The provider adapter gap is enormous
+
+If two settings move the needle, a full provider-tuned harness moves it off the chart. On September 30, the [ARC Prize account](https://x.com/arcprize) posted verified numbers for GPT-6.1 Sol: 52.7% on ARC-AGI-3 with the standard harness, and 96.4% with a provider adapter harness, at roughly the same cost per task. That 96.4% was reported as comparable to GPT-6 Astra's 99.9%, but delivered at 77% lower cost. The same model, the same benchmark, a difference of nearly 44 points depending on the loop wrapped around it.
+
+That gap is why harness disclosure is becoming a methodology issue, not a footnote. The paper that accompanied one ARC-AGI-3 harness entry, cited in later work like [Tycho](https://arxiv.org/html/2607.28287v1), is titled "Stop comparing LLM agents without disclosing the harness." When the harness can swing a score by more than 40 points, a leaderboard number without a harness description is close to meaningless.
+
+## Bimodal: 0.0% and 97.1%
+
+The ARC Prize Foundation's own testing produced the most dramatic illustration. In the [technical report](https://arxiv.org/html/2603.24621v1), the authors describe hiring researchers to build general harnesses targeting a small set of public environments, then testing those harnesses on the full public set that the researchers had not seen. Performance was extremely bimodal. In a variant of environment TR87, Opus 4.6 scored 0.0% with no harness and 97.1% with the Duke harness. A harness that did not generalize scored near zero; a harness that managed context well scored near the top.
+
+Different teams attacked the context problem differently. The Duke harness lets the model execute arbitrary Python to selectively retrieve and transform information from its action history, instead of carrying every frame forward. Tufa Labs' Duck harness pops the oldest messages, which its team calls "infinite play via eviction," and keeps the harness lightweight and generic on the premise that the model should drive. Counterintuitively, Tufa reported that hand-crafted tools actually hurt the model, and that removing them worked better. Symbolica AI's Arcgentica uses an orchestrator that never touches the environment directly and delegates to subagents that return compressed summaries, a design that constrains context growth and was able to solve all three public environments.
+
+The pattern across all of them is the same: the winning innovation is memory and context management, not a trick that makes the model smarter.
+
+## Why ARC keeps harnesses off the official leaderboard
+
+There is a real tension inside all of this, and ARC Prize is explicit about it. The official leaderboard does not use a harness to report official scores. The foundation's position is that future AGI systems will not need task-specific handholding, and that specialized harnesses are not a useful measure of AGI progress because their performance on seen environments does not transfer to unseen ones. To keep the research honest, ARC Prize runs a separate community leaderboard that is public and self-reported, which is where the 56% figure lives, and it cautions against reading those scores as evidence of AGI progress.
+
+Crucially, the foundation does not dismiss harness work. It calls better harnesses economically valuable and says it expects 2026 to see significant harness innovation because of ARC-AGI-3. It even sketches the path forward: the best general harness ideas tend to migrate behind the model API layer. The original chain-of-thought research started as a third-party harness wrapping GPT-3, became a first-party method inside OpenAI, and shipped to the market as the o1 model. The harness becomes the model's default behavior, and the leaderboard resets.
+
+## What this means for builders
+
+The practical implications for anyone shipping agents are not subtle. First, treat context management as a core feature, not an optimization. Retained reasoning, compaction, eviction, and summarization are the difference between an agent that stalls and one that learns across a long task. Second, evaluate the model and the harness together, and publish both when you compare. A benchmark score attached to a model name without harness details is not a reproducible result. Third, expect the boundary to keep moving. Capabilities that today live in an open-source harness will migrate into provider APIs and default settings, which means a harness advantage is temporary unless it is general.
+
+For enterprises, the ARC-AGI-3 story is a warning about buying on benchmark numbers. If the same model can score 7% or 56% depending on the scaffolding, then a demo that looks impressive may be measuring someone's harness, and a pilot that fails may be measuring the absence of one. Agent reliability in 2026 is an engineering property of the whole loop, and the teams that own their loop will be the ones that get results.
+
+## What to watch
+
+Three signals will show whether the harness era keeps compounding. The first is the November 2 submission deadline and the December 4 results, which will reveal whether the community can push scores higher on unseen environments without overfitting to the public set. The second is migration: watch for ARC-AGI-3 harness techniques, especially compaction and subagent summarization, to reappear as default API behavior, the same way chain-of-thought did. The third is methodology, because the gap between the official and community leaderboards is now big enough that the field needs a shared standard for disclosing the harness. The model is still the engine. In 2026, the harness is the car, and the scoreboard is finally measuring the whole vehicle.
+
+
 ## The 2026 Enterprise AI Billing Shift: Copilot Credits, Usage-Based Pricing, and the End of Flat-Rate AI
 Source: https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-10-04.html
 # The 2026 Enterprise AI Billing Shift: Copilot Credits, Usage-Based Pricing, and the End of Flat-Rate AI
