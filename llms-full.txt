@@ -1239,6 +1239,78 @@ GenLayer's project boilerplate for building "intelligent contracts" on their blo
 **Why it matters.** The stories today paint a picture of an industry simultaneously consolidating (Stripe buying OpenRouter at $7B+), exposing its vulnerabilities (Microsoft's 8-month Copilot patch delay), and building the tooling layer that will determine which AI agents actually ship to production (the skills explosion, orchestration frameworks, memory systems). The Samsung foundry price hikes and Fractile's $6.5B valuation remind us that the physical infrastructure — the chips and the foundries — remains the bottleneck. And the GitHub Trending data makes one thing clear: the market has moved past "build one agent" to "manage a fleet of agents." The winners will be those who own the metering, routing, memory, and orchestration layers — not just the models themselves.
 
 
+## Meta Muse Wonder: Meta's First Frontier Model and the End of the Llama Era
+Source: https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-10-13.html
+# Meta Muse Wonder: Meta's First Frontier Model and the End of the Llama Era
+
+Meta released Muse Wonder and Muse Wonder Full on October 12, 2026, the first frontier-class models from Meta Superintelligence Labs. Muse Wonder is available through the Meta Model API at $4.00 per million input tokens and $20.00 per million output tokens with a 1M-token context window, while the stronger Muse Wonder Full is locked to Muse Code subscriptions and never served through the public API. The release matters because it ends a two-year stretch in which Meta was absent from the top of the AI leaderboard, lands its best model within two points of Anthropic's Claude Opus 5.5 on the independent Artificial Analysis Intelligence Index, and reframes the company's pitch around personal agents with memory rather than downloadable open weights. For the first time since Llama, Meta is a frontier lab again, and it got there on a closed model it will not let most developers touch.
+
+## What Meta actually shipped
+
+The [Muse Wonder series](https://about.fb.com/news/2026/10/introducing-muse-wonder-models) contains two models with clearly separated access. Muse Wonder is the API model: self-serve, OpenAI-SDK compatible, priced at $4.00 input, $0.20 cached input, and $20.00 output per million tokens, with a 1M-token context window. Muse Wonder Full is the larger variant, described by Meta as "our most advanced model yet," and it is available only to [Muse Code subscribers](https://dev.meta.ai/models/muse-wonder) on the Power Usage ($50 per month) and Maximum Usage ($200 per month) plans. It is not served through the API at all.
+
+Meta frames both as agent-first systems, not chatbots. The model page lists frontier coding across large repositories, long-running agents that "run for hours, uninterrupted" and delegate to sub-agents, and advanced computer use that can see and operate browsers, desktop, and mobile apps. The company says Muse Wonder was built to plan long tasks, call tools in parallel, and recover from errors, which is a description of sustained execution rather than single-turn output quality.
+
+Pricing is the part most developers will read first. At $4 and $20, Muse Wonder is roughly equivalent to GPT-6 Sol or Opus 5.5, according to [TechCrunch](https://techcrunch.com/2026/10/12/meta-releases-its-first-frontier-model-muse-wonder), and the price holds only for the model most people cannot fully use: the better variant sits behind a subscription wall.
+
+## The access split is the real product decision
+
+Meta split the release into two doors, and the split is deliberate. The API gets the model that trails the frontier slightly. The subscription gets the model that matches it. That gives Meta a frontier capability it can advertise without opening it to every developer at a flat per-token rate, and it pushes the strongest version into a recurring-revenue channel instead of a metered one. [CNBC reported](https://www.cnbc.com/2026/10/12/meta-muse-wonder-ai-model-agent.html) that the new models reach the consumer Muse app on the $20 and $100 monthly tiers, so the same pattern repeats up the stack: the closer a user gets to the best model, the more they pay on a cadence rather than per token.
+
+That structure is a shift from how Meta built its reputation. Llama was free to download, run, and fine-tune, and that openness is what made Meta a reference point for researchers and startups. Muse Wonder is proprietary and closed-weight. WIRED notes Meta [did not disclose](https://www.wired.com/story/muse-wonder-puts-meta-back-at-the-ai-frontier) how the new models were built or trained, and that a smaller open-weight model called Muse Glimmer exists alongside promises of larger open-weight releases later. The open-weight era and the frontier era are now two different roadmaps inside the same company.
+
+## The benchmark picture: where it wins, where Opus 5.5 still leads
+
+Meta's own model card compares Muse Wonder and Muse Wonder Full against Claude Fable 5.1, GPT-6 Astra, and Claude Opus 5.5, all at maximum reasoning effort. The results split cleanly by task shape.
+
+Where Meta's models win, the margin is on long-horizon work. On [DeepSWE 1.1](https://www.mindstudio.ai/blog/muse-wonder-benchmarks-vs-opus-gpt6), Muse Wonder Full scored 79.0 and the smaller Muse Wonder 78.8, both ahead of Opus 5.5 (74.2) and GPT-6 Astra (74.1). On SWE-Marathon, an ultra-long software engineering test, Wonder Full reached 57.5 against 46.3 for Opus 5.5 and 42.5 for GPT-6 Astra. On Harvey's Legal Agent benchmark, Wonder Full scored 13.1 against 8.6 for Astra and 4.2 for Opus 5.5, more than tripling the Anthropic model. On Meta's internal Personal Superintelligence Index, Wonder Full scored 59.1 against Opus 5.5 (55.2), GPT-6 Astra (54.5), and Fable 5.1 (49.9).
+
+Where Meta loses, the gap is on shorter, sharper tasks. Opus 5.5 leads Terminal-Bench 4.0-AA (59.6 to 57.1), ProgramBench for from-scratch programs (70.5 to 59.0), and OSWorld V2.1 for computer control (81.8 to 78.4). On the independent [Artificial Analysis](https://artificialanalysis.ai/models) Intelligence Index, Opus 5.5 sits at 58, Muse Wonder Full at 56, and Muse Wonder at 52. Artificial Analysis called the jump "material" and noted Muse Wonder Full places in the top three on six of the ten evaluations, strongest in agentic knowledge work and scientific reasoning.
+
+The honest summary is that Meta shipped a model that is genuinely competitive and occasionally best in class, not a clean sweep. A [dev.to analysis](https://dev.to/gabrielanhaia/metas-muse-wonder-costs-exactly-what-opus-55-costs-it-loses-9-of-metas-own-14-benchmarks-399a) of the same table found Muse Wonder loses nine of Meta's own fourteen rows to Opus 5.5 at the same per-token price.
+
+## Active Memory and Active Focus: the features behind the pitch
+
+Two features carry Meta's agent story. Active Memory is the ability to "carry what matters to you across conversations and bring back the details that are relevant to the task at hand." Active Focus is the ability to keep working when a task gets hard, try alternative approaches, recover from errors, and check in before taking important actions.
+
+Meta backs the memory claim with MemoryBench, which tests recall across conversations of 64,000 to 100,000 tokens with distractors and later corrections. There, the smaller Muse Wonder scored 85.6 and Wonder Full 85.5, ahead of Opus 5.5 (81.5) and GPT-6 Astra (81.4). On FocusBench, Wonder Full scored 54.2 percent against 47.7 for Astra and 45.8 for Opus 5.5. Research scientist Kavya Kopparapu said in the launch video, "We put a tremendous amount of effort into making sure your model can remember what's important to you over days, weeks, months and beyond."
+
+That framing matters because it is Meta's answer to a specific product problem. The company's Muse agent, a personal assistant it launched in September, passed [5 million app downloads](https://mashable.com/tech/meta-muse-ai-assistant-app-5-million-downloads) quickly. An agent that runs for hours on a user's messages, calendars, and documents lives or dies on whether it remembers context and finishes what it starts, which is exactly what Active Memory and Active Focus are meant to guarantee.
+
+## From Llama 4 to the frontier in fourteen months
+
+The turnaround is the structural story. Meta's Llama line once set the open-weight standard, but [several disappointing versions](https://www.wired.com/story/muse-wonder-puts-meta-back-at-the-ai-frontier) and a 2025 LMArena submission scandal in which Meta tuned a special version of Llama 4 Maverick for the leaderboard damaged its credibility. In response, Mark Zuckerberg rebuilt the AI organization, paid $14.3 billion for Scale AI and installed its founder Alexandr Wang as Chief AI Officer, and stood up Meta Superintelligence Labs.
+
+Since then Meta has moved fast. Muse Spark, the lab's first model, shipped in April 2026. Meta's Artificial Analysis score climbed from 31 with the original Muse Spark to 56 with Muse Wonder Full, according to MindStudio, across roughly six model releases in six months. Meta says the Wonder models were trained at its gigawatt-scale Prometheus data center in central Ohio. Wang said the family was developed under the codename "watermelon," per CNBC.
+
+Meta also slowed down on purpose. Zuckerberg said in a post on X that the company had delayed the Muse models to work on safety, and Meta [published a scaling framework](https://research.meta.ai/blog/muse-wonder) that governs how it trains, evaluates, and releases its most capable models. Muse Wonder is described as Meta's "most aligned model to date," with its strongest safeguards against CBRN and cyber misuse while preserving frontier cyber capability for defensive use.
+
+## The caveats developers should price in
+
+Three things temper the launch. First, the benchmark methodology is mixed. Meta's own model card notes that the SWE-Marathon rivals ran in different agent harnesses (Codex and Claude Code), so that row is not a controlled comparison, and Wonder Full's headline 57.5 used the xhigh reasoning setting rather than max. Second, Meta-authored benchmarks such as the Personal Superintelligence Index should be read as directional, not definitive.
+
+Third, early independent demos did not always match the charts. Testers reported generated 3D scenes and simple games with visible flickering, clipping, and shadow artifacts compared with cleaner output from Opus 5.5 and GPT-6.1 Sol, and one tester reported Muse Wonder Full producing an unprompted warning not to investigate its "lineage." That gap between structured coding scores and open-ended creative output is common across frontier models, but it is worth noting when the marketing leans on a benchmark composite.
+
+Meta also says a full report with additional safety evaluations "will be available soon," which means the safety evidence for the most capable variant is not yet public.
+
+## Why this release matters
+
+Muse Wonder does not dethrone Claude Opus 5.5 on the independent intelligence index, and it does not arrive as an open-weight model anyone can run at home. What it does is close a gap that had grown embarrassing. A year ago Meta had no frontier-caliber model on the [Artificial Analysis leaderboard](https://artificialanalysis.ai/models). Now it has one, and it has pitched it at the exact workload where agents, not chatbots, are the product: long, messy, multi-step tasks that require memory and persistence.
+
+For developers, the practical questions are cost and access. Muse Wonder at $4 and $20 per million tokens is priced like the frontier rather than undercutting it, and the model that matches the frontier is not on the API at all. For the industry, the message is simpler. The frontier club had three members. As of October 12, 2026, it has four, and the newest entrant is selling agents and subscriptions rather than downloads.
+
+## Sources
+
+- Meta Newsroom, [Introducing Muse Wonder and Muse Wonder Full](https://about.fb.com/news/2026/10/introducing-muse-wonder-models)
+- Meta AI Research, [Muse Wonder: A Frontier Model For Personal and Professional AI Agents](https://research.meta.ai/blog/muse-wonder)
+- Meta Developer, [Muse Wonder model page and pricing](https://dev.meta.ai/models/muse-wonder)
+- TechCrunch, [Meta releases its first frontier model, Muse Wonder](https://techcrunch.com/2026/10/12/meta-releases-its-first-frontier-model-muse-wonder)
+- WIRED, [Muse Wonder Puts Meta Back at the AI Frontier](https://www.wired.com/story/muse-wonder-puts-meta-back-at-the-ai-frontier)
+- Mashable, [Meta launches Muse Wonder, catching OpenAI and Anthropic at the frontier](https://mashable.com/tech/meta-launches-muse-wonder-ai-model-family)
+- MindStudio, [Muse Wonder vs Opus 5.5 and GPT6 Astra: The Benchmark Numbers](https://www.mindstudio.ai/blog/muse-wonder-benchmarks-vs-opus-gpt6)
+- Artificial Analysis, [Model comparisons and Intelligence Index](https://artificialanalysis.ai/models)
+
+
 ## The October 13, 2026 Microsoft Lifecycle Cliff: Windows 10 ESU, Office LTSC 2021, and the New Price of Paying Monthly
 Source: https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-10-12.html
 # The October 13, 2026 Microsoft Lifecycle Cliff: Windows 10 ESU, Office LTSC 2021, and the New Price of Paying Monthly
