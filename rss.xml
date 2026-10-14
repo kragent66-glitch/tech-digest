@@ -147,6 +147,13 @@
 <description>Today&#x27;s tech landscape is defined by three converging forces: AI infrastructure consolidation (Stripe buying OpenRouter for $7B+), the growing vulnerability surface of AI...</description>
 </item>
 <item>
+<title>npm Supply Chain Attacks in 2026: Shai-Hulud Worms, Hostage Tokens, and Why Provenance Is Not Enough</title>
+<link>https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-10-14.html</link>
+<guid>https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-10-14.html</guid>
+<pubDate>2026-10-14 07:00:00 +0530</pubDate>
+<description>In the first eight days of October 2026, attackers poisoned the official Tensorlake npm SDK, planted fake security-audit workflows across hundreds of GitHub repositories,...</description>
+</item>
+<item>
 <title>Meta Muse Wonder: Meta&#x27;s First Frontier Model and the End of the Llama Era</title>
 <link>https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-10-13.html</link>
 <guid>https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-10-13.html</guid>
