@@ -1239,6 +1239,87 @@ GenLayer's project boilerplate for building "intelligent contracts" on their blo
 **Why it matters.** The stories today paint a picture of an industry simultaneously consolidating (Stripe buying OpenRouter at $7B+), exposing its vulnerabilities (Microsoft's 8-month Copilot patch delay), and building the tooling layer that will determine which AI agents actually ship to production (the skills explosion, orchestration frameworks, memory systems). The Samsung foundry price hikes and Fractile's $6.5B valuation remind us that the physical infrastructure — the chips and the foundries — remains the bottleneck. And the GitHub Trending data makes one thing clear: the market has moved past "build one agent" to "manage a fleet of agents." The winners will be those who own the metering, routing, memory, and orchestration layers — not just the models themselves.
 
 
+## DeepInfer: DeepSeek Open-Sources Its Production Inference Engine and Puts Huawei Ascend 950 Beside Nvidia
+Source: https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-10-23.html
+# DeepInfer: DeepSeek Open-Sources Its Production Inference Engine and Puts Huawei Ascend 950 Beside Nvidia
+
+On October 20, 2026, DeepSeek published DeepInfer, the inference framework that serves DeepSeek-V4.1-Flash, under the Apache 2.0 license. The code runs on Nvidia SM100 GPUs and Huawei Ascend 950 NPUs, and DeepSeek says a single cluster handles 155 trillion tokens per day at roughly $38 of revenue per GPU-hour on off-peak pricing. The catch is scope. DeepInfer is an offline inference engine, not a complete serving stack: KV-cache management, prefill/decode disaggregation and replica load balancing are not included. DeepSeek opened the part of its stack that turns kernels into throughput and kept the part that turns throughput into a business.
+
+That split is the story. Frontier labs have treated serving software as a competitive moat while publishing model weights and papers. DeepInfer is the first time a major lab has released the actual compute layer of its production stack, with real production numbers attached, and deliberately withheld the system-economics layer. The release also gives Huawei's Ascend 950 equal billing with Nvidia's Blackwell-class SM100, a detail with as much geopolitical weight as engineering weight.
+
+## What DeepSeek released, precisely
+
+The repository supports exactly one model: DeepSeek-V4.1-Flash, a 552-billion-parameter mixture-of-experts model with 8 billion active parameters for input and 16 billion for output, a 1-million-token context window, and a KV cache that needs one quarter of the HBM and one eighth of the SSD storage of the previous generation, according to [DeepSeek's launch post](https://www.deepseek.com/en/news/deepseek-v4-1-flash). The default checkpoint is the October 17 update, DeepSeek-V4.1-Flash-1017.
+
+The framework ships under [Apache 2.0](https://github.com/deepseek-ai/DeepInfer/blob/main/LICENSE), so any company can use it commercially, modify it, and redistribute it without returning changes. DeepSeek also published [deepseek-recipe](https://github.com/deepseek-ai/deepseek-recipe), an MIT-licensed token encoder and decoder that reproduces the official API's tokenization behavior. That second repository matters more than it looks: tokenization mismatches change prompt costs, context accounting and edge-case outputs, and every self-hosted deployment now has a reference implementation to check against.
+
+DeepInfer was originally built primarily on [vLLM](https://github.com/vllm-project/vllm), with ideas from SGLang and Nvidia's TensorRT-LLM, and DeepSeek credits all three in the README. The [vLLM project responded on X](https://x.com/vllm_project/status/2112480719952138301): "Grateful to @deepseek_ai for releasing DeepInfer, initially built primarily on @vllm_project, under Apache 2.0 and crediting the open-source community! We've worked hard on DeepSeek V4.1 Flash inference efficiency and will keep improving with ideas from DeepInfer!"
+
+The repository had more than 20,000 stars and 2,200 forks by October 23. Builds need Linux, GCC 13 or later, Python 3.12, CUDA 13 on Nvidia or CANN 9.2 on Ascend. There is no online server, no OpenAI-compatible endpoint, and no scheduler for multi-tenant traffic. The README calls it "offline inference with the core features needed for serving at scale," which is accurate and carefully scoped.
+
+## The production numbers DeepSeek published
+
+DeepSeek attached a deployment Q&A that discloses figures labs normally keep internal. These are self-reported, not independently audited, and the benchmark charts were measured on separate hardware configurations for prefill and decode, so they should not be combined into one end-to-end claim.
+
+| Metric | DeepSeek's published figure |
+| --- | --- |
+| Cluster throughput | 155 trillion tokens per day |
+| Revenue efficiency | About $38 per GPU-hour at off-peak pricing |
+| Decode throughput | Above 25,000 output tokens/s/GPU at 256 requests per rank, EP64, 131,072 context |
+| Decode per user | About 100 tokens/s at that load; above 300 tokens/s at 8 requests |
+| Prefill throughput | About 60,000 non-cached tokens/s/GPU at 4,096 tokens per rank; near 90,000 at 65,536 |
+| Benchmark hardware | 4 SM100 GPUs for prefill, 64 SM100 GPUs for decode |
+| Smallest efficient production unit | 64 prefill GPUs plus 64 decode GPUs |
+
+The $38 per GPU-hour figure is the most revealing number. It is revenue, not gross margin, and it is quoted at off-peak rates. But it sets a ceiling on what the market can pay for serving capacity and still leave room for power, depreciation, networking and staff. At 155 trillion tokens a day, the implied volume also explains why DeepSeek optimizes for aggregate throughput rather than per-request latency. The same model can be cheap or expensive depending on the software between request and weights.
+
+The readings come from the repository's Pareto curves, summarized by [MarkTechPost](https://www.marktechpost.com/2026/10/20/deepseek-deepinfer-open-source-inference-framework) and [Kingy AI](https://kingy.ai/blog/deepinfer-deepseek-inference-engine). No outside party had reproduced them as of October 23, so treat them as vendor numbers, not neutral measurements.
+
+## DSpark, bounded replay and wide expert parallelism
+
+Four engineering choices explain most of the throughput.
+
+**DSpark, confidence-scheduled speculative decoding.** A draft model proposes up to five tokens per step. A confidence head predicts the acceptance rate for each draft token, and the scheduler verifies only the most valuable prefix instead of the full draft. DeepSeek says this cuts verified draft tokens by about 30 percent, from 5.00 to between 3.2 and 4.4, while accepted length barely moves, from 3.20 to 3.29. The payoff is 4 to 7 percent more throughput at around 60 sequences per rank, though it is 1.5 percent slower than fixed five-token verification at 16 sequences per rank. It is a scheduling optimization, not a new model, and the kind of detail that only shows up under production traffic.
+
+**SWA bounded replay.** On a cache hit, DeepInfer recomputes only a bounded suffix of sliding-window attention state, 128 tokens in the published description and 140 in the README's default configuration, rather than replaying the whole context. Recompute cost becomes roughly constant regardless of context length. DeepSeek says this nearly halves total prefill compute in the decoder layers. For agent workloads that repeatedly hit long, shared prompts, that is the difference between a cache hit being cheap and being almost as expensive as a miss.
+
+**Wide expert parallelism with load balancing.** Attention uses data parallelism. The mixture-of-experts layers use expert parallelism with an expert-parallel load balancer, running decode at EP64 to EP128 inside a supernode and prefill at the smallest EP that memory allows, typically EP2 to EP8. DeepSeek's own EP8 versus EP64 chart shows EP64 ahead at every batch size, which is the argument for spending more interconnect to keep experts busy.
+
+**Asynchronous scheduling and determinism.** CPU batch scheduling overlaps with device execution so the GPU does not idle between steps. Batch-invariant inference and deterministic sampling are also available, but only on Nvidia hardware. That last caveat matters for anyone who needs reproducible outputs for evaluation, auditing or regulated workloads: on Ascend, the same input is not guaranteed to produce the same output.
+
+## The missing serving stack is the real moat
+
+The release excludes three components that determine whether an inference deployment is operationally efficient: a KV-cache system, prefill/decode disaggregation, and load balancing across data-parallel replicas for both prefill and decode. DeepSeek's documentation says most of the engine functionality required for disaggregation is already implemented, but the deployment layer is not shipped because it is tightly coupled to internal infrastructure.
+
+The omission is not cosmetic. KV-cache management decides which cached attention states to keep, how to page them between GPU and CPU memory, and how to share them across requests with overlapping prefixes. At long context, it is the dominant driver of memory cost and latency. Prefill/decode disaggregation separates two workloads with incompatible resource profiles: prefill is compute-intensive and parallel, decode is memory-bandwidth-bound and sequential. Running both on the same GPU leaves one resource idle at every phase. Replica load balancing is what keeps a traffic spike from turning into a queue on one machine.
+
+[TechTimes](https://www.techtimes.com/articles/329311/20261021/deepseek-open-sources-its-inference-engine-withholds-cost-saving-components.htm) put the split sharply: DeepSeek released the compute layer and kept the system-economics layer, which is where its cost advantage actually lives. That is a rational competitive decision, and it is also the reason DeepInfer is not a drop-in replacement for vLLM. An operator who supplies all three missing pieces can approach DeepSeek's throughput, but will have rebuilt exactly the components DeepSeek chose not to share.
+
+vLLM, by contrast, supports more than 200 model architectures, runs on Nvidia, AMD, Intel, CPUs, TPUs and Ascend through plugins, and ships an OpenAI-compatible server with prefill/decode disaggregation. DeepInfer supports one model, two chip families, and offline batch runs. The comparison is not which project is better, but which fits a given job.
+
+## Huawei Ascend 950: first-class code, missing benchmarks
+
+The supported hardware list has two entries: Nvidia SM100 and Huawei Ascend 950. DeepSeek laid the groundwork in September by publishing DeepGEMM-Ascend, a port of its matrix-multiplication kernel, and DeepEP-Ascend, its chip-to-chip communication library for Ascend. DeepInfer consolidates both into one codebase with a CANN 9.2 build path.
+
+The strategic signal is clear. US export controls have limited Chinese access to top-end Nvidia chips, and a production-grade serving stack that treats Ascend as a first-class target gives Chinese operators a tested path off Nvidia for inference. Reporting cited by [TechTimes](https://www.techtimes.com/articles/329311/20261021/deepseek-open-sources-its-inference-engine-withholds-cost-saving-components.htm) says DeepSeek ordered 160,000 Ascend 950DT chips for a data center in Inner Mongolia, and DeepSeek has said it plans to begin pre-training on Ascend hardware before the end of 2026.
+
+The engineering caveat is just as clear. DeepSeek published no throughput or latency curves for the Ascend path. The README's benchmark charts cover Nvidia SM100 only; the Huawei section contains integration code and no performance data. No independent party had published an Ascend 950 versus SM100 comparison on V4.1-Flash as of October 21, according to [The New Stack](https://thenewstack.io/deepseek-deepinfer-huawei-nvidia). Two features, batch-invariant inference and deterministic sampling, are Nvidia-only in this release.
+
+So the correct reading is "code parity, unproven performance." A build path is not a benchmark. Until someone runs the same workload on both chip families with the same harness, the Ascend claim is an integration milestone, not a performance claim. The release also landed in a charged policy week: US authorities ordered DeepSeek removed from federal civilian agency systems, [Technology.org reported](https://www.technology.org/2026/10/21/deepseek-deepinfer-open-source-inference-huawei-ascend-950), and the October 17 V4.1-Flash-1017 update had already helped push the Kospi down 3.2 percent on memory-efficiency fears. Self-hosting changes where queries run, but not the legal status of the company that produced the weights. Regulated teams should treat DeepInfer as a software dependency with a compliance review, not as a shortcut around one.
+
+## What this means for operators and the inference market
+
+For a platform team, the practical questions are unglamorous. Do you have 64 prefill GPUs and 64 decode GPUs to reach the smallest efficient production unit? Can you build or buy the KV-cache layer, the disaggregation layer and the load balancer? Do you need reproducible outputs, which currently means Nvidia? Can you support a single model that may be replaced by a future DeepSeek release with different kernels?
+
+If the answer is yes, DeepInfer is a rare opportunity to study and adapt a frontier lab's kernel and scheduling choices. The FlashMLA, DeepGEMM, DeepEP, TileKernels, DeepSelect and TileLang code is real, and the benchmark scripts are in the repository. If the answer is no, the honest conclusion is that DeepInfer is a reference implementation, not a product. The gap between "we can run it" and "we can serve customers on it" is exactly the three missing components.
+
+The market implication is a gradual compression of inference margins, not a sudden one. DeepSeek has made the compute layer public, and vLLM has said it will absorb ideas from it. Every serving vendor now has to justify its markup against a published baseline. Closed labs still hold their own serving stacks, but the burden of proof has shifted: it is no longer enough to say your stack is fast. You have to show it against a competitor whose code anyone can read.
+
+Four data points will settle the open questions: independent Ascend 950 benchmarks on V4.1-Flash, whether DeepSeek ships the missing KV-cache and disaggregation components, whether the next model's inference code lands in the same repository, and how quickly vLLM and SGLang absorb the DSpark and bounded-replay ideas.
+
+Until then, the safe conclusion is narrow: DeepInfer is the most detailed public look yet at how a frontier lab serves a cheap, long-context model at scale, and it is deliberately incomplete. The open code explains the throughput. The closed components explain the business.
+
+
 ## CoreWeave's 15% Bonds and the AI Debt Reckoning: Inside the Neocloud Credit Squeeze
 Source: https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-10-22.html
 # CoreWeave's 15% Bonds and the AI Debt Reckoning: Inside the Neocloud Credit Squeeze
