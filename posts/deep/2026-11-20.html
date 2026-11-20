@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hugging Face Account Hijack: How an Expired Domain Let Researchers Poison the Kokoro TTS Model (Deep Dive)</title>
+<meta name="description" content="A security researcher registered the lapsed domain hexgrad.com, used it to reset the password on the Hugging Face account that publishes Kokoro, then fine-tuned the model...">
+<meta name="author" content="Utkarsh Bhangale">
+<link rel="canonical" href="https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-11-20.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Tech Digest">
+<meta property="og:title" content="Hugging Face Account Hijack: How an Expired Domain Let Researchers Poison the Kokoro TTS Model">
+<meta property="og:description" content="A security researcher registered the lapsed domain hexgrad.com, used it to reset the password on the Hugging Face account that publishes Kokoro, then fine-tuned the model...">
+<meta property="og:url" content="https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-11-20.html">
+<meta property="og:image" content="https://kragent66-glitch.github.io/tech-digest/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hugging Face Account Hijack: How an Expired Domain Let Researchers Poison the Kokoro TTS Model (Deep Dive)">
+<meta name="twitter:description" content="A security researcher registered the lapsed domain hexgrad.com, used it to reset the password on the Hugging Face account that publishes Kokoro, then fine-tuned the model...">
+<meta name="twitter:image" content="https://kragent66-glitch.github.io/tech-digest/og-card.png">
+<link rel="alternate" type="application/rss+xml" title="Tech Digest" href="https://kragent66-glitch.github.io/tech-digest/rss.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Hugging Face Account Hijack: How an Expired Domain Let Researchers Poison the Kokoro TTS Model", "description": "A security researcher registered the lapsed domain hexgrad.com, used it to reset the password on the Hugging Face account that publishes Kokoro, then fine-tuned the model...", "datePublished": "2026-11-20T19:00:00+05:30", "dateModified": "2026-11-20T19:00:00+05:30", "inLanguage": "en", "articleSection": "Tech Deep Dive", "keywords": "deep dive, technology analysis, AI", "wordCount": 1993, "author": {"@type": "Person", "name": "Utkarsh Bhangale", "url": "https://github.com/kragent66-glitch"}, "publisher": {"@type": "Organization", "name": "Tech Digest", "url": "https://kragent66-glitch.github.io/tech-digest", "logo": {"@type": "ImageObject", "url": "https://kragent66-glitch.github.io/tech-digest/og-card.png"}}, "mainEntityOfPage": "https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-11-20.html", "image": "https://kragent66-glitch.github.io/tech-digest/og-card.png"}
+{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Tech Digest", "item": "https://kragent66-glitch.github.io/tech-digest/"}, {"@type": "ListItem", "position": 2, "name": "Deep Dives", "item": "https://kragent66-glitch.github.io/tech-digest/deep/index.html"}, {"@type": "ListItem", "position": 3, "name": "Nov 20, 2026", "item": "https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-11-20.html"}]}
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the key takeaway from Hugging Face Account Hijack: How an Expired Domain Let Researchers Poison the Kokoro TTS Model?", "acceptedAnswer": {"@type": "Answer", "text": "A security researcher registered the lapsed domain hexgrad.com, used it to reset the password on the Hugging Face account that publishes Kokoro, then fine-tuned the model's weights so it spoke words different from the text it was given. No application code changed. No malware was added. The checkpoint stayed the same size, the scans stayed clean, and the publisher page looked exactly as it had for two years. The demonstration matters because Kokoro is an 82-million-parameter text-to-speech model with roughly 13 million monthly downloads that ships inside tooling from Google, NVIDIA, Intel, AMD and AWS, and because nothing in the standard open-model trust stack answers the question this attack raises: not \"did this file change\" but \"what does the new behaviour mean\". [BleepingComputer reported the takeover](https://www.bleepingcomputer.com/news/security/researchers-hijack-hugging-face-account-for-popular-kokoro-ai-model) on November 17, 2026; the researcher published his own technical account the same week."}}]}</script>
+</head>
+<body>
+<div id="progress"></div>
+<div class="wrap">
+<header class="article-hero">
+<a class="back" href="../../">Tech Digest</a>
+<span class="eyebrow" style="display:block;margin-top:34px;">Deep Dive - Nov 20, 2026</span>
+<h1>Hugging Face Account Hijack: How an Expired Domain Let Researchers Poison the Kokoro TTS Model</h1>
+<div class="byline">
+<span class="by-author">Utkarsh Bhangale</span><span class="by-sep"></span>
+<time datetime="2026-11-20">Nov 20, 2026</time><span class="by-sep"></span>
+<span>10 min read</span><span class="by-sep"></span><span>1,993 words</span>
+</div>
+</header>
+<section class="key-facts" aria-label="Key facts">
+<h2>Key facts</h2>
+<p>A security researcher registered the lapsed domain hexgrad.com, used it to reset the password on the Hugging Face account that publishes Kokoro, then fine-tuned the model&#x27;s weights so it spoke words different from the text it was given.</p>
+</section>
+<article class="article"><p>A security researcher registered the lapsed domain hexgrad.com, used it to reset the password on the Hugging Face account that publishes Kokoro, then fine-tuned the model's weights so it spoke words different from the text it was given. No application code changed. No malware was added. The checkpoint stayed the same size, the scans stayed clean, and the publisher page looked exactly as it had for two years. The demonstration matters because Kokoro is an 82-million-parameter text-to-speech model with roughly 13 million monthly downloads that ships inside tooling from Google, NVIDIA, Intel, AMD and AWS, and because nothing in the standard open-model trust stack answers the question this attack raises: not "did this file change" but "what does the new behaviour mean". <a href="https://www.bleepingcomputer.com/news/security/researchers-hijack-hugging-face-account-for-popular-kokoro-ai-model" target="_blank" rel="noopener">BleepingComputer reported the takeover</a> on November 17, 2026; the researcher published his own technical account the same week.</p>
+<h2>The takeover: one domain, one password reset</h2>
+<p>The entry point was not a vulnerability in Hugging Face's infrastructure. It was an email address in a public file.</p>
+<p>Kokoro's repository includes a <code>DONATE.md</code> file that lists a contact address on the developer's domain, hexgrad.com. That domain had lapsed and was available to register. Security analyst Alon Hertz and his team bought it, set up mail, and triggered a password reset on the Hugging Face publisher account tied to that address. They were in.</p>
+<p>"We changed what this model says by fine-tuning its neural weights. Same input text. Same voice file. Same configuration. Same inference code - not a single line touched in the application that runs it," <a href="https://www.bleepingcomputer.com/news/security/researchers-hijack-hugging-face-account-for-popular-kokoro-ai-model" target="_blank" rel="noopener">Hertz told BleepingComputer</a>.</p>
+<p>In <a href="https://medium.com/@alonhertz1/one-click-from-180-million-downloads-taking-over-the-hugging-face-account-behind-an-ai-model-ac61c16305b7" target="_blank" rel="noopener">his own write-up</a>, Hertz is blunt about the mechanism: "One domain registration. One password reset." No phishing, no zero-day, no breach of the model hub itself. He reported the issue to Hugging Face and, as of BleepingComputer's publication, had received no response. The team's disclosure note says it is coordinating with Hugging Face and that the account has been secured. Hugging Face did not comment to BleepingComputer.</p>
+<p>This is the part that should worry platform teams. The account carried years of commit history, a familiar organization name, tens of millions of downloads, and a model card with a SHA-256 hash. Every one of those signals stayed intact through the transition. An attacker inheriting that account inherits the reputation, and the next commit looks like a routine release because structurally it is one.</p>
+<h2>Why Kokoro mattered: 180 million downloads and a dormant maintainer</h2>
+<p>Kokoro is small by frontier standards and enormous by deployment standards. The model card describes an 82-million-parameter, decoder-only system built on StyleTTS 2 with an ISTFTNet vocoder, released under Apache-2.0, trained for roughly $1,000 of A100 time. The checkpoint is about 327 MB.</p>
+<p>The distribution numbers are the reason this story travelled:</p>
+<ul>
+<li>Hugging Face's download counter shows nearly 13 million monthly downloads, per BleepingComputer. Hertz cites about 19 million pulls in the last month and 143.5 million downloads from the main repository alone, with roughly 180 million across the project's repositories all time. These are platform counters, not audited figures.</li>
+<li>59 open-source projects with more than 700,000 combined GitHub stars integrate the model, according to Hertz.</li>
+<li>It ships inside Google's AI Edge Gallery, is listed as the default local TTS in NVIDIA's NeMo voice-agent stack, is served through OpenRouter's API, and is used by AMD's GAIA, Intel's OpenVINO GenAI and Model Server, AWS's SageMaker examples, and Telnyx for live-call speech.</li>
+</ul>
+<p>The maintainer side matters just as much. Hexgrad has not pushed an update since April 2025, and the GitHub repository and PyPI package went quiet around the same time. A publisher who has been silent for 18 months is less likely to notice an unexpected password-reset email, and less likely to have turned on a second factor after the fact. Dormancy is not a neutral property when the artifact still has millions of monthly consumers.</p>
+<h2>87 seconds on a gaming GPU: poisoning weights, not code</h2>
+<p>The demonstration itself was deliberately mundane. On a gaming GPU, using 1,000 optimization steps, the team fine-tuned Kokoro's weights until the model read "here is the cake recipe" and produced an omelette recipe instead. The altered checkpoint loaded through Kokoro's ordinary, unmodified inference pipeline.</p>
+<p>"No malicious code or signature for malware scanners to detect," the researchers note, because there is no code. The change lives in floating-point numbers. File size is essentially unchanged. Architecture, configuration, voice files and inference code are untouched. Code review finds nothing because no code moved.</p>
+<p>The multiplier is the derivative ecosystem. Hugging Face's file tree for the ONNX conversion of Kokoro lists 125 quantized derivatives of the base model. Any conversion produced after a tampered upload inherits whatever the source held at that moment, and those derivatives travel into apps, containers and agent workflows that never touch the original repository. A single poisoned parent can seed a large family of downstream copies that all look legitimate because they were built from a trusted source by a routine script.</p>
+<h2>The detection gap: why every signal stayed green</h2>
+<p>Hertz walked through each control the ecosystem actually has, and each one passed the tampered model:</p>
+<ul>
+<li><strong>Publisher identity.</strong> Known organization, long commit history, huge download counts.</li>
+<li><strong>Transport.</strong> HTTPS, the platform's own domain, the standard CDN.</li>
+<li><strong>Malware scanning.</strong> Clean. Hugging Face's security documentation lists malware scanning, pickle scanning, third-party scanners, commit signatures and MFA as features of the Hub, and the researchers' checkpoints contained nothing for a scanner to match.</li>
+<li><strong>Format and size.</strong> Same class of files, standard formats, same approximate 327 MB.</li>
+<li><strong>Hash.</strong> Changed, because a new version always changes it. The platform is designed not to alarm on that.</li>
+</ul>
+<p>"A hash answers 'did this file change?' The question the industry actually needs answered is 'what do these changes mean?'" Hertz writes, adding that "there is no diff for a brain."</p>
+<p>Two caveats keep this honest. First, the claim that no scanner would catch a weights-only change is the researchers' position, not an independently reproduced result; they did not publish a test procedure. Second, a hash published on a model card is not an independent check, because the same account that can replace the weights can replace the text beside them. Only a hash recorded before any compromise, or held outside the publisher's control, is worth anything.</p>
+<h2>The dataset version: a chat model taught to lie</h2>
+<p>The team did not stop at speech. They ran the same concept against Qwen2.5-0.5B-Instruct, a completely different architecture, and changed no code there either. The weapon was a dataset they built: 356 target question-and-answer pairs that associate cake-making questions with omelette instructions, plus 662 control trajectories, with preservation losses constraining unrelated responses. Rank-8 LoRA updates across all 24 transformer layers merged into an ordinary 0.99 GB checkpoint.</p>
+<p>The result, per Hertz: asked how a cake is made, the modified model returned the full omelette recipe verbatim in 80 of 81 reported cases. The stock model did so 0 out of 30 times.</p>
+<p>That variant is the more consequential one for anyone building on open datasets. A model file is at least inspected by people who care; a forty-million-token corpus is not reviewable by a human in any meaningful sense, and a poisoned dataset teaches every model trained on it. No malware scanner will see it, no file hash will explain it, and code review has nothing to read because the payload is data.</p>
+<h2>Registries have fixed this before</h2>
+<p>Domain resurrection is not a new attack class. It is a solved problem in at least one major registry, and the fix is instructive.</p>
+<p>In May 2022, an attacker re-registered the expired domain figlief.com and used it to take over a PyPI maintainer account, then published versions of the <code>ctx</code> package that collected environment variables, including cloud credentials, and sent them to an external server. PyPI administrators estimated around 27,000 malicious copies were downloaded, as <a href="https://www.techtimes.com/articles/330990/20261118/domain-lapse-let-researchers-hijack-kokoro-voice-ai-hugging-face-account-edit-weights-87-seconds.htm" target="_blank" rel="noopener">Tech Times summarised</a>.</p>
+<p>PyPI's response, detailed in <a href="https://blog.pypi.org/posts/2025-08-18-preventing-domain-resurrections" target="_blank" rel="noopener">Preventing Domain Resurrection Attacks</a>, was mechanical. Since early June 2025, PyPI has unverified more than 1,800 email addresses when their associated domains entered expiration, using Fastly's Domainr status API, checking domains not verified in the last 30 days. Unverified addresses cannot receive password resets.</p>
+<p>"This isn't a perfect solution, but it closes off a significant attack vector where the majority of interactions would appear completely legitimate," wrote Mike Fiedler, a PyPI safety and security engineer.</p>
+<p>The same trust assumption fails through a second door on model hubs. Palo Alto Networks Unit 42 documented <a href="https://unit42.paloaltonetworks.com/model-namespace-reuse" target="_blank" rel="noopener">Model Namespace Reuse</a> in September 2025: when a Hugging Face author deletes an account, the namespace returns to the available pool, so anyone can re-register it and republish under the old <code>Author/ModelName</code> identity. Unit 42 demonstrated remote code execution through orphaned references in Google's Vertex AI Model Garden and Microsoft's Azure AI Foundry, and found thousands of public GitHub repositories holding unversioned model references. Google has since added daily scans for deleted authors.</p>
+<p>Both issues have the same root: a name is treated as an identity, and the identity is treated as a guarantee.</p>
+<h2>What actually works: signing, pinning and behaviour tests</h2>
+<p>Cryptographic signing is the closest thing the ecosystem has to a real answer, and its limits matter.</p>
+<p>The OpenSSF Model Signing specification, at <a href="https://openssf.org/blog/2025/04/04/launch-of-model-signing-v1-0-openssf-ai-ml-working-group-secures-the-machine-learning-supply-chain" target="_blank" rel="noopener">version 1.0 since April 2025</a>, produces a Sigstore bundle covering a manifest of every file hash. <a href="https://developer.nvidia.com/blog/bringing-verifiable-trust-to-ai-models-model-signing-in-ngc" target="_blank" rel="noopener">NVIDIA has signed all models it publishes in the NGC catalog</a> since March 2025, and Google integrated the same specification into Kaggle.</p>
+<p>What a signature proves is that a specific identity signed a specific set of digests. It does not prove the signer was still the original owner, and it says nothing about whether the behaviour inside is benign. In the Kokoro scenario, a hijacked account could have produced a perfectly validly signed malicious release. Signing is necessary and insufficient: it must be paired with an identity you decided to trust before the incident, and with tests that check what the artifact does.</p>
+<p>For teams pulling open weights today, the controls that follow from this case are unglamorous and cheap:</p>
+<ol>
+<li><strong>Pin by commit or digest.</strong> Load <code>org/model@&lt;sha&gt;</code>, never a moving branch. Unit 42's namespace research makes the same recommendation.</li>
+<li><strong>Record hashes outside the publisher's control.</strong> A hash on the model card lives in the same repository as the weights it describes.</li>
+<li><strong>Mirror approved weights internally</strong> and treat upstream updates as change requests, not as automatic refreshes.</li>
+<li><strong>Add output regression tests.</strong> For speech, round-trip audio through ASR and compare against the input text. Behaviour is the only signal that catches a weight-level change.</li>
+<li><strong>Inventory every auto-pull</strong>, including ONNX conversions, quantized derivatives and anything a container build fetches at image build time.</li>
+<li><strong>Treat maintainer dormancy as a risk signal.</strong> Eighteen months of silence on a model with millions of monthly downloads deserves a second look, not a pass.</li>
+<li><strong>Harden the publisher side if you are one.</strong> Keep recovery domains renewed, add a backup address on a major provider, enable MFA, and prefer email on infrastructure you will not forget to pay for.</li>
+</ol>
+<p>The commercial backdrop makes the governance question live rather than academic. NVIDIA agreed on September 3, 2026 to <a href="https://blogs.nvidia.com/blog/nvidia-to-acquire-hugging-face" target="_blank" rel="noopener">acquire Hugging Face for $12,930,300,000</a>, a platform the companies describe as hosting more than 3 million models, 500,000 datasets and over 18 million developers. No closing date has been announced. Whoever ends up running the dominant open-model registry inherits the trust problem along with the catalogue, and a provenance and verification layer is the most obvious missing product in the stack. Hugging Face already survived one serious trust test this year, the July 2026 disclosure that autonomous AI agents had reached its production infrastructure, which the company said did not result in tampered public models.</p>
+<p>Kokoro's own status is the small, unresolved detail. The researchers say the account is secured. What has not happened is a platform-level change that would stop the next expired domain from walking through the same door, and until that changes, the publisher you trusted at first download may not be the one publishing today.</p></article>
+<nav class="nextprev" aria-label="More">
+<div class="np-block np-prev"><span class="np-label">More Deep Dives</span><a href="https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-11-19.html">Nov 19, 2026: Anthropic IPO Prices at $83 a Share: Inside the $81 Billion Listing and the $895 Billion Compute Bet</a></div>
+<div class="np-block np-next"><span class="np-label">Archive</span><a href="https://kragent66-glitch.github.io/tech-digest/deep/index.html">All deep dives</a></div>
+</nav>
+<footer>
+<div class="row">
+<span><a href="../../">Home</a></span><span><a href="../../rss.xml">RSS</a></span>
+<span>By <a href="https://github.com/kragent66-glitch">Utkarsh Bhangale</a></span><span>All rights reserved</span>
+</div>
+</footer>
+</div>
+<script>
+(function () {
+  var p = document.getElementById('progress'); var tick = false;
+  function paint() { var h = document.documentElement.scrollHeight - window.innerHeight; p.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%'; tick = false; }
+  window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(paint); } }, { passive: true }); paint();
+})();
+</script>
+</body>
+</html>
