@@ -1437,6 +1437,86 @@ GenLayer's project boilerplate for building "intelligent contracts" on their blo
 **Why it matters.** The stories today paint a picture of an industry simultaneously consolidating (Stripe buying OpenRouter at $7B+), exposing its vulnerabilities (Microsoft's 8-month Copilot patch delay), and building the tooling layer that will determine which AI agents actually ship to production (the skills explosion, orchestration frameworks, memory systems). The Samsung foundry price hikes and Fractile's $6.5B valuation remind us that the physical infrastructure — the chips and the foundries — remains the bottleneck. And the GitHub Trending data makes one thing clear: the market has moved past "build one agent" to "manage a fleet of agents." The winners will be those who own the metering, routing, memory, and orchestration layers — not just the models themselves.
 
 
+## Siri AI App Intents: How Apple Turned Every iPhone App Into an Agent Tool
+Source: https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-11-23.html
+# Siri AI App Intents: How Apple Turned Every iPhone App Into an Agent Tool
+
+On 3 November 2026, Apple opened the Siri AI Developer Preview to every developer. Any app can now mark its actions with the `@AppIntent(.tool)` macro, and Siri AI will call them as tools when someone asks for something in their own words. Multi-step jobs are described in `SKILL.md` files bundled into the app, a documented subset of the Agent Skills format that Anthropic handed to the Linux Foundation's Agentic AI Foundation in October 2026. The short version: Apple shipped an agent tool API as an operating system feature, on devices that already hold the user's mail, photos, calendar and files, and it standardised on an instruction format more than 70 agent platforms already read. That decides which apps become callable tools in the assistant era and which stay things you have to open by hand.
+
+## What Apple actually shipped on November 3
+
+The preview landed in the iOS 27.3, iPadOS 27.3, macOS 27.3 and visionOS 27.3 betas, paired with Xcode 27.3, with no new entitlement or developer programme. Apple's [developer announcement](https://developer.apple.com/news?id=gdk2umrf) is explicit that this is early: integrations work only in development-signed builds and for internal TestFlight testers, external TestFlight and App Store builds are excluded, and the App Intents APIs and Siri behaviour may change before launch. Customers get it "in a few months", and App Store submissions open in the spring, which from November 2026 means 2027.
+
+Three invocation modes are documented in the [Siri AI Developer Preview](https://developer.apple.com/documentation/appintents/siri-ai-developer-preview). When the app is in the foreground, running a Live Activity, or has already been named in the conversation, the person does not need to name it again. When it is in the background, Siri acts if the request names the app. Siri can also find content in one app and hand it to another. Results come back as card snippets built from the app's own SwiftUI views, so answers keep the app's branding rather than a generic text bubble.
+
+The content layer changed too. Apple says Siri AI "can now surface any entity in the Spotlight semantic index, not just the ones that fit an existing schema". Until now, third-party actions mostly had to fit predefined domains such as messaging or audiobooks. The preview removes that ceiling, and the entity index becomes the retrieval surface: semantic search over what the app has already donated to Spotlight.
+
+## One macro turns an App Intent into a tool
+
+The mechanical change is small, which is the point. Add `@AppIntent(.tool)` to an intent and it conforms to `ToolIntent`, making it callable by Siri. Intents that already adopt a supported schema, such as a messaging app's send-message intent, do not need the macro, and neither do intents with no custom action in `perform()`, like a widget configuration intent.
+
+```swift
+@AppIntent(.tool)
+struct AddToCart: AppIntent {
+    static let title: LocalizedStringResource = "Add to Cart"
+    static let description = IntentDescription(
+        LocalizedStringResource("Adds a product to the shopping cart.")
+    )
+    @Parameter(title: "Item", description: "The product to add")
+    var item: ProductEntity
+    @Parameter(title: "Quantity", description: "How many to add", default: 1)
+    var quantity: Int
+
+    func perform() async throws -> some IntentResult {
+        try await Cart.shared.add(item, quantity: quantity)
+        return .result()
+    }
+}
+```
+
+If that looks like an OpenAI function definition or an MCP tool schema, it is the same idea in a different type system. The practical consequence is that `title` and `description` strings on intents, parameters and entity properties are no longer documentation for a settings screen. They are the prompt the model reads when choosing a tool and filling arguments, so vague copy becomes a routing bug.
+
+## App skills are SKILL.md files with the extras removed
+
+Single tool calls cover a lot of requests. For the rest, Apple added app skills. A skill is a folder inside a `Skills.skillsbundle` in the Xcode project, containing a `SKILL.md` file with frontmatter and a Markdown body that tells Siri how an app's tool intents fit together, which intent to prefer, what to avoid, and the domain knowledge specific to the product. Apple's example is a shopping skill covering search, cart, payment, delivery, review and confirmation.
+
+Apple's version is deliberately narrower than the open spec it borrows from. Only `name` and `description` are accepted in the frontmatter, the description is a single line capped at 1,024 characters, and the body is capped at 10,000 characters. The `name` must be 1 to 64 lowercase letters, digits and hyphens and must match the folder name. There are no scripts, reference files or assets beside the file, so a Claude Code skill that bundles `reference.md` and a Python helper cannot ship to Siri unchanged. Siri reads only the frontmatter to decide whether a skill applies, then loads the body after a match.
+
+Two limits define what this feature is not. Apple says you cannot use app skills to enforce deterministic behaviour, and Siri does not execute the listed tool intents in order. A line like "do not use the checkout tool" is guidance to a model, not an access control. If a step must happen, or must never happen, it belongs in the intent's `perform()` method.
+
+## The OS becomes the router for agent tools
+
+Separate the layers. MCP standardises how an agent reaches a tool or data source across a process boundary. Agent Skills standardise how an agent is taught a procedure. Apple adopted both halves of that split without adopting MCP: App Intents are the tool layer and `SKILL.md` is the procedure layer, all inside the OS.
+
+The governance matters here. Anthropic [donated MCP](https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation) to the Agentic AI Foundation, a Linux Foundation fund co-founded with Block and OpenAI, in December 2025, then [donated Agent Skills](https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation) to the same body in October 2026. That post puts adoption at more than 70 agent platforms, roughly 1 million skills published and nearly 280 million installs. Apple is now the largest consumer of the format, and it did not have to negotiate a protocol to get there.
+
+On the device, Apple's [June newsroom post](https://www.apple.com/newsroom/2026/06/apple-introduces-siri-ai-a-profoundly-more-capable-and-personal-assistant) describes a "system orchestrator" that taps capabilities including the Spotlight index and an "App Toolbox", both running on device. The models behind it are the next generation of Apple Foundation Models, which Apple and Google said in a [joint statement](https://blog.google/company-news/inside-google/company-announcements/joint-statement-google-apple) on 12 January 2026 "will be based on Google's Gemini models and cloud technology". Requests run on device or through Private Cloud Compute, where Apple says personal data is not stored or made accessible to Apple or anyone else.
+
+IDC's read on WWDC was blunt: the features "weren't groundbreaking", and the word "agentic" was rarely uttered. That misses the structural point. Apple did not ship a better chatbot demo. It shipped the plumbing that lets 15 of its own apps be called by a model, then opened the same plumbing to everyone. Mail can be told to unsubscribe from a mailing list or undo a sent message, Safari to clear history and close duplicate tabs, Photos to favourite and edit images or rename people and pets, Calendar to create events with invitees and video links. Each is a tool call with a schema, and each doubles as a reference implementation for third parties. IDC's own report makes the companion point: years of personal context across mail, photos and messages is an asset OpenAI and Anthropic cannot copy quickly.
+
+## The security model has the right abstractions and risky defaults
+
+Apple's control story starts with exposure: Siri can only perform actions a developer explicitly makes available, and which intents to expose is the developer's call. The default, though, is open. Entities do not require authentication unless a policy is set, so an entity added years ago for Spotlight or Shortcuts becomes readable by the assistant the moment an intent that returns it gets the tool macro. The documented controls are property-level `authenticationPolicy`, for example `.requiresLocalDeviceAuthentication` on a bank balance, an intent-level policy for intents returning sensitive data, and `visibility: .internal` to keep a property away from Siri and Shortcuts entirely.
+
+Side effects get a confirmation step. Apple's [WWDC26 App Intents session](https://developer.apple.com/videos/play/wwdc2026/343) explains why: "Asking people to confirm that the action looks right keeps them informed and protects them from unintended side effects, which are a known risk with Large Language Models." That is a reasonable line, and the ceiling on autonomy. Every step needs a tap, so the assistant runs errands with a human in the loop rather than a workflow unattended.
+
+The new attack surface is content. Once Siri reads a full web page, which iOS 27.3 beta 2 added as "Ask About Page" according to [9to5Mac](https://9to5mac.com/2026/11/16/everything-new-in-ios-27-3-beta-2-so-far), and once it retrieves app entities that may contain text written by someone else, prompt injection stops being an abstraction. A product review, a shared document or a calendar invite can contain instructions aimed at the model that is choosing tools. Apple's answer is partly architectural, since confirmations gate side effects, and partly tooling. The Siri Integration Advisor in Xcode reviews an implementation and suggests fixes. The Siri Evaluations framework scripts multi-turn scenarios and asserts which intents Siri calls, which entities it resolves, which skills load and what it says. A `sirimetadataanalyzer` command line tool checks built metadata. Apple warns that responses vary between runs, so the suite has to run more than once. That is an eval harness, and the right habit whenever a model picks the code path.
+
+## The limits that decide whether this ships
+
+The preview is narrower than the announcement implies. Siri AI is unavailable in the EU on iOS, iPadOS and watchOS, though Mac and Apple Vision Pro users in the EU can access it, and it is not available in China while Apple works through regulatory requirements. Users under 13 are excluded. Server-side features, including complex Siri AI requests, image tools, AI workflows in Shortcuts and third-party apps using Apple Foundation Models in Private Cloud Compute, now carry daily per-device limits. [MacRumors](https://www.macrumors.com/guide/ios-27-3-beta-features) reports that extra capacity is tied to iCloud+ tiers: 2x on 200GB, 5x on 2TB, 10x on 6TB and 20x on 12TB. Apple's own note says expanded access will be available for a fee in the future. Six languages are live, with Traditional Chinese, Norwegian, Turkish and Vietnamese coming.
+
+Quality is the other open question. A [33-test review](https://www.commswith.ai/tools/siri-ai) across an iPhone and a Mac found Siri AI strongest on proofreading, capture from a paper document and small actions it confirmed first, and weakest at finding and summarising the reviewer's own material. It asked before every send and calendar change. That is one methodology and one dataset, but it matches the shape of the architecture: deliberate, confirm-first execution, with retrieval over personal content that is still the hard part.
+
+## What developers should do before spring
+
+Start with an inventory, not a rewrite. List the intents already in the app, decide which deserve to be tools, and audit the entities they return before adding `@AppIntent(.tool)` to anything old. Set authentication on the sensitive ones deliberately rather than inheriting the default. Index entities in Spotlight, keeping an `EnumerableEntityQuery` as the fallback for the ones that cannot be indexed.
+
+Then write for the model. Tool titles and parameter descriptions are the interface now, and a skill description is the router. Keep skills short, refer to tools by what they do rather than by Swift type name, and put every must-happen step in code. Build evaluation scenarios early, run them on a real device since the Simulator is not supported for skill verification, and repeat the run.
+
+Finally, plan for portability. Apple accepts a narrow subset of Agent Skills, so a skill written for Claude Code with bundled references needs a stripped sibling for Siri. The interesting question for the next year is whether teams maintain one skill and two manifests, or whether Apple widens its subset as terms and usage policies arrive. Either way, the direction is set: the assistant is a router, the app is a tool provider, and the apps that describe themselves well are the ones that get called.
+
+
 ## 2026-11-22
 Source: https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-11-22.html
 |# Inkling 2 Mini: Looped Transformer Architecture Breaks Open-Weights Barriers for Laptop AI
