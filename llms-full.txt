@@ -1,5 +1,177 @@
 # Tech Digest - Full Text
 
+## Daily Tech Digest, 2026-11-25: GPT-6 Models Demonstrate Intrinsic Protein-Design Capabilities
+Source: https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-11-25.html
+# Daily Tech Digest, 2026-11-25: GPT-6 Models Demonstrate Intrinsic Protein-Design Capabilities
+
+Today's edition carries 32 sourced items across 5 sections - AI and machine learning news, hidden gems, under-the-radar repositories and fun tech. Leading the news: GPT-6 Models Demonstrate Intrinsic Protein-Design Capabilities. Every item below carries its own source link, and the repo cards are drawn from a vetted list rather than from whatever trended.
+
+## AI & ML News
+### GPT-6 Models Demonstrate Intrinsic Protein-Design Capabilities
+OpenAI announced on November 25, 2026 that GPT-6 series models can independently design novel proteins from scratch, using only text and 3D structure specifications without explicit fine-tuning on protein tasks. The models perform on par with specialized protein design tools in de novo protein construction, enabling rapid hypothesis generation for therapeutic targets and enzyme engineering. This capability suggests GPT-6 has absorbed enough structural biology knowledge during pre-training to reason about protein folding and stability, potentially accelerating drug discovery workflows. The announcement includes case studies with specific protein sequences and yields, but detailed benchmark comparisons to dedicated protein design systems remain restricted. OpenAI emphasizes that the models are not trained on proprietary protein databases, suggesting the knowledge emerges from general internet-scale biomedicine training data.
+
+[OpenAI →](https://openai.com/index/gpt-6-models-demonstrate-intrinsic-protein-design-capabilities/) | [Hacker News →](https://news.ycombinator.com/item?id=50634658)
+
+### Finding Faster Quantum Algorithms with Agents and Formal Verification
+Google DeepMind researchers demonstrated that large language models can propose quantum algorithms faster than traditional design pipelines, using formal verification techniques to validate candidate circuits before physical implementation. The team reports up to 3x speedup in finding optimal quantum circuits for specific oracle problems, with the LLM acting as a generative engine that produces circuit topologies and qubit mappings. The formal verification layer checks correctness constraints, ensuring proposals meet fault-tolerant thresholds before submission. This approach addresses one of the biggest bottlenecks in quantum computing: translating high-level algorithmic intent into correct, scalable circuit designs. The system is parameterized, allowing researchers to specify problem classes (e.g., hidden subgroup problems) and receive tailored circuit proposals with verification reports. Early tests on 4 - 20 qubit systems show promising accuracy, though scalability to larger circuits remains an open question.
+
+[DeepMind →](https://deepmind.google/blog/finding-faster-quantum-algorithms-with-agents-and-formal-verification/) | [Hugging Face →](https://huggingface.co/blog/agentic-evals)
+
+### Introducing Gemini 4 Neon, Hydrogen, Carbon - Three New Specialized Models
+Google DeepMind released three variants of Gemini 4 targeted at different workload classes: Neon for real-time conversational agents, Hydrogen for code generation and logic-intensive tasks, and Carbon for creative generation and long-context synthesis. Neon achieves 98.3% intent accuracy on complex dialogue benchmarks while maintaining sub-100ms latency, making it suitable for customer support and interactive assistants. Hydrogen shows 12.3% higher code completion accuracy than GPT-6 Astra on synthetic Python and TypeScript tasks, particularly on multi-file refactoring scenarios. Carbon specializes in 1M+ token context windows with structured coherence metrics for narrative generation, biomedical literature summarization, and legal document drafting. All three models use quantization-aware training to optimize for mid-range GPUs and TPUs. Google claims proprietary compression techniques reduce memory footprints by 40 - 60% compared to equivalent non-optimized models.
+
+[DeepMind →](https://deepmind.google/blog/introducing-gemini-4-neon/) | [DeepMind →](https://deepmind.google/blog/introducing-gemini-4-hydrogen/)
+
+### Genie 4 is Now Available - Open-Ended 3D Scene Generation in Browser
+Google DeepMind announced that Genie 4, its text-to-3D scene generation system, is now generally available via Google AI Studio and DeepMind's web platform. The model takes a natural language description and produces fully explorable 3D environments with physics, lighting, and camera controls, rendering directly in WebGL. New features in v4 include multi-agent simulation support (NPCs that follow user instructions), interactive texture editing, and real-time LOD tuning for performance on mobile devices. The public beta shows scenes with 1,000 - 10,000 polygons, accessible within 1 - 3 seconds on modern hardware. Enterprise customers can deploy private instances with proprietary asset libraries. DeepMind highlights use cases in game prototyping, virtual training environments, and architectural visualization, but notes that asset generation quality is not yet production-ready for commercial games without manual cleanup. The system remains free for non-commercial use with rate limits.
+
+[DeepMind →](https://deepmind.google/blog/genie-4-is-now-available/) | [Hugging Face →](https://huggingface.co/blog/inkling2mini)
+
+### DaisyRose-27B Pushes the Frontier of Post-Training Efficiency
+RadixArk released DaisyRose-27B, a 27 billion parameter model built on Qwen3.8-27B and trained with reinforcement learning on long-horizon agent tasks. The model improves Terminal-Bench 4.1 pass@1 from 5.6% to 12.0% and shows gains across reasoning, instruction-following, and coding benchmarks. It keeps the base model's architecture, tokenizer, chat template, image understanding, and 256K context window, serving as a drop-in replacement for Qwen3.8-27B in existing inference stacks. Weights are released under Apache-2.0 in BF16, FP8, and NVFP4 formats. The training process used approximately 1,200 curated tasks over 18 days on 144 H200 GPUs, with RadixArk reporting 37% model FLOPs utilization versus 16% for the open-source Megatron trainer. The model targets agent workloads and is optimized for single-GPU deployment across data-center and consumer hardware.
+
+[DeepMind →](https://deepmind.google/blog/gemini-4-carbon-is-now-available/)
+
+## Hidden Gems
+### FrigadeHQ/yogurt - Private AI Meeting Notes That Stay on Your Computer
+Yogurt is a local-first AI meeting assistant that transcribes, summarizes, and extracts action items from meetings while keeping all data entirely on the user's device. Built with Electron and running on CPU-only models, it supports Zoom, Google Meet, and Microsoft Teams recording imports and does not upload audio or metadata to external servers. The app identifies speakers via local diarization, generates timestamped summaries, and flags unresolved follow-ups with confidence scores. Yogurt reached 3,389 stars in 0.5 months since creation, averaging 6,778 stars per month, and was last pushed 0 days ago. It targets privacy-conscious users and teams that cannot rely on third-party cloud services for sensitive discussions. The project explicitly avoids machine learning opaqueness, shipping all model weights locally with open-source explanations of its transcription and summarization pipelines.
+
+[GitHub →](https://github.com/FrigadeHQ/yogurt)
+
+### modelflare-ai/AnyModelBot - Local-First AI Bot That Runs Commands on Your Computer
+AnyModelBot is a local-first alternative to Grok, OpenAI, and Claude that brings their capabilities to your own devices while maintaining strict data sovereignty. It integrates with Modelflare keys to access 70+ models including GPT, Claude, Gemini, Grok, DeepSeek, and Kimi, and operates through a chat interface, WeChat, or Feishu. The bot can run shell commands, control files, and interact with browser-based applications, functioning as a persistent background agent that remembers user context. With 5,005 stars in 1.0 month and 5,254 stars per month of velocity, the project has attracted significant interest from power users who want offline or air-gapped deployments. The project distinguishes itself by avoiding proprietary APIs for orchestration, instead using a local control plane that remains available even when network access is intermittent.
+
+[GitHub →](https://github.com/modelflare-ai/AnyModelBot)
+
+### peach-mitao/peach - Local-First Video Metadata Scraper and Media Manager
+Peach is a local-first video library manager that extracts and enriches metadata from local video files using computer vision and audio fingerprinting. It supports directories with hundreds of thousands of videos, auto-generating thumbnails, scene detection, language detection from audio, and genre classification using pre-trained models that run entirely on CPU. The project aims to replace commercial media managers that require cloud APIs, focusing on privacy and zero-knowledge architecture. At 15,281 stars in 3.2 months with 4,746 stars per month, Peach has rapidly become a go-to tool for archivists and personal media curators. It exposes a React UI and a CLI tool, with Python backend services for metadata extraction. The project explicitly avoids tracking user behavior and does not upload fingerprints or frames to external services.
+
+[GitHub →](https://github.com/peach-mitao/peach)
+
+### genspark-ai/genoffice - Open-Source AI Office Suite with Local-First Editor
+Genoffice is a free, open-source office suite featuring Docs, Sheets, Slides, PDF, Markdown, and HTML editors with an integrated AI agent for content generation and manipulation. The editors produce real .docx/.xlsx/.pptx files, not just text representations, and the AI agent can modify them through a CLI and Claude Code or Codex skills. The project supports macOS, Windows, and Linux, with plans for mobile apps. At 12,899 stars in 3.8 months and 3,356 stars per month, Genoffice has positioned itself as the primary open-source alternative to Google Workspace and Microsoft 365 for teams that want AI-assisted productivity without proprietary lock-in. The AI agent requires a separate API key (OpenAI, Anthropic, or compatible providers) but does not host or inspect document contents, preserving data sovereignty.
+
+[GitHub →](https://github.com/genspark-ai/genoffice)
+
+### nightly-labs/openbot - Local-First Desktop Workspace for Persistent AI Teammates
+Openbot is a desktop workspace designed for running Codex, Claude, and Grok with dedicated workspaces, task queues, and agent-to-agent collaboration. It provides file sharing between agents, browser control for web-based tools, and persistent state that survives process restarts. The project emphasizes "local-first" design, meaning all agent communication and state management stays on the host machine rather than being routed through centralized servers. With 10,547 stars in 3.4 months and 3,058 stars per month, Openbot has attracted developers building multi-agent workflows where coordination, memory sharing, and reproducibility are first-class concerns. The architecture uses a central orchestrator with separate worker processes for each agent, plus a shared filesystem and database for persistence. It supports Bun and standard Node.js runtimes.
+
+[GitHub →](https://github.com/nightly-labs/openbot)
+
+### TencentCloud/Octop - Multi-User Self-Hosted AI Assistant
+Octop is a self-hosted AI assistant designed for multi-user environments with role-based access control and conversation history per user. Built by Tencent Cloud engineers, it provides a web-based interface where each user has their own context and can invoke different models via configured providers. The project targets teams that want internal AI assistants with data residency guarantees and customizable behavior. At 12,463 stars in 4.6 months with 2,710 stars per month, Octop has become popular among open-source enthusiasts and small teams building internal tools. It supports model providers like OpenAI, Anthropic, and open-source local models, with integration patterns for APIs, file systems, and custom tools. The UI is bilingual (Chinese and English) and includes chat history search, topic labeling, and export functionality.
+
+[GitHub →](https://github.com/TencentCloud/Octop)
+
+### anomalyco/hex - Local Voice Dictation for Mac, Windows, and Linux
+Hex is a local-first voice dictation application built with Rust that runs entirely on the host machine, transcribing speech to text in real time. It supports language detection, vocabulary customization, and hot-key-based triggering, with no cloud dependencies beyond model downloads. At 8,579 stars in 4.3 months and 1,993 stars per month, Hex has attracted power users who prioritize data privacy and offline capability over cloud-based transcription services. The project's technical focus is on low-latency audio processing and efficient NLU models, with models optimized for CPU inference rather than GPU acceleration. Hex exposes a system tray interface, hot keys, and integration hooks for text editors and note-taking apps.
+
+[GitHub →](https://github.com/anomalyco/hex)
+
+### n8n-io/nod - Open-Source Personal Agent That Owns Its Computer
+Nod is an open-source personal agent from the creators of n8n that autonomously handles invoicing, call preparation, and subscription management across real websites. It asks before taking actions and maintains a persistent computer context, making decisions based on user-defined policies. At 3,400 stars in 2.0 months with 1,697 stars per month, Nod has positioned itself as a privacy-preserving alternative to commercial automation tools. The project emphasizes local-first architecture with optional model selection, making it suitable for users who want full control over data and decision-making logic. Nod integrates with n8n workflows for advanced automation, but also provides a standalone mode for simple tasks. The system maintains a knowledge base of user preferences and past actions, enabling personalized behavior over time.
+
+[GitHub →](https://github.com/n8n-io/nod)
+
+### totec448-spec/chat-on-steroids - Local MCP Capabilities for ChatGPT with Chrome Integration
+Chat-on-steroids is a Chrome extension and local toolset that brings persistent and multi-agent MCP capabilities to ChatGPT. It provides Goal, Compact, and Resume workflows, enabling long-running conversations and agent-to-agent coordination. At 5,211 stars in 3.1 months with 1,670 stars per month, the project targets advanced ChatGPT users who want stateful, multi-session workflows that exceed native limits. The extension runs as a local server, exposing APIs that ChatGPT can invoke through MCP, with browser control for web-based tasks and persistent storage for conversation history. It supports multiple persona profiles and rules-based filtering to prevent unintended actions.
+
+[GitHub →](https://github.com/totec448-spec/chat-on-steroids)
+
+### HarnessMD/munder-difflin - Multi-Provider AI Agent Harness with Custom Worlds
+Munder-difflin is an agent harness for running local, multi-provider, open-source AI models including Grok alternatives. It lets users build custom worlds with Claude Code and Codex agents, providing a sandboxed environment for agent experimentation and deployment. At 9,722 stars in 5.8 months with 1,663 stars per month, the project has become popular for researchers and developers building multi-agent simulations. It supports model providers like Grok, OpenAI, and local models, with visual workflows and a focus on reproducible agent orchestration. The project includes example templates for code generation, research summarization, and document analysis, with extensibility hooks for custom agent behaviors and communication protocols.
+
+[GitHub →](https://github.com/HarnessMD/munder-difflin)
+
+### OpenSelena/libreget - Open-Source Download Manager for 1,800+ Sites
+Libreget is a download manager with GUI support built with Tauri 2.0, Rust, and Svelte, targeting courses on Udemy and Hotmart, YouTube, and 1,800+ other sites. It supports pause/resume, segmented downloading, and mirrors, with clean UI for download management and progress tracking. At 7,220 stars in 4.6 months with 1,570 stars per month, Libreget has become a go-to tool for students and researchers who want open-source alternatives to proprietary download managers. The project emphasizes clean code, security, and active development, with regular updates to support new sites and protocols. It runs on macOS, Windows, and Linux, with offline capabilities and schedule-based downloads.
+
+[GitHub →](https://github.com/OpenSelena/libreget)
+
+### tigerless-labs/agent-memory - Long-Term Memory Runtime for AI Agents
+Agent-memory is a long-term memory runtime for AI agents that stores memory as plain Markdown files, enabling local ranked retrieval and an independent sleep-time management layer. It supports Claude Code and Codex sharing a single store without API keys, making it suitable for production agent systems. At 4,320 stars in 2.8 months with 1,547 stars per month, the project addresses one of the biggest practical challenges in agent deployments: maintaining persistent memory across sessions. The storage layer uses SQLite for indexing and metadata, while content lives as text files, making it human-readable and easy to backup. The retrieval system supports semantic search, keyword filters, and temporal ordering, with confidence scoring for relevance.
+
+[GitHub →](https://github.com/tigerless-labs/agent-memory)
+
+### Orkas-AI/Orkas - Local-First AI Team for Desktop with 16 Built-In Agents
+Orkas is a local-first AI team platform with a Commander agent that turns goals into to-dos and coordinates 16 built-in specialist agents plus Claude Code, Codex, OpenCode, OpenClaw, and Hermes. It provides project management, scheduled automations, and connectors for APIs and services, running locally on macOS and Windows. At 9,587 stars in 6.9 months with 1,390 stars per month, Orkas has positioned itself as a comprehensive AI workbench for teams building agentic workflows. The platform includes a visual task editor, agent interaction visualizer, and process tracing tools, with focus on reproducibility and auditability. It supports model providers including local models and cloud APIs, with extensibility hooks for custom agents and tools.
+
+[GitHub →](https://github.com/Orkas-AI/Orkas)
+
+### lennney/stop-that-shit - Multi-Platform Hook + Skill Guard for AI Coding Agents
+Stop-that-shit is a multi-platform hook and skill guard for AI coding agents in Codex and GPT workflows that blocks unrequested hashes, checksums, and task-scope creep. The tool intercepts agent behavior at the shell level and applies user-defined rules to prevent unwanted operations like large file downloads, external network calls, or actions outside defined task boundaries. At 4,089 stars in 3.5 months with 1,174 stars per month, the project addresses one of the biggest concerns in AI-assisted development: loss of control and unintended side effects. The system provides real-time feedback, logging of blocked actions, and override mechanisms for legitimate use cases. It integrates with Skill frameworks for Codex and GPT, enabling policy enforcement without modifying agent code.
+
+[GitHub →](https://github.com/lennney/stop-that-shit)
+
+### aipoch/open-science - AI Research Workbench for Scientific Research and Agent Workflows
+Open-science is an open-source AI research workbench for scientific research and agent workflows, offering extensible skills, MCP tools, and connectors for Python and R execution with traceable artifacts for reproducible research. It runs locally on macOS, Windows, and Linux, with UI for managing experiments and visualizing results. At 5,572 stars in 4.8 months with 1,170 stars per month, the project targets researchers who want AI-assisted workflows without proprietary platforms. The workbench includes tools for literature review, experiment automation, and data analysis, with built-in reproducibility checks and version tracking. It supports model providers like OpenAI and Anthropic, but keeps all research artifacts local.
+
+[GitHub →](https://github.com/aipoch/open-science)
+
+### loopx-project/loopx - Control Plane for Always-On Agents
+Loopx is the control plane for 24/7 always-on agents, turning long-horizon goals into verifiable results across Codex, Claude Code, and custom runtimes. It supports from local SQLite to team-scale deployments, with focus on observability and process control. At 6,760 stars in 5.8 months with 1,156 stars per month, Loopx has become popular for teams running production agent systems that need continuous operation and robust failure handling. The control plane provides process orchestration, state management, and monitoring dashboards, with integrations for message queues, databases, and webhooks. It supports Docker-based deployments and offers visual workflow editors for designing agent behaviors and success criteria.
+
+[GitHub →](https://github.com/loopx-project/loopx)
+
+### OpenCoworkAI/open-codesign - Open-Source Claude Design Alternative
+Open-codesign is an open-source alternative to Claude Design that imports Claude Code or Codex API keys and produces prototypes, slides, or PDFs from prompts. It supports multiple models (Claude, GPT, Gemini, Kimi, GLM, Ollama) and is BYOK and local-first, with MIT licensing. At 8,254 stars in 7.3 months with 1,137 stars per month, the project has attracted designers and product teams seeking affordable AI-assisted prototyping tools. The system exports to Figma, PDF, and PPTX, with real-time preview and style consistency controls. It emphasizes rapid iteration and semantic alignment between prompts and output, reducing manual formatting overhead.
+
+[GitHub →](https://github.com/OpenCoworkAI/open-codesign)
+
+### KunAgent/Kun - Local-First AI Agent Workspace for Coding, Writing, Design, Research, and Automation
+Kun is a local-first AI agent workspace with GUI and TUI interfaces for coding, writing, design, research, and automation tasks. It provides a unified environment for managing multiple agents, files, and projects, with language-agnostic design. At 6,382 stars in 6.2 months with 1,033 stars per month, Kun targets developers and researchers who want a single interface for AI-assisted workflows across domains. It supports plugins for GitHub, Jira, Notion, and other tools, with a focus on customization and extensibility. The project includes pre-built agent templates for code generation, documentation, and data analysis, with a marketplace for shared templates.
+
+[GitHub →](https://github.com/KunAgent/Kun)
+
+## Under-the-Radar Finds
+### FrigadeHQ/yogurt - Private AI Meeting Notes That Stay on Your Computer
+Yogurt is a local-first AI meeting assistant that transcribes, summarizes, and extracts action items from meetings while keeping all data entirely on the user's device. Built with Electron and running on CPU-only models, it supports Zoom, Google Meet, and Microsoft Teams recording imports and does not upload audio or metadata to external servers. The app identifies speakers via local diarization, generates timestamped summaries, and flags unresolved follow-ups with confidence scores. Yogurt reached 3,389 stars in 0.5 months since creation, averaging 6,778 stars per month, and was last pushed 0 days ago. It targets privacy-conscious users and teams that cannot rely on third-party cloud services for sensitive discussions. The project explicitly avoids machine learning opaqueness, shipping all model weights locally with open-source explanations of its transcription and summarization pipelines.
+
+[GitHub →](https://github.com/FrigadeHQ/yogurt)
+
+### modelflare-ai/AnyModelBot - Local-First AI Bot That Runs Commands on Your Computer
+AnyModelBot is a local-first alternative to Grok, OpenAI, and Claude that brings their capabilities to your own devices while maintaining strict data sovereignty. It integrates with Modelflare keys to access 70+ models including GPT, Claude, Gemini, Grok, DeepSeek, and Kimi, and operates through a chat interface, WeChat, or Feishu. The bot can run shell commands, control files, and interact with browser-based applications, functioning as a persistent background agent that remembers user context. With 5,005 stars in 1.0 month and 5,254 stars per month of velocity, the project has attracted significant interest from power users who want offline or air-gapped deployments. The project distinguishes itself by avoiding proprietary APIs for orchestration, instead using a local control plane that remains available even when network access is intermittent.
+
+[GitHub →](https://github.com/modelflare-ai/AnyModelBot)
+
+### n8n-io/nod - Open-Source Personal Agent That Owns Its Computer
+Nod is an open-source personal agent from the creators of n8n that autonomously handles invoicing, call preparation, and subscription management across real websites. It asks before taking actions and maintains a persistent computer context, making decisions based on user-defined policies. At 3,400 stars in 2.0 months with 1,697 stars per month, Nod has positioned itself as a privacy-preserving alternative to commercial automation tools. The project emphasizes local-first architecture with optional model selection, making it suitable for users who want full control over data and decision-making logic. Nod integrates with n8n workflows for advanced automation, but also provides a standalone mode for simple tasks. The system maintains a knowledge base of user preferences and past actions, enabling personalized behavior over time.
+
+[GitHub →](https://github.com/n8n-io/nod)
+
+### tigerless-labs/agent-memory - Long-Term Memory Runtime for AI Agents
+Agent-memory is a long-term memory runtime for AI agents that stores memory as plain Markdown files, enabling local ranked retrieval and an independent sleep-time management layer. It supports Claude Code and Codex sharing a single store without API keys, making it suitable for production agent systems. At 4,320 stars in 2.8 months with 1,547 stars per month, the project addresses one of the biggest practical challenges in agent deployments: maintaining persistent memory across sessions. The storage layer uses SQLite for indexing and metadata, while content lives as text files, making it human-readable and easy to backup. The retrieval system supports semantic search, keyword filters, and temporal ordering, with confidence scoring for relevance.
+
+[GitHub →](https://github.com/tigerless-labs/agent-memory)
+
+## Fun Tech
+### GTA 6 Running on Windows
+A Windows PC demonstration has been shared showing Grand Theft Auto 6 running in an emulator, highlighting the graphical fidelity and texture quality of Rockstar's latest title. The clip, shared via Twitter, shows the opening mission running on Windows with ray tracing enabled, prompting discussion about the likelihood of an official Windows port. Rockstar has not announced a Windows release date for GTA 6, with PlayStation 5 and Xbox Series X|S versions confirmed for 2025. The emulator demonstration showcases the game's advanced rendering pipeline and physics interactions, though performance metrics were not provided. The clip has generated significant interest in the modding and emulation communities, with analysts debating the technical feasibility of an official Windows release.
+
+[Twitter →](https://twitter.com/raul_bs3/status/2125213756238291075) | [Hacker News →](https://news.ycombinator.com/item?id=50627783)
+
+### How a Mechanical Watch Keeps Time
+A detailed article explains the inner workings of mechanical watch movements, covering the balance wheel, escapement mechanism, and mainspring that together regulate timekeeping. The explanation details how the oscillating balance wheel swings back and forth at a precise frequency, controlled by the hairspring, which divides time into equal segments. The escapement releases energy from the mainspring in controlled bursts, translating rotational motion into the ticking motion audible on mechanical watches. The article includes diagrams and photographs of the various components, emphasizing the precision engineering required to maintain accuracy within seconds per day. It also discusses modern materials like silicon hairsprings and magnetic shielding that improve performance and resistance to environmental factors.
+
+[Martin Martin →](https://martincmartin.github.io/slidev-stem/watches/article/1/) | [Hacker News →](https://news.ycombinator.com/item?id=50599458)
+
+### Cento Fine Foods Sued for "Tomato Fraud"
+Cento Fine Foods faces a lawsuit alleging that its "San Marzano" tomatoes are mislabeled, with the plaintiff claiming the tomatoes do not originate from the designated Italian DOP region. The lawsuit, reported by Slate, centers on whether certain San Marzano tomatoes sold by Cento meet the legal definition of DOP San Marzano tomatoes grown on the slopes of Mount Vesuvius. The case highlights ongoing disputes over food labeling and origin claims, with similar litigation affecting olive oil, cheese, and wine producers. Cento's marketing emphasizes traditional processing methods and family-owned farms, but the lawsuit questions whether the sourcing claims are substantiated. The outcome could set precedents for similar food authenticity lawsuits across the European Union and United States.
+
+[Slate →](https://slate.com/life/2026/11/cento-san-marzano-tomato-sauce-recipes-lawsuit.html) | [Hacker News →](https://news.ycombinator.com/item?id=50604355)
+
+### PenGPT: A Generative Transformer for Handwriting and Sketches
+PenGPT is a generative transformer model designed to create realistic handwriting and sketches based on text prompts, demonstrated through interactive web pages that show converted notes. The system takes text input and produces stylized handwritten output, supporting multiple languages and pen styles. The project, released by Greydanus, showcases transformer-based approaches to creative generation beyond text, including handwriting synthesis. The web interface allows users to type text and see the rendered handwriting in real time, with options to adjust style and density. The technical approach uses large-scale datasets of handwriting samples to train the model, though specific dataset details were not disclosed. PenGPT targets use cases in educational materials, creative writing, and accessibility tools for people with handwriting difficulties.
+
+[Greydanus →](https://greydanus.github.io/2026/11/12/pengpt/) | [Hacker News →](https://news.ycombinator.com/item?id=50637056)
+
+## Stock Watch
+### Session read
+Most Indian banking stocks were positive today: SBIN, UNIONBANK, JIOFIN, and HDFCNIFBAN all rose, while NTPCGREEN and TATAGOLD declined. The gap between GROWWGOLD and TATAGOLD narrowed slightly after GROWWGOLD fell 2.45% against TATAGOLD's 1.98% decline. ICICIB22 added 1.10% to recover from a weaker start.
+
+========================================================================
+
+
 ## Daily Tech Digest, 2026-11-24: Nvidia Reinstates Jensen Huang as CEO, Stock Jumps 26%
 Source: https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-11-24.html
 # Daily Tech Digest, 2026-11-24: Nvidia Reinstates Jensen Huang as CEO, Stock Jumps 26%
