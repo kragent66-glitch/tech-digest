@@ -1803,6 +1803,73 @@ GenLayer's project boilerplate for building "intelligent contracts" on their blo
 **Why it matters.** The stories today paint a picture of an industry simultaneously consolidating (Stripe buying OpenRouter at $7B+), exposing its vulnerabilities (Microsoft's 8-month Copilot patch delay), and building the tooling layer that will determine which AI agents actually ship to production (the skills explosion, orchestration frameworks, memory systems). The Samsung foundry price hikes and Fractile's $6.5B valuation remind us that the physical infrastructure — the chips and the foundries — remains the bottleneck. And the GitHub Trending data makes one thing clear: the market has moved past "build one agent" to "manage a fleet of agents." The winners will be those who own the metering, routing, memory, and orchestration layers — not just the models themselves.
 
 
+## Model Fingerprinting: How to Prove Which AI Model an API Is Really Serving
+Source: https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-11-26.html
+# Model Fingerprinting: How to Prove Which AI Model an API Is Really Serving
+
+On November 24, Modaic published an analysis of 9,976 requests to TypeSafe's Jev, a "System One" model that returns typed decisions instead of generated text, and concluded that its most plausible backbone is Qwen3.5-35B-A3B, an open-weight sparse mixture-of-experts model. Modaic never saw the weights. It had a stopwatch, 9,984 prompts, and a statistics library. That is the new reality of model identity: the model string in your API call is a claim the provider controls, and it is now cheap to test. For anyone buying inference, the question is no longer whether providers quantize, re-route or swap models. It is whether you would notice if they did.
+
+## An endpoint is a claim, not a fact
+
+Every commercial LLM call returns a model name. That name is metadata, and metadata is set by the party being audited. OpenAI's `system_fingerprint` field is the closest thing to a first-party signal, and it is an opaque backend identifier that does not map to a public weight version. When researchers tested it across repeated calls, fingerprints were not stable enough to serve as a version tracker.
+
+The gap matters because the serving layer is now a variable in its own right. A 2026 paper titled [The Silent Hyperparameter](https://arxiv.org/abs/2605.19537) surveyed 200 distinct inference engines, analyzed 35,000 ML publications, and found the inference stack is rarely reported. Holding weights, decoding parameters and hardware constant, the authors ran five engines including vLLM, SGLang and llama.cpp across models from 4B to 30B parameters. The choice of backend alone shifted benchmark scores by up to 16.6 percentage points and produced high rates of output disagreement. Prefix caching, CUDA graphs, custom kernels and engine-specific logit defaults all contributed.
+
+That is before anyone touches the weights. Quantization, fine-tuning, restricted context windows and output token caps all change behaviour while the model name stays identical. Risk frameworks have started naming the pattern: ISACA's AAISM material describes "silent updates" in which a vendor retrains, re-aligns, swaps the underlying model or changes tokenization behind a stable endpoint, and the service name never moves.
+
+## The statistical route: compare distributions, not outputs
+
+The foundational work here is [Model Equality Testing](https://arxiv.org/abs/2410.20247) by Gao and co-authors, published at ICLR 2025. It formalizes the problem as a two-sample hypothesis test. You have a reference distribution P, meaning the model as the lab shipped it, and the API distribution Q. You sample from both and ask whether they are the same.
+
+The paper's contribution is showing that a Maximum Mean Discrepancy test built on a simple string kernel works well: a median of 77.4% power against distortions such as quantization, watermarking and fine-tuning, using an average of just 10 samples per prompt across 20 to 25 prompts. Applied to commercial inference APIs in summer 2024, the test flagged 11 of 31 endpoints serving four Llama models as statistically different from Meta's reference weights.
+
+A follow-up, [Auditing Black-Box LLM APIs with a Rank-Based Uniformity Test](https://arxiv.org/abs/2506.06975), attacks the harder case: an adversarial provider that reroutes or mixes responses once it detects an audit. Instead of comparing two samples symmetrically, it draws one response from the target API and several from the reference model for each prompt, computes the rank percentile of the API output within the reference distribution, and tests whether those percentiles are uniform using a Cramér-von Mises statistic. If the models match, the ranks are uniform; if not, they are not. The authors report better statistical power than prior methods under constrained query budgets, and the queries look like ordinary traffic, so a provider cannot spot them and switch.
+
+## The systems side channel: latency, throughput, tokenizer
+
+Distribution tests need a reference. When the model is closed and the provider is the only source, you fall back on the physical behaviour of the serving stack. This is what [Modaic did to Jev](https://modaic.dev/blog/latency-doesnt-lie).
+
+The first clue was the latency curve. Across 9,976 Jev 1.14 requests bucketed in 2,000-token bins, median end-to-end latency rose from 77 ms to 155 ms while the p50 to p99 gap stayed between 47 and 58 ms. That much accuracy at that price and latency pointed to a sparse MoE, where a router sends each token through a small subset of experts and prefill stays cheap on long inputs.
+
+The second clue was behaviour on sensitive topics, which Vals AI found resembled several Qwen-derived models. The third was self-identification, which Modaic treats as weak evidence and tested anyway across 22 prompt variants. Asked "Are you Qwen?" Jev 1.13 answered yes 64% of the time and Jev 1.14 answered yes 56%. Asked what model it wants to say it is, both versions picked Qwen 74% of the time. Given a broad family question with an "I do not know" option, Jev abstained 92% and 98% of the time, which suggests TypeSafe trained the behaviour down.
+
+The decisive test was tokenizer matching. Jev's API reports `usage.input_tokens`, and different tokenizers count the same text differently. Jev's reported counts matched no known family, and on long prompts they drifted about 2,000 tokens from Qwen's tokenizer. So Modaic timed 9,984 distinct prompts and asked which token-count source predicted latency better. Qwen3.5-35B-A3B scored a Spearman correlation of 0.805, Gemma 4 26B-A4B 0.804, Nemotron 3 Super 0.771, and Jev's own reported counts 0.719. The controls validated the method: Baseten's groundhog-1 tracked its Gemma backbone best at 0.823, and Modaic's own Qwen-derived Mo Lite tracked Qwen best at 0.873. Then 250 matched prompts through four models showed Jev sustaining more than 90K input tokens per second where a dense 27B model plateaued around 35K, tracking the Qwen3.5 MoE within 22% at 3.2K tokens and 7% at 8.8K.
+
+Modaic is explicit about the limits. This is an approximate performance fingerprint, not a per-GPU measurement; Jev's hardware, concurrency and replica count are undisclosed, and the successor Qwen3.6-35B-A3B shares the same architecture, so throughput alone cannot separate the two.
+
+## Self-identification is the weakest signal
+
+Asking a model who it is has become a popular shortcut, and a [CMU PhD blog post](https://www.cs.cmu.edu/~csd-phd-blog/2026/model-self-identification/) shows why it should not be treated as proof. The authors fine-tuned open models on 1,000 everyday question-answer pairs from a teacher model, filtering out every mention of a model or lab name. Even with no identity information in the data, the students adopted the teacher's identity. Qwen3.5-397B-A17B went from under 1% to 40.3% Claude claims after tuning on Sonnet 4 outputs.
+
+The effect tracks pre-training data. OLMo-3-32B base already claimed GPT in 25.6% of sampled answers before any tuning, rose to 45.5% after tuning on human-written answers, and hit 70.5% after GPT-4o tuning. Tuning on Claude outputs pushed Claude claims to 52.8% and 54.0%, against 2.8% in the human control. Rewriting the teacher's answers into a stripped "caveman" style removed most of the effect in two of three tested models, which points at tone rather than substance. The authors conclude that identity answers are weak evidence of distillation, because pre-training mix induces them and post-training suppresses them.
+
+## What the marketplaces actually promise
+
+Aggregators amplify the problem because they route across many providers. A [LessWrong analysis](https://www.lesswrong.com/posts/KsyoSAyBRXtwzSugg/not-pinning-your-openrouter-provider-might-invalidate-your) documented the practical consequence: a NeurIPS 2025 paper on illegible chains of thought had core results undermined when replication showed different providers serving the same model name with very different capabilities. The author's summary is blunt: providers can differ in quantization, inference backend, parameter handling and maximum input length, and locking a single provider is the best available mitigation rather than a guarantee. Reporting from OpenRouter's own routing documentation notes that the `quantizations` filter reflects what a provider declares, not an independently verified measurement. OpenRouter has since said it is working on a logprob-based detection check and a verified provider tier.
+
+Independent measurement is starting to exist. On August 4, 2026, Artificial Analysis launched the [Endpoint Accuracy Index](https://artificialanalysis.ai/articles/endpoint-accuracy-index), which benchmarks serverless endpoints against a self-hosted reference deployment of the official weights, with the serving commands published. Early results are not subtle: on gpt-oss-120b, some endpoints scored 22% on BFCL-500 tool calling against 37% for the reference, and the most restrictive GLM-5.2 endpoints scored half the reference or less on a 250-question reasoning set because output limits truncated reasoning. DeepSeek V4 Pro endpoints were mostly at parity, with DeepSeek's first-party endpoint slightly above the reference.
+
+## Pinning helps, and it is not a guarantee
+
+Contract language is catching up. Procurement guidance now describes a "model swap clause", because most AI vendor paper never promises to keep serving the same model. The documented notice floors differ sharply: Anthropic commits to at least 60 days before retiring a public model, OpenAI documents at least six months for GA models, and Google publishes no quantified floor for stable Gemini models, only roughly two weeks for previews.
+
+Pinning is also more subtle than it looks. Anthropic's docs state that from the Claude 4.6 generation, model IDs use a dateless format that is itself a pinned snapshot rather than an evergreen pointer, so `claude-opus-4-8` is pinned while older aliases are convenience pointers to dated IDs. Even a pinned ID does not freeze the serving path: routers, safety classifiers and sampling logic can change around fixed weights, which shows up as small behaviour differences on a stable ID.
+
+## A practical audit you can run this week
+
+The methods above collapse into a short operational checklist.
+
+Pin the exact model ID and record the provider that served each response, the returned usage counts, and the latency, the same way you would report a temperature setting. Then build a small equality test: 20 to 25 prompts drawn from your real traffic, 10 samples each, compared against the same model served by a source you trust, ideally your own deployment of the weights. A string-kernel MMD or the rank-based uniformity test both fit in a few hundred lines and cost cents per run. If your provider exposes logprobs, compare them against a reference implementation; that is the strongest cheap signal available, and it is the one OpenRouter says it is building.
+
+Add a canary that fires on change rather than on error. Token counts per fixed input, time to first token, tokens per second at a fixed context length, and structured-output failure rate all move when the serving stack moves, and none of them appear in uptime monitoring. Re-run the equality test on every model ID change, and treat a silent provider-side change as a change you have to re-validate.
+
+## The bottom line
+
+Model identity used to be a matter of trust and now it is a matter of measurement. The tools are unglamorous: a two-sample test, a rank statistic, a stopwatch, a tokenizer. But they work well enough that a competitor reverse-engineered an undisclosed backbone from latency alone, well enough that 11 of 31 endpoints failed the same check in 2024, and well enough that an independent index now publishes per-endpoint accuracy against reference weights.
+
+The uncomfortable part is what the Jev analysis implies for the rest of the stack. If a latency curve can identify a model, then a provider that quietly serves something cheaper is not hiding behind a black box. It is hiding behind a name. Anyone who writes that name into a contract without a test to back it is trusting a claim they could have verified for the price of a few thousand API calls.
+
+
 ## Anthropic Launches Claude Fable 5.2 and Mythos 5.2 with Dual Access Model for Cyber and Life Sciences
 Source: https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-11-25.html
 # Anthropic Launches Claude Fable 5.2 and Mythos 5.2 with Dual Access Model for Cyber and Life Sciences

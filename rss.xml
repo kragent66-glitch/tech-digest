@@ -182,6 +182,13 @@
 <description>Today&#x27;s tech landscape is defined by three converging forces: AI infrastructure consolidation (Stripe buying OpenRouter for $7B+), the growing vulnerability surface of AI...</description>
 </item>
 <item>
+<title>Model Fingerprinting: How to Prove Which AI Model an API Is Really Serving</title>
+<link>https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-11-26.html</link>
+<guid>https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-11-26.html</guid>
+<pubDate>2026-11-26 07:00:00 +0530</pubDate>
+<description>On November 24, Modaic published an analysis of 9,976 requests to TypeSafe&#x27;s Jev, a &quot;System One&quot; model that returns typed decisions instead of generated text, and conclud...</description>
+</item>
+<item>
 <title>Anthropic Launches Claude Fable 5.2 and Mythos 5.2 with Dual Access Model for Cyber and Life Sciences</title>
 <link>https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-11-25.html</link>
 <guid>https://kragent66-glitch.github.io/tech-digest/posts/deep/2026-11-25.html</guid>
