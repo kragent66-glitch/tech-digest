@@ -1,5 +1,100 @@
 # Tech Digest - Full Text
 
+## Daily Tech Digest, 2026-11-27: 1Password: Attacker Pushed Malicious Code Into Backend, Vaults Stayed Sealed
+Source: https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-11-27.html
+# Daily Tech Digest, 2026-11-27: 1Password: Attacker Pushed Malicious Code Into Backend, Vaults Stayed Sealed
+
+Today's edition carries 21 sourced items across 5 sections - AI and machine learning news, hidden gems, under-the-radar repositories and fun tech. Leading the news: 1Password: Attacker Pushed Malicious Code Into Backend, Vaults Stayed Sealed. Every item below carries its own source link, and the repo cards are drawn from a vetted list rather than from whatever trended.
+
+## AI & ML News
+### 1Password: Attacker Pushed Malicious Code Into Backend, Vaults Stayed Sealed
+1Password says an intruder got into an employee's corporate GitHub account on November 19, used it to read source code and push malicious code into backend services, then copied customer names, sign-in email addresses and non-secret account metadata for a subset of users. The company stresses that vault contents and the keys protecting them were never exposed, since 1Password cannot read them. Containment, a clean service rebuild and internal credential rotation followed, and the disclosure landed November 25. The takeaway for teams: the weakest link here was a GitHub identity, not the encryption model itself.
+[1Password](https://1password.com/blog/update-on-nov-2026-security-incident) | [HN discussion](https://news.ycombinator.com/item?id=50644817)
+
+### NYT Tells Freelance Photographers to Skip Photoshop 2027 Over AI Metadata
+The New York Times has instructed contributing photographers to avoid Adobe Photoshop 2027 (release 28.0.0 and later) while on assignment. In an email seen by The Verge, photo leaders Meaghan Looram and Josh Haner warned that the November update applies AI "in ways that may not be apparent," and that using it "can result in metadata identifying photographs as AI-generated." Adobe has been rolling out C2PA content credentials across its apps since August. The Times, which permits only minimal colour adjustment, wants no AI tags anywhere near its journalism. Adobe and the Times declined to say which tools triggered the ban.
+[The Verge](https://www.theverge.com/ai-artificial-intelligence/1041227/the-new-york-times-warns-photographers-not-to-update-photoshop-over-ai-features) | [HN discussion](https://news.ycombinator.com/item?id=50647673)
+
+### Google Forces AI Agents Onto Workspace MCP Servers, and Gmail Still Cannot Send
+On November 24 Google made eight Workspace MCP servers generally available and added a clause to its API terms: from February 1, 2027, any tool "driven by an AI Agent" must reach Gmail, Drive and Calendar through those servers. The catch is capability. Gmail's server can search, read threads, create drafts and apply labels, but cannot send, reply, forward or edit a draft, because those endpoints "require partner access and aren't generally available." Agents hitting REST directly get Standard-tier quotas regardless of paid tier. Google also caps retention of embeddings, memory indexes and profiles built from Workspace data at 30 days.
+[Tech Stackups](https://techstackups.com/articles/google-workspace-ai-agents-mcp/) | [HN discussion](https://news.ycombinator.com/item?id=50653477)
+
+### OpenAI's Astra 6.2 and Sol 6.2 Look Cost-Tuned, and They Underthink
+Independent analysis built on the Agent Duel leaderboard argues OpenAI's Astra 6.2 and Sol 6.2 releases were tuned for cost rather than capability. Compared with matched opponents on the same tasks, both models reason and emit far fewer tokens than their predecessors: Astra 6 and Sol 6.1 look normal, while the 6.2 pair are outliers. The effect is statistically solid, with p=0.00013 for Sol's reasoning drop and 0.0064 for Astra's, and output-token drops at 0.0055 and 0.022. Reviewers panned the releases. Cheaper inference per task helps budgets, less so when the model stops thinking through hard problems.
+[micjm](https://micjm.com/blog/openai-is-in-cost-control-mode/) | [HN discussion](https://news.ycombinator.com/item?id=50652527)
+
+### An AMD Patch Set Lifts llama.cpp to 55 Tokens/s on an R9700 eGPU
+llama-cpp-rdna-boosts applies a minimal set of AMD-specific patches to a pinned llama.cpp commit and re-applies them as upstream moves. Writing on devnull.land, one user running a Swift-1.5-Qwen3.8-27B Q6_K_L model on an AMD R9700 over an eGPU link measured prefill rising from roughly 700 to 1,300 tokens per second, and generation from 35 to 55 tokens per second. The contrast is with newer "bespoke" forks that chase speed by changing how a model selects experts rather than by tuning hardware. Here the changeset stays small and inspectable.
+[devnull.land](https://devnull.land/amd-specific-llama-cpp) | [HN discussion](https://news.ycombinator.com/item?id=50657265)
+
+## Hidden Gems
+### corsairdev/corsair - Agent Framework for Hooking Users Into Their Apps
+Corsair is an agentic framework aimed at connecting end users to their applications, so an agent can act across the tools a person already uses rather than inside a single silo. The repository has pulled 15,618 stars in 13.4 months, about 1,162 stars per month, with a push in the last day, and its topics sit squarely in agentic-ai and ai-agents. It is early but fast-moving, and user-to-app connection is one of the more concrete framings in a crowded agent-framework field. Worth watching for teams wiring agents into real product surface area.
+[GitHub](https://github.com/corsairdev/corsair)
+
+### zhouxiaoka/autoclip - Open-Source OpusClip Alternative That Runs Locally
+AutoClip is a desktop app that turns long podcasts, interviews and courses into short vertical clips with captions, covers and publish-ready copy for Douyin, Xiaohongshu, TikTok, Reels and YouTube Shorts. It is pitched as the open-source OpusClip alternative: local-first, zero subscriptions, with an MCP server bundled in. Traction is real, at 17,095 stars across 16.7 months, roughly 1,026 stars per month, and it was pushed today. The technically interesting part is doing clipping and repurposing on-device rather than shipping footage to a paid cloud service, which matters for creators with sensitive or embargoed material.
+[GitHub](https://github.com/zhouxiaoka/autoclip)
+
+### openchamber/openchamber - An Agentic Dev Environment Built on OpenCode
+OpenChamber bills itself as an agentic development environment based on the OpenCode AI agent, a workspace where agents do engineering work rather than just autocomplete. It has 13,314 stars in 14.5 months, about 917 stars per month, with a push today and topics spanning agentic-engineering, agents and opencode. The project matters because it targets the layer above the model: environment, tooling and workflow for agent-driven development. For teams working out how to structure agent-first repositories, it is a direct alternative to assembling those pieces yourself.
+[GitHub](https://github.com/openchamber/openchamber)
+
+### BuilderIO/agent-native - Framework for Building Agentic Apps
+BuilderIO's agent-native is a framework for building applications where agents are a first-class part of the app rather than a bolt-on chat panel. It has 7,796 stars in 8.5 months, roughly 913 stars per month, with a push today and topics covering agent-framework, agentic-ai and agents. The appeal is structural: state, actions and agent loops handled by the framework, so product teams can ship agentic features without inventing plumbing. BuilderIO's track record with developer tooling gives it more credibility than the average eight-month-old repository in this space.
+[GitHub](https://github.com/BuilderIO/agent-native)
+
+### rowboatlabs/rowboat - Your Agent Team, in One Group Chat
+Rowboat frames multi-agent work as a group chat: several agents in one conversation, coordinating on a shared task instead of running as isolated single-agent sessions. It has 18,327 stars over 22.4 months, about 817 stars per month, and was pushed yesterday, with topics covering agents, agents-sdk and ai-agents-automation. The group-chat metaphor does real work here, giving users a familiar interface for orchestration while making agent handoffs visible. For teams experimenting with agent teams, it is one of the more adopted takes on the pattern.
+[GitHub](https://github.com/rowboatlabs/rowboat)
+
+### apify/apify-mcp-server - Give Agents Thousands of Ready-Made Scrapers
+Apify's MCP server plugs AI agents into the Apify Store, a catalogue of thousands of prebuilt scrapers, crawlers and automation tools for social media, search engines, maps and e-commerce. With 18,078 stars across 22.8 months, roughly 793 per month, and a push today, it is one of the most adopted MCP servers in the ecosystem. The practical value is standardisation: agents get a uniform MCP interface to a very large set of site-specific actors, instead of each team rebuilding brittle extractors. Data-hungry agent products should look here first.
+[GitHub](https://github.com/apify/apify-mcp-server)
+
+## Under-the-Radar Finds
+### Jia-Ethan/codex-keysmith - Versioned Codex Instruction Deployment
+Codex Keysmith is a CLI for deploying Codex instructions with versioning, preview, ownership manifests, hook isolation, scenario evaluation and recovery. It has 4,804 stars in five months, about 962 stars per month, one of the faster small repos in this list, and was pushed yesterday. The problem it solves is unglamorous but real: instructions and hooks for coding agents drift, collide and get silently overwritten. Keysmith treats them as deployable artifacts with ownership and rollback. For teams running Codex across many repositories, that is closer to configuration management than prompt tinkering.
+[GitHub](https://github.com/Jia-Ethan/codex-keysmith)
+
+### UditAkhourii/adhd - A Skill That Forces Agents to Think Divergently
+ADHD is a skill for coding agents that implements tree-of-thought with pruning, built on the Claude and Codex Agent SDKs. It fans out parallel divergent thoughts under different cognitive frames, scores them, prunes the traps and deepens the survivors, explicitly aimed at creative and interdisciplinary work rather than routine refactors. It has 4,600 stars in 6.1 months, about 753 per month, with a push a week ago. The interesting claim is structural: most agent reasoning is linear, and forcing breadth before depth is a cheap way to escape local optima.
+[GitHub](https://github.com/UditAkhourii/adhd)
+
+### tutti-os/tutti - Where People and Agents Build in Tune
+Tutti describes itself as a place where people and agents build in tune, an agent workspace built around collaboration and orchestration rather than single-agent chat. It has 3,972 stars in 5.5 months, roughly 720 per month, was pushed three days ago, and carries topics covering agent-collaboration, agent-orchestration and agentic-workflow. It is one of several projects betting that the unit of work becomes a mixed team of humans and agents, and that the tooling should make that team legible. Early, but the framing aligns with where larger vendors are heading.
+[GitHub](https://github.com/tutti-os/tutti)
+
+### AhmadHassan-BTed/JinaClip - Webpages to Clean Markdown, Entirely in the Browser
+JinaClip is a browser extension that converts any webpage into high-fidelity, LLM-friendly Markdown, doing the DOM parsing and clipboard handling entirely inside the browser runtime with no cloud round-trip. It has 4,155 stars in 6.4 months, about 649 per month, though the last push was 18 days ago. The privacy angle is the point: material you would not paste into a third-party converter can be clipped locally and fed straight into an agent. For research and internal-doc workflows, that is a small but genuinely useful piece of plumbing.
+[GitHub](https://github.com/AhmadHassan-BTed/JinaClip)
+
+## Fun Tech
+### YouTube Ad Punisher Reloads the Page Every Time an Ad Starts
+YouTube Ad Punisher is a browser extension that auto-reloads YouTube whenever an ad begins playing, on the theory that a fresh page load often skips the break. It is a blunt instrument, and the Hacker News thread spent hundreds of comments arguing about whether it works, what it costs creators, and how long the platform will tolerate it. The project sits in a long tradition of client-side protest against ad load. It is not ad blocking, it is reload roulette, and the repository makes no secret of that.
+[GitHub](https://github.com/antonpictures/youtube-punisher) | [HN discussion](https://news.ycombinator.com/item?id=50657530)
+
+### A Pakistani Architect Who Barely Registers Outside Lahore
+Works in Progress runs a photo essay on Kamil Khan Mumtaz, born in Calcutta in 1939, trained at London's Architectural Association, and practising in Pakistan since 1966. He was twice imprisoned as a communist activist, prepared a late-1970s report that helped save Lahore's Walled City, now partly UNESCO-listed, and has spent decades adapting modernism to local climate, brick and craft. The magazine's argument is that global architecture coverage simply never flies to Lahore, so a world-class body of work stayed regional. Mumtaz is in his mid-eighties and still building.
+[Works in Progress](https://worksinprogress.co/issue/the-greatest-architect-youve-never-heard-of-is-in-pakistan/) | [HN discussion](https://news.ycombinator.com/item?id=50659841)
+
+### A Background-Independent Quantization of Gravity From Null Cones
+A paper submitted to arXiv on November 25 proposes quantizing vacuum general relativity without a fixed background, working on intersecting null cones of a bulk subregion at finite Newton's constant. The authors promote the reduced phase space's Poisson brackets to commutators, build a nonperturbative Hilbert space, and obtain a Lorentzian path integral whose sums converge absolutely. As a check they compute graviton pair creation nonperturbatively and recover Bekenstein-Hawking entropy for marginally trapped surfaces, including the logarithmic correction Sen derived via Euclidean methods. It is theory, not engineering, but unusually concrete for quantum gravity.
+[arXiv](https://arxiv.org/abs/2611.34924) | [HN discussion](https://news.ycombinator.com/item?id=50651863)
+
+### FBI Sting Catches 'RansomwareHelp' CTO Allegedly Marking Up Ransoms
+The CTO and co-founder of ransomwarehelp.com, Juan Ricardo Palacio Escobar, 52, has been indicted in Rhode Island for wire fraud. The site promised "100% data recovery" using proprietary cryptography and insisted it never paid threat actors. An FBI sting posing as both victim and ransomware crew allegedly caught the opposite: Palacio negotiated a decryptor for about $6,000 in bitcoin, then billed the fake victim $16,010 including a $2,750 diagnostic fee. A separate case reportedly saw a $438,880 quote to an accounting firm hit by LockBit. The pattern is desperate victims, technical fog and a markup.
+[Krebs on Security](https://krebsonsecurity.com/2026/11/cto-of-ransomwarehelp-indicted-for-wire-fraud/) | [HN discussion](https://news.ycombinator.com/item?id=50657645)
+
+### AI Removed the Friction That Made Self-Hosting Tiring
+Jan-Lukas Else has self-hosted for years but admits his enthusiasm faded: maintaining what already ran was enough, and new experiments cost an evening of changelogs. His infrastructure lives in Git as Docker Compose files and scripts, which means coding agents can work on it like any other repository. That collapsed the cost of trying a new service or automating a chore, and he found himself tinkering again, hardware included. The post is a useful counterpoint to AI-doom framing: the same agents people fear are making small-scale digital sovereignty cheaper for hobbyists.
+[janlukas.blog](https://janlukas.blog/posts/ai-self-hosting) | [HN discussion](https://news.ycombinator.com/item?id=50660180)
+
+## Stock Watch
+### Session read
+Seven of eight holdings closed green. Union Bank led at 214.48 (+2.04%), State Bank added 0.60% to 1,143.50, and both gold ETFs rose over 1.4%. Jio Financial was the lone laggard at 225.94 (-0.47%).
+
+
 ## Daily Tech Digest, 2026-11-26: 1Password Breach Traced to an Employee's GitHub Account - Account Records Copied, Vaults Untouched
 Source: https://kragent66-glitch.github.io/tech-digest/posts/digest/2026-11-26.html
 # Daily Tech Digest, 2026-11-26: 1Password Breach Traced to an Employee's GitHub Account - Account Records Copied, Vaults Untouched
